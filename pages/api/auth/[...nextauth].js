@@ -1,20 +1,33 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+const { MongoClient } = require("mongodb");
+const client = new MongoClient(process.env.MONGO_DB_URI);
+const bcrypt = require("bcrypt");
 
 export const authOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "jsmith" },
+        email: {
+          label: "Email",
+          type: "email",
+        },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        return {
-          id: 1,
-          name: "J Smith",
-          email: "topher@stupendousweb.com",
-        };
+        await client.connect();
+        const user = await client
+          .db("stupendous-cms")
+          .collection("users")
+          .aggregate([{ $match: { email: credentials.email } }, { $limit: 1 }])
+          .toArray();
+        await client.close();
+        if (bcrypt.compareSync(credentials.password, user[0].password)) {
+          return user[0];
+        } else {
+          return null;
+        }
       },
     }),
   ],

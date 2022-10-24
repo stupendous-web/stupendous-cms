@@ -51,6 +51,7 @@ export default function Register() {
             <input
               type={"password"}
               value={password}
+              min={8}
               className={"uk-input"}
               onChange={(event) => setPassword(event.target.value)}
               required
