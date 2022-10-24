@@ -36,7 +36,7 @@ export default function Login() {
             />
           </div>
           <button
-            className={"uk-button uk-button-primary"}
+            className={"uk-button uk-button-primary uk-margin-right"}
             onClick={() =>
               signIn("credentials", {
                 email: email,

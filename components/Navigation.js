@@ -14,11 +14,15 @@ export default function Navigation() {
       className={"uk-navbar-container uk-light uk-box-shadow-medium"}
       data-uk-navbar={""}
     >
-      {!paths.includes(router.pathname) && (
-        <div className={"uk-navbar-left"}>
+      <div className={"uk-navbar-left"}>
+        {!paths.includes(router.pathname) ? (
           <div className={"uk-navbar-item"}>Hello, {session?.user?.name}!</div>
-        </div>
-      )}
+        ) : (
+          <Link href={"/"}>
+            <a className={"uk-navbar-item uk-logo"}>Stupendous CMS</a>
+          </Link>
+        )}
+      </div>
       <div className={"uk-navbar-right"}>
         {session?.user ? (
           <ul className={"uk-navbar-nav"}>

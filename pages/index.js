@@ -11,10 +11,11 @@ export default function Home() {
         data-uk-height-viewport={"offset-top: true"}
       >
         <div className={"uk-container uk-container-xsmall"}>
-          <h1>Stupendous CMS</h1>
-          <p className={"uk-text-lead"}>
-            Your clients manage their content. You mange their software.
-          </p>
+          <h2>
+            Your clients manage their content.
+            <br />
+            You manage their software.
+          </h2>
           <p>
             As a noob developer, I was frustrated with that lack of platforms
             that would allow my clients to manager their content while allowing

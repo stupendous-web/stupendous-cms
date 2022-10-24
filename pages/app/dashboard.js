@@ -5,7 +5,7 @@ import Layout from "../../components/Layout";
 
 export default function Dashboard() {
   const { data: session } = useSession();
-  const user = session?.user;
+  console.log(session);
 
   const checklist = [
     "Create a project",
@@ -55,7 +55,7 @@ export default function Dashboard() {
                       <h1>🎉</h1>
                       <div>Your REST API is live at:</div>
                       <div>
-                        <a>https://something.com/api/{user?._id}</a>
+                        <a>https://something.com/api/{session?.user?._id}</a>
                       </div>
                     </div>
                   </div>
