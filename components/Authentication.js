@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { useSession, signIn } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
-export default function Authenticated({ children }) {
+export default function Authentication({ children }) {
   const { data: session } = useSession();
 
   return session ? (
@@ -11,9 +11,9 @@ export default function Authenticated({ children }) {
       className={"uk-section-primary uk-flex uk-flex-center uk-flex-middle"}
       data-uk-height-viewport={""}
     >
-      <a onClick={() => signIn(null, { callbackUrl: "/app/dashboard" })}>
-        Login
-      </a>
+      <Link href={"/login"}>
+        <a>Login</a>
+      </Link>
       &nbsp;|&nbsp;
       <Link href={"/"}>
         <a>Home</a>

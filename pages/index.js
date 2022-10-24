@@ -1,12 +1,11 @@
 import Link from "next/link";
-import { signIn } from "next-auth/react";
 
-import Navbar from "../components/Navbar";
+import Navigation from "../components/Navigation";
 
 export default function Home() {
   return (
     <>
-      <Navbar />
+      <Navigation />
       <div
         className={"uk-section"}
         data-uk-height-viewport={"offset-top: true"}
@@ -32,9 +31,9 @@ export default function Home() {
                 Get started!
               </a>
             </Link>
-            <a onClick={() => signIn(null, { callbackUrl: "/app/dashboard" })}>
-              Login
-            </a>
+            <Link href={"/login"}>
+              <a>Login</a>
+            </Link>
           </p>
           <p className={"uk-text-small"}>
             Learn more at{" "}

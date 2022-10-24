@@ -10,7 +10,7 @@ import {
   faImage,
 } from "@fortawesome/free-solid-svg-icons";
 
-import Navbar from "./Navbar";
+import Navigation from "./Navigation";
 
 export default function Layout({ children }) {
   const { data: session } = useSession();
@@ -58,7 +58,7 @@ export default function Layout({ children }) {
           </div>
         </div>
         <div className={"uk-width-expand"}>
-          <Navbar />
+          <Navigation />
           {children}
         </div>
       </div>

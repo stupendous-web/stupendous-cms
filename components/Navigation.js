@@ -1,18 +1,20 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 
-export default function Navbar() {
+export default function Navigation() {
   const { data: session } = useSession();
 
   const router = useRouter();
+
+  const paths = ["/", "/register", "/login"];
 
   return (
     <nav
       className={"uk-navbar-container uk-light uk-box-shadow-medium"}
       data-uk-navbar={""}
     >
-      {router.pathname !== "/" && (
+      {!paths.includes(router.pathname) && (
         <div className={"uk-navbar-left"}>
           <div className={"uk-navbar-item"}>Hello, {session?.user?.name}!</div>
         </div>
@@ -20,7 +22,7 @@ export default function Navbar() {
       <div className={"uk-navbar-right"}>
         {session?.user ? (
           <ul className={"uk-navbar-nav"}>
-            {router.pathname === "/" && (
+            {!paths.includes(router.pathname) && (
               <li>
                 <Link href={"/app/dashboard"}>
                   <a>Dashboard</a>
@@ -39,11 +41,9 @@ export default function Navbar() {
               </Link>
             </li>
             <li>
-              <a
-                onClick={() => signIn(null, { callbackUrl: "/app/dashboard" })}
-              >
-                Login
-              </a>
+              <Link href={"/login"}>
+                <a>Login</a>
+              </Link>
             </li>
           </ul>
         )}

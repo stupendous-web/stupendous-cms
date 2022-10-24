@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react";
 
-import Authenticated from "../../components/Authenicated";
+import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
 
 export default function Dashboard() {
@@ -16,7 +16,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <Authenticated>
+      <Authentication>
         <Layout>
           <div className={"uk-section uk-section-small"}>
             <div className={"uk-container uk-container-expand"}>
@@ -55,7 +55,7 @@ export default function Dashboard() {
                       <h1>🎉</h1>
                       <div>Your REST API is live at:</div>
                       <div>
-                        <a>https://something.com/api/{user?.email}</a>
+                        <a>https://something.com/api/{user?._id}</a>
                       </div>
                     </div>
                   </div>
@@ -64,7 +64,7 @@ export default function Dashboard() {
             </div>
           </div>
         </Layout>
-      </Authenticated>
+      </Authentication>
     </>
   );
 }
