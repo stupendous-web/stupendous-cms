@@ -7,6 +7,7 @@ import {
   faDatabase,
   faProjectDiagram,
   faUser,
+  faImage,
 } from "@fortawesome/free-solid-svg-icons";
 
 import Navbar from "./Navbar";
@@ -19,6 +20,7 @@ export default function Layout({ children }) {
     { href: "/", tooltip: "Edit Models", icon: faDatabase },
     { href: "/", tooltip: "Edit Projects", icon: faProjectDiagram },
     { href: "/", tooltip: "Invite Users", icon: faUser },
+    { href: "/", tooltip: "Edit Media", icon: faImage },
   ];
 
   return (
