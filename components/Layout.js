@@ -17,7 +17,7 @@ export default function Layout({ children }) {
 
   const links = [
     { href: "/", tooltip: "Publish Content", icon: faFeather },
-    { href: "/", tooltip: "Edit Models", icon: faDatabase },
+    { href: "/models", tooltip: "Edit Models", icon: faDatabase },
     { href: "/", tooltip: "Edit Projects", icon: faProjectDiagram },
     { href: "/", tooltip: "Invite Users", icon: faUser },
     { href: "/", tooltip: "Edit Media", icon: faImage },

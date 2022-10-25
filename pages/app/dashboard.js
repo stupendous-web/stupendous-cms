@@ -1,4 +1,5 @@
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
@@ -53,10 +54,14 @@ export default function Dashboard() {
                   >
                     <div>
                       <h1>🎉</h1>
-                      <div>Your REST API is live at:</div>
-                      <div>
-                        <a>https://something.com/api/{session?.user?._id}</a>
-                      </div>
+                      <div>You can access your API via:</div>
+                      <Link
+                        href={`https://stupendouscms.com/api/${session?.user?._id}`}
+                      >
+                        <a>
+                          https://stupendouscms.com/api/{session?.user?._id}
+                        </a>
+                      </Link>
                     </div>
                   </div>
                 </div>

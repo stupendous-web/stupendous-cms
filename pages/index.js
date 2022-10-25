@@ -1,4 +1,5 @@
 import Link from "next/link";
+import devicon from "devicon";
 
 import Navigation from "../components/Navigation";
 
@@ -25,6 +26,10 @@ export default function Home() {
             headless content management system built with Javascript and
             MongoDB. Your clients can login and easily manage their content and
             you can access it through your REST API. Let&apos;s go!
+          </p>
+          <p className={"uk-h1 uk-text-right"}>
+            <i class={"devicon-nextjs-original-wordmark"} />
+            <i class={"devicon-mongodb-plain-wordmark"} />
           </p>
           <p>
             <Link href={"/register"}>

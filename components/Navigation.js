@@ -7,7 +7,8 @@ export default function Navigation() {
 
   const router = useRouter();
 
-  const paths = ["/", "/register", "/login"];
+  const noGreetingPaths = ["/", "/register", "/login"];
+  const noDashboardLinkPaths = ["/app/dashboard"];
 
   return (
     <nav
@@ -15,7 +16,7 @@ export default function Navigation() {
       data-uk-navbar={""}
     >
       <div className={"uk-navbar-left"}>
-        {!paths.includes(router.pathname) ? (
+        {!noGreetingPaths.includes(router.pathname) ? (
           <div className={"uk-navbar-item"}>Hello, {session?.user?.name}!</div>
         ) : (
           <Link href={"/"}>
@@ -26,7 +27,7 @@ export default function Navigation() {
       <div className={"uk-navbar-right"}>
         {session?.user ? (
           <ul className={"uk-navbar-nav"}>
-            {!paths.includes(router.pathname) && (
+            {!noDashboardLinkPaths.includes(router.pathname) && (
               <li>
                 <Link href={"/app/dashboard"}>
                   <a>Dashboard</a>
