@@ -11,5 +11,7 @@ export default async function Handler(request, response) {
       return_url: "https://stupendouscms.com/app/dashboard",
     });
     response.status(200).send(session.url);
-  } catch (error) {}
+  } catch (error) {
+    response.status(200).send("");
+  }
 }

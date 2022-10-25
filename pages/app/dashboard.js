@@ -42,10 +42,10 @@ export default function Dashboard() {
                 <div className={"uk-width-2-3"}>
                   <div
                     className={
-                      "uk-card uk-card-default uk-card-body uk-text-center uk-flex uk-flex-center uk-flex-middle"
+                      "uk-card uk-card-default uk-card-body uk-flex uk-flex-center uk-flex-middle"
                     }
                   >
-                    <div>
+                    <div className={"uk-text-center"}>
                       <h2>🎉</h2>
                       <div>You can access your API via:</div>
                       <Link

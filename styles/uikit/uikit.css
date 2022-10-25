@@ -11890,4 +11890,7 @@ a:hover {
 .uk-alert {
   border-radius: 7px;
 }
+.uk-modal-dialog {
+  border-radius: 14px;
+}
 /*# sourceMappingURL=uikit.css.map */
