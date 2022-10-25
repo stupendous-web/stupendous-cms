@@ -1,9 +1,18 @@
+import { useEffect } from "react";
 import Link from "next/link";
+import { useGlobal } from "../../lib/context";
+import axios from "axios";
 
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
 
 export default function Projects() {
+  const { projects, setProjects } = useGlobal();
+
+  useEffect(() => {
+    axios.get("/api/projects").then((response) => setProjects(response.data));
+  }, []);
+
   return (
     <Authentication>
       <Layout>
@@ -24,10 +33,10 @@ export default function Projects() {
               <div className={"uk-width-1-1"}>
                 <div
                   className={
-                    "uk-card uk-card-default uk-card-body uk-text-center uk-flex uk-flex-center uk-flex-middle"
+                    "uk-card uk-card-default uk-card-body uk-text-center uk-flex uk-flex-middle"
                   }
                 >
-                  asdf
+                  <h3>Projects</h3>
                 </div>
               </div>
             </div>

@@ -19,19 +19,24 @@ export default function SideNavigation() {
   const { data: session } = useSession();
 
   useEffect(() => {
-    if (session?.user?.customer) {
+    if (session?.user?.stripeCustomer) {
       axios
-        .post("/api/billingLink", { customer: session?.user?.customer })
+        .post("/api/billingLink", {
+          stripeCustomer: session?.user?.stripeCustomer,
+        })
         .then((response) => setBillingLink(response.data))
         .catch((error) => console.log(error));
     }
   }, [session]);
 
-  const links = [
+  const publishingLinks = [
     { href: "/app/content", tooltip: "Publish Content", icon: faFeather },
-    { href: "/app/models", tooltip: "Edit Models", icon: faDatabase },
-    { href: "/app/projects", tooltip: "Edit Projects", icon: faProjectDiagram },
     { href: "/app/media", tooltip: "Edit Media", icon: faImage },
+  ];
+
+  const adminLinks = [
+    { href: "/app/projects", tooltip: "Edit Projects", icon: faProjectDiagram },
+    { href: "/app/models", tooltip: "Edit Models", icon: faDatabase },
     { href: "/app/users", tooltip: "Invite Users", icon: faUser },
     {
       href: billingLink,
@@ -49,17 +54,36 @@ export default function SideNavigation() {
           style={{ width: "2rem" }}
         />
       </div>
-      {links.map((link, key) => {
+      {publishingLinks.map((link, key) => {
         return (
-          <Link key={key} href={link.href}>
-            <a>
-              <p data-uk-tooltip={`title: ${link.tooltip}; pos: right;`}>
-                <FontAwesomeIcon icon={link.icon} />
-              </p>
-            </a>
-          </Link>
+          <div key={key}>
+            <Link href={link.href}>
+              <a>
+                <p data-uk-tooltip={`title: ${link.tooltip}; pos: right;`}>
+                  <FontAwesomeIcon icon={link.icon} />
+                </p>
+              </a>
+            </Link>
+          </div>
         );
       })}
+      {session?.user?.isAccountOwner && (
+        <div>
+          {adminLinks.map((link, key) => {
+            return (
+              <div key={key}>
+                <Link href={link.href}>
+                  <a>
+                    <p data-uk-tooltip={`title: ${link.tooltip}; pos: right;`}>
+                      <FontAwesomeIcon icon={link.icon} />
+                    </p>
+                  </a>
+                </Link>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

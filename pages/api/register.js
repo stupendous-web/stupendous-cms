@@ -1,3 +1,5 @@
+import { ObjectId } from "mongodb";
+
 const stripe = require("stripe")(
   process.env.NODE_ENV === "production"
     ? process.env.STRIPE_LIVE_KEY
@@ -31,7 +33,14 @@ export default async function handler(request, response) {
       email: body.email,
     });
 
-    // Store User in Mongo DB
+    // Create Account
+
+    const account = await client
+      .db("stupendous-cms")
+      .collection("accounts")
+      .insertOne({ created_at: new Date() });
+
+    // Create User
 
     await client
       .db("stupendous-cms")
@@ -40,7 +49,9 @@ export default async function handler(request, response) {
         name: body.name,
         email: body.email,
         password: bcrypt.hashSync(body.password, 10),
-        customer: customer.id,
+        stripeCustomer: customer.id,
+        isAccountOwner: true,
+        account: ObjectId(account.insertedId),
         created_at: new Date(),
       });
   } else {

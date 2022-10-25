@@ -11,12 +11,16 @@ export const authOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user?._id) token._id = user._id;
-      if (user?.customer) token.customer = user.customer;
+      if (user?.stripeCustomer) token.stripeCustomer = user.stripeCustomer;
+      if (user?.isAccountOwner) token.isAccountOwner = user.isAccountOwner;
       return token;
     },
     async session({ session, token }) {
       if (token?._id) session.user._id = token._id;
-      if (token?.customer) session.user.customer = token.customer;
+      if (token?.stripeCustomer)
+        session.user.stripeCustomer = token.stripeCustomer;
+      if (token?.isAccountOwner)
+        session.user.isAccountOwner = token.isAccountOwner;
       return session;
     },
   },
