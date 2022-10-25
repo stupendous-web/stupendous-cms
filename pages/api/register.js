@@ -1,6 +1,4 @@
-const stripe = require("stripe")(
-  "sk_test_51LJRdkIqQW8xJ9oZtDiwyQwuSTsVeKp4Psj0PaPgHh17Sv5E8XvvWNPdTe5QC7t3KXeeinANfSNti0MQsE44bzQs0075onM3Rj"
-);
+const stripe = require("stripe")(process.env.STRIPE_KEY);
 const { MongoClient } = require("mongodb");
 const client = new MongoClient(process.env.MONGO_DB_URI);
 const bcrypt = require("bcrypt");
