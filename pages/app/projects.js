@@ -1,17 +1,24 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { useGlobal } from "../../lib/context";
+import { useSession } from "next-auth/react";
 import axios from "axios";
 
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
 
 export default function Projects() {
+  const { data: session } = useSession();
+
   const { projects, setProjects } = useGlobal();
 
   useEffect(() => {
-    axios.get("/api/projects").then((response) => setProjects(response.data));
-  }, []);
+    console.log(session?.user?._id);
+    axios
+      .get("/api/projects", { params: { userId: session?.user?._id } })
+      .then((response) => console.log(response.data))
+      .catch((error) => console.log("error", error));
+  }, [session]);
 
   return (
     <Authentication>

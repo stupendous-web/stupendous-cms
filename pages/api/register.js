@@ -51,7 +51,7 @@ export default async function handler(request, response) {
         password: bcrypt.hashSync(body.password, 10),
         stripeCustomer: customer.id,
         isAccountOwner: true,
-        account: ObjectId(account.insertedId),
+        accountId: ObjectId(account.insertedId),
         created_at: new Date(),
       });
   } else {

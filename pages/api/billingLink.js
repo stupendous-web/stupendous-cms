@@ -5,12 +5,11 @@ const stripe = require("stripe")(
 );
 
 export default async function Handler(request, response) {
-  return response.status(200).send(
-    (
-      await stripe.billingPortal.sessions.create({
-        customer: request?.body?.stripeCustomer,
-        return_url: "https://stupendouscms.com/app/dashboard",
-      })
-    ).url
-  );
+  try {
+    const session = await stripe.billingPortal.sessions.create({
+      customer: request?.body?.stripeCustomer,
+      return_url: "https://stupendouscms.com/app/dashboard",
+    });
+    response.status(200).send(session.url);
+  } catch (error) {}
 }
