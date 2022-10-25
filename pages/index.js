@@ -6,10 +6,7 @@ export default function Home() {
   return (
     <>
       <Navigation />
-      <div
-        className={"uk-section"}
-        data-uk-height-viewport={"offset-top: true"}
-      >
+      <div className={"uk-section"}>
         <div className={"uk-container uk-container-xsmall"}>
           <h2>
             Your clients manage their content.
@@ -30,6 +27,19 @@ export default function Home() {
             <i class={"devicon-nextjs-original-wordmark"} />
             <i class={"devicon-mongodb-plain-wordmark"} />
           </p>
+        </div>
+      </div>
+      <div className={"uk-section"}>
+        <div className={"uk-container uk-container-xsmall"}>
+          <img
+            src={"/screenshot.jpg"}
+            className={"uk-box-shadow-medium"}
+            style={{ borderRadius: "4px" }}
+          />
+        </div>
+      </div>
+      <div className={"uk-section"}>
+        <div className={"uk-container uk-container-xsmall"}>
           <p>
             <Link href={"/register"}>
               <a className={"uk-button uk-button-primary uk-margin-right"}>
