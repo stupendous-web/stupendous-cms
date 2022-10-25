@@ -1,4 +1,8 @@
-const stripe = require("stripe")(process.env.STRIPE_KEY);
+const stripe = require("stripe")(
+  process.env.NODE_ENV === "production"
+    ? process.env.STRIPE_LIVE_KEY
+    : process.env.STRIPE_TEST_KEY
+);
 const { MongoClient } = require("mongodb");
 const client = new MongoClient(process.env.MONGO_DB_URI);
 const bcrypt = require("bcrypt");
@@ -36,7 +40,7 @@ export default async function handler(request, response) {
         name: body.name,
         email: body.email,
         password: bcrypt.hashSync(body.password, 10),
-        customer: customer,
+        customer: customer.id,
         created_at: new Date(),
       });
   } else {

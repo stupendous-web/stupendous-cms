@@ -6,7 +6,6 @@ import Layout from "../../components/Layout";
 
 export default function Dashboard() {
   const { data: session } = useSession();
-  console.log(session);
 
   const checklist = [
     "Create a project",
