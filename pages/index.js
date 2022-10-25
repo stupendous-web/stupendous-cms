@@ -1,5 +1,4 @@
 import Link from "next/link";
-import devicon from "devicon";
 
 import Navigation from "../components/Navigation";
 
