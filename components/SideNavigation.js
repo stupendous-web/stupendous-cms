@@ -14,14 +14,17 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function SideNavigation() {
-  const [billingLink, setBillingLink] = useState();
+  const [billingLink, setBillingLink] = useState("");
 
   const { data: session } = useSession();
 
   useEffect(() => {
-    axios
-      .post("/api/billingLink", { customer: session?.user?.customer })
-      .then((response) => setBillingLink(response.data));
+    if (session?.user?.customer) {
+      axios
+        .post("/api/billingLink", { customer: session?.user?.customer })
+        .then((response) => setBillingLink(response.data))
+        .catch((error) => console.log(error));
+    }
   }, [session]);
 
   const links = [
