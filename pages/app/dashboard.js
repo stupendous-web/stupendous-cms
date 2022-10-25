@@ -23,13 +23,8 @@ export default function Dashboard() {
             <div className={"uk-container uk-container-expand"}>
               <div className={"uk-grid-match"} data-uk-grid={""}>
                 <div className={"uk-width-1-3"}>
-                  <div
-                    className={
-                      "uk-card uk-card-default uk-card-body uk-box-shadow-small"
-                    }
-                    style={{ borderRadius: "4px" }}
-                  >
-                    <h2>Let&apos;s get started!</h2>
+                  <div className={"uk-card uk-card-default uk-card-body"}>
+                    <h3>Let&apos;s get started!</h3>
                     {checklist.map((item, key) => {
                       return (
                         <div key={key}>
@@ -48,12 +43,11 @@ export default function Dashboard() {
                 <div className={"uk-width-2-3"}>
                   <div
                     className={
-                      "uk-card uk-card-default uk-card-body uk-text-center uk-box-shadow-small uk-flex uk-flex-center uk-flex-middle"
+                      "uk-card uk-card-default uk-card-body uk-text-center uk-flex uk-flex-center uk-flex-middle"
                     }
-                    style={{ borderRadius: "4px" }}
                   >
                     <div>
-                      <h1>🎉</h1>
+                      <h2>🎉</h2>
                       <div>You can access your API via:</div>
                       <Link
                         href={`https://stupendouscms.com/api/${session?.user?._id}`}

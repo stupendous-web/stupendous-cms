@@ -16,11 +16,11 @@ export default function Layout({ children }) {
   const { data: session } = useSession();
 
   const links = [
-    { href: "/", tooltip: "Publish Content", icon: faFeather },
-    { href: "/models", tooltip: "Edit Models", icon: faDatabase },
-    { href: "/", tooltip: "Edit Projects", icon: faProjectDiagram },
-    { href: "/", tooltip: "Invite Users", icon: faUser },
-    { href: "/", tooltip: "Edit Media", icon: faImage },
+    { href: "/app/content", tooltip: "Publish Content", icon: faFeather },
+    { href: "/app/models", tooltip: "Edit Models", icon: faDatabase },
+    { href: "/app/projects", tooltip: "Edit Projects", icon: faProjectDiagram },
+    { href: "/app/users", tooltip: "Invite Users", icon: faUser },
+    { href: "/app/media", tooltip: "Edit Media", icon: faImage },
   ];
 
   return (

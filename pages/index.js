@@ -8,11 +8,7 @@ export default function Home() {
       <Navigation />
       <div className={"uk-section"}>
         <div className={"uk-container uk-container-xsmall"}>
-          <h2>
-            Your clients manage their content.
-            <br />
-            You manage their software.
-          </h2>
+          <h1>Clients manage their content. You manage their software.</h1>
           <p>
             As a noob developer, I was frustrated with that lack of platforms
             that would allow my clients to manager their content while allowing
@@ -34,7 +30,7 @@ export default function Home() {
           <img
             src={"/screenshot.jpg"}
             className={"uk-box-shadow-medium"}
-            style={{ borderRadius: "4px" }}
+            style={{ borderRadius: "7px" }}
           />
         </div>
       </div>
@@ -50,7 +46,7 @@ export default function Home() {
               <a>Login</a>
             </Link>
           </p>
-          <p className={"uk-text-small"}>
+          <p>
             Learn more at{" "}
             <Link href={"https://stupendousweb.com"}>
               <a
