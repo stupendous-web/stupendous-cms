@@ -20,8 +20,8 @@ export default function Home() {
             you can access it through your REST API. Let&apos;s go!
           </p>
           <p className={"uk-h1 uk-text-right"}>
-            <i class={"devicon-nextjs-original-wordmark"} />
-            <i class={"devicon-mongodb-plain-wordmark"} />
+            <i className={"devicon-nextjs-original-wordmark"} />
+            <i className={"devicon-mongodb-plain-wordmark"} />
           </p>
         </div>
       </div>
@@ -29,6 +29,7 @@ export default function Home() {
         <div className={"uk-container uk-container-xsmall"}>
           <img
             src={"/screenshot.jpg"}
+            alt={"Stupendous CMS Dashboard"}
             className={"uk-box-shadow-medium"}
             style={{ borderRadius: "7px" }}
           />

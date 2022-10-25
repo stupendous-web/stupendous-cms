@@ -11886,7 +11886,8 @@ a:hover {
   border-radius: 7px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
-.uk-input {
+.uk-input,
+.uk-alert {
   border-radius: 7px;
 }
 /*# sourceMappingURL=uikit.css.map */

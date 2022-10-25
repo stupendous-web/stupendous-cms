@@ -1,3 +1,6 @@
+const stripe = require("stripe")(
+  "sk_test_51LJRdkIqQW8xJ9oZtDiwyQwuSTsVeKp4Psj0PaPgHh17Sv5E8XvvWNPdTe5QC7t3KXeeinANfSNti0MQsE44bzQs0075onM3Rj"
+);
 const { MongoClient } = require("mongodb");
 const client = new MongoClient(process.env.MONGO_DB_URI);
 const bcrypt = require("bcrypt");
@@ -5,16 +8,47 @@ const bcrypt = require("bcrypt");
 export default async function handler(request, response) {
   const body = request.body;
   await client.connect();
-  await client
+
+  // Validate Email
+
+  const user = await client
     .db("stupendous-cms")
     .collection("users")
-    .insertOne({
+    .aggregate([
+      { $match: { email: body.email } },
+      { $limit: 1 },
+      { $count: "count" },
+    ])
+    .toArray();
+
+  if (!user.length) {
+    // Create Stripe Customer
+
+    const customer = await stripe.customers.create({
       name: body.name,
       email: body.email,
-      password: bcrypt.hashSync(body.password, 10),
-      created_at: new Date(),
     });
 
+    // Store User in Mongo DB
+
+    await client
+      .db("stupendous-cms")
+      .collection("users")
+      .insertOne({
+        name: body.name,
+        email: body.email,
+        password: bcrypt.hashSync(body.password, 10),
+        customer: customer,
+        created_at: new Date(),
+      });
+  } else {
+    await client.close();
+
+    return response
+      .status(422)
+      .json({ title: "That email is already registered." });
+  }
   await client.close();
-  response.status(200).json("hi");
+
+  return response.status(200).send("Good things come to those who wait.");
 }

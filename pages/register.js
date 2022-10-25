@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import axios from "axios";
-import { signIn } from "next-auth/react";
 
 import Navigation from "../components/Navigation";
 
@@ -9,6 +9,9 @@ export default function Register() {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [error, setError] = useState();
+
+  const router = useRouter();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -19,9 +22,12 @@ export default function Register() {
         password: password,
       })
       .then(() => {
-        signIn(null, { callbackUrl: "/app/dashboard" });
+        router.replace("/login");
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        setError(error?.response?.data);
+      });
   };
 
   return (
@@ -62,6 +68,18 @@ export default function Register() {
                 required
               />
             </div>
+            {error && (
+              <div class={"uk-alert-danger"} data-uk-alert={""}>
+                <p>
+                  {error?.title || "There was an error."} Please try again or
+                  email{" "}
+                  <Link href={"mailto:topher@stupendousweb.com"}>
+                    <a>topher@stupendousweb.com</a>
+                  </Link>{" "}
+                  for help.
+                </p>
+              </div>
+            )}
             <input
               type={"submit"}
               value={"Let's Go!"}
