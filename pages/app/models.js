@@ -14,7 +14,7 @@ export default function Projects() {
   const [project, setProject] = useState();
   const [editingProject, setEditingProject] = useState();
 
-  const { models, projects } = useGlobal();
+  const { models, setModels, projects } = useGlobal();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -22,6 +22,7 @@ export default function Projects() {
       .post("/api/models", { name: modelName, projectId: project })
       .then((response) => {
         UIkit.modal("#create-model-modal").hide();
+        // setModels([response.data, ...models]);
         setModelName("");
       })
       .catch((error) => console.log(error));

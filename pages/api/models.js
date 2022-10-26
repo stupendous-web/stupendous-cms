@@ -58,6 +58,7 @@ export default async function handler(request, response) {
               localField: "projectId",
               foreignField: "_id",
               as: "project",
+              pipeline: [{ $limit: 1 }],
             },
           },
         ])
