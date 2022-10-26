@@ -35,6 +35,7 @@ export default async function handler(request, response) {
         .finally(() => {
           client.close();
         });
+
       break;
     case "GET":
       const projects = await client
@@ -70,10 +71,13 @@ export default async function handler(request, response) {
       await client
         .db("stupendous-cms")
         .collection("projects")
-        .deleteOne({ _id: ObjectId(request?.body?._id) });
-      await client.close();
-
-      response.status(200).send("Good things come to those who wait.");
+        .deleteOne({ _id: ObjectId(request?.body?._id) })
+        .then(() => {
+          response.status(200).send("Good things come to those who wait.");
+        })
+        .finally(() => {
+          client.close();
+        });
 
       break;
     default:

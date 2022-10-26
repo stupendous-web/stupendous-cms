@@ -21,7 +21,7 @@ export default function Projects() {
       .post("/api/projects", { name: name })
       .then((response) => {
         UIkit.modal("#create-project-modal").hide();
-        setProjects([...projects, response.data]);
+        setProjects([response.data, ...projects]);
         setName("");
       })
       .catch((error) => console.log(error));
@@ -44,7 +44,9 @@ export default function Projects() {
   const handleDelete = (_id) => {
     axios
       .delete("/api/projects", { data: { _id: _id } })
-      .then((response) => console.log(response.data))
+      .then(() => {
+        setProjects(projects.filter((project) => project._id !== _id));
+      })
       .catch((error) => console.log(error));
   };
 
