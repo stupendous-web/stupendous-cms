@@ -39,7 +39,11 @@ export default function Home() {
         <div className={"uk-container uk-container-xsmall"}>
           <p>
             <Link href={"/register"}>
-              <a className={"uk-button uk-button-primary uk-margin-right"}>
+              <a
+                className={
+                  "uk-button uk-button-primary uk-button-large uk-margin-right"
+                }
+              >
                 Get started!
               </a>
             </Link>

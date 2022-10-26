@@ -5053,7 +5053,7 @@ ul.uk-nav-sub {
  * Nav items
  */
 .uk-navbar-nav > li > a {
-  padding: 0 15px;
+  padding: 0 2rem;
   color: #393939;
 }
 /*
@@ -5083,7 +5083,7 @@ ul.uk-nav-sub {
 /* Item
  ========================================================================== */
 .uk-navbar-item {
-  padding: 0 15px;
+  padding: 0 2rem;
   color: #262626;
 }
 /*
@@ -5095,7 +5095,7 @@ ul.uk-nav-sub {
 /* Toggle
  ========================================================================== */
 .uk-navbar-toggle {
-  padding: 0 15px;
+  padding: 0 2rem;
   color: #393939;
 }
 .uk-navbar-toggle:hover,
@@ -11887,6 +11887,7 @@ a:hover {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 .uk-input,
+.uk-select,
 .uk-alert {
   border-radius: 7px;
 }

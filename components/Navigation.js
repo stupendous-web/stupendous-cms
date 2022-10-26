@@ -26,31 +26,32 @@ export default function Navigation() {
       </div>
       <div className={"uk-navbar-right"}>
         {session?.user ? (
-          <ul className={"uk-navbar-nav"}>
+          <div className={"uk-navbar-item"}>
             {!noDashboardLinkPaths.includes(router.pathname) && (
-              <li>
-                <Link href={"/app/dashboard"}>
-                  <a>Dashboard</a>
-                </Link>
-              </li>
+              <Link href={"/app/dashboard"}>
+                <a className={"uk-button uk-button-primary uk-margin-right"}>
+                  Dashboard
+                </a>
+              </Link>
             )}
-            <li>
-              <a onClick={() => signOut({ callbackUrl: "/" })}>Logout</a>
-            </li>
-          </ul>
+            <a
+              className={"uk-button uk-button-primary"}
+              onClick={() => signOut({ callbackUrl: "/" })}
+            >
+              Logout
+            </a>
+          </div>
         ) : (
-          <ul className={"uk-navbar-nav"}>
-            <li>
-              <Link href={"/register"}>
-                <a>Get Started</a>
-              </Link>
-            </li>
-            <li>
-              <Link href={"/login"}>
-                <a>Login</a>
-              </Link>
-            </li>
-          </ul>
+          <div className={"uk-navbar-item"}>
+            <Link href={"/register"}>
+              <a className={"uk-button uk-button-primary uk-margin-right"}>
+                Get Started
+              </a>
+            </Link>
+            <Link href={"/login"}>
+              <a className={"uk-button uk-button-primary"}>Login</a>
+            </Link>
+          </div>
         )}
       </div>
     </nav>

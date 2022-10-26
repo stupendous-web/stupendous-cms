@@ -47,43 +47,54 @@ export default function SideNavigation() {
 
   return (
     <div className={"uk-container uk-container-expand uk-text-center"}>
-      <div className={"uk-flex uk-flex-middle"} style={{ height: "80px" }}>
+      <div
+        className={"uk-flex uk-flex-center uk-flex-middle"}
+        style={{ height: "6rem" }}
+      >
         <img
           src={gravatar.url(session?.user?.email)}
           className={"uk-border-circle"}
-          style={{ width: "2rem" }}
+          style={{ width: "3rem" }}
         />
       </div>
-      {publishingLinks.map((link, key) => {
-        return (
-          <div key={key}>
-            <Link href={link.href}>
-              <a>
-                <p data-uk-tooltip={`title: ${link.tooltip}; pos: right;`}>
-                  <FontAwesomeIcon icon={link.icon} />
-                </p>
-              </a>
-            </Link>
-          </div>
-        );
-      })}
-      {session?.user?.isAccountOwner && (
-        <div>
-          {adminLinks.map((link, key) => {
-            return (
-              <div key={key}>
+      <div className={"uk-padding uk-padding-remove-horizontal"}>
+        {publishingLinks.map((link, key) => {
+          return (
+            <div key={key}>
+              <p
+                style={{ fontSize: "1.5rem" }}
+                data-uk-tooltip={`title: ${link.tooltip}; pos: right;`}
+              >
                 <Link href={link.href}>
                   <a>
-                    <p data-uk-tooltip={`title: ${link.tooltip}; pos: right;`}>
-                      <FontAwesomeIcon icon={link.icon} />
-                    </p>
+                    <FontAwesomeIcon icon={link.icon} fixedWidth />
                   </a>
                 </Link>
-              </div>
-            );
-          })}
-        </div>
-      )}
+              </p>
+            </div>
+          );
+        })}
+        {session?.user?.isAccountOwner && (
+          <div>
+            {adminLinks.map((link, key) => {
+              return (
+                <div key={key}>
+                  <p
+                    style={{ fontSize: "1.5rem" }}
+                    data-uk-tooltip={`title: ${link.tooltip}; pos: right;`}
+                  >
+                    <Link href={link.href}>
+                      <a>
+                        <FontAwesomeIcon icon={link.icon} fixedWidth />
+                      </a>
+                    </Link>
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
