@@ -10,8 +10,7 @@ import Layout from "../../components/Layout";
 
 export default function Projects() {
   const [name, setName] = useState("");
-  const [editingId, setEditingId] = useState();
-  const [editingName, setEditingName] = useState();
+  const [editingProject, setEditingProject] = useState();
 
   const { projects, setProjects } = useGlobal();
 
@@ -30,13 +29,13 @@ export default function Projects() {
   const handleEdit = (event) => {
     event.preventDefault();
     axios
-      .patch("/api/projects", {
-        _id: editingId,
-        name: editingName,
-      })
+      .patch("/api/projects", editingProject)
       .then((response) => {
         UIkit.modal("#edit-project-modal").hide();
-        setEditingName("");
+        setEditingProject({
+          ...editingProject,
+          name: "",
+        });
       })
       .catch((error) => console.log(error));
   };
@@ -97,8 +96,7 @@ export default function Projects() {
                                     className={"uk-text-primary"}
                                     style={{ cursor: "pointer" }}
                                     onClick={() => {
-                                      setEditingId(project?._id);
-                                      setEditingName(project.name);
+                                      setEditingProject(project);
                                       UIkit.modal("#edit-project-modal").show();
                                     }}
                                   >
@@ -161,9 +159,14 @@ export default function Projects() {
                   <label className={"uk-form-label"}>Name</label>
                   <input
                     type={"text"}
-                    value={editingName}
+                    value={editingProject?.name}
                     className={"uk-input"}
-                    onChange={(event) => setEditingName(event.target.value)}
+                    onChange={(event) =>
+                      setEditingProject({
+                        ...editingProject,
+                        name: event.target.value,
+                      })
+                    }
                     required
                   />
                 </div>
