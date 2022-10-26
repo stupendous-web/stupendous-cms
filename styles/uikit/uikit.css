@@ -326,7 +326,7 @@ hr,
   /* 3 */
   margin: 0 0 14px 0;
   border: 0;
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid #e0e0e0;
 }
 /* Add margin if adjacent element */
 * + hr,
@@ -552,7 +552,7 @@ a.uk-link-reset,
  ========================================================================== */
 .uk-heading-divider {
   padding-bottom: calc(5px + 0.1em);
-  border-bottom: calc(0.2px + 0.05em) solid #e5e5e5;
+  border-bottom: calc(0.2px + 0.05em) solid #e0e0e0;
 }
 /* Bullet
  ========================================================================== */
@@ -575,7 +575,7 @@ a.uk-link-reset,
   /* 3 */
   height: calc(4px + 0.7em);
   margin-right: calc(5px + 0.2em);
-  border-left: calc(5px + 0.1em) solid #e5e5e5;
+  border-left: calc(5px + 0.1em) solid #e0e0e0;
 }
 /* Line
  ========================================================================== */
@@ -606,7 +606,7 @@ a.uk-link-reset,
   /* 2 */
   width: 2000px;
   /* 3 */
-  border-bottom: calc(0.2px + 0.05em) solid #e5e5e5;
+  border-bottom: calc(0.2px + 0.05em) solid #e0e0e0;
 }
 .uk-heading-line > ::before {
   right: 100%;
@@ -638,7 +638,7 @@ a.uk-link-reset,
 .uk-divider-icon {
   position: relative;
   height: 20px;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Ccircle%20fill%3D%22none%22%20stroke%3D%22%23e5e5e5%22%20stroke-width%3D%222%22%20cx%3D%2210%22%20cy%3D%2210%22%20r%3D%227%22%20%2F%3E%0A%3C%2Fsvg%3E%0A");
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Ccircle%20fill%3D%22none%22%20stroke%3D%22%23e0e0e0%22%20stroke-width%3D%222%22%20cx%3D%2210%22%20cy%3D%2210%22%20r%3D%227%22%20%2F%3E%0A%3C%2Fsvg%3E%0A");
   background-repeat: no-repeat;
   background-position: 50% 50%;
 }
@@ -648,7 +648,7 @@ a.uk-link-reset,
   position: absolute;
   top: 50%;
   max-width: calc(50% - (50px / 2));
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e0e0e0;
 }
 .uk-divider-icon::before {
   right: calc(50% + (50px / 2));
@@ -674,7 +674,7 @@ a.uk-link-reset,
   display: inline-block;
   width: 100px;
   max-width: 100%;
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid #e0e0e0;
   vertical-align: top;
 }
 /* Vertical
@@ -684,7 +684,7 @@ a.uk-link-reset,
   height: 100px;
   margin-left: auto;
   margin-right: auto;
-  border-left: 1px solid #e5e5e5;
+  border-left: 1px solid #e0e0e0;
 }
 /* ========================================================================
    Component: List
@@ -802,7 +802,7 @@ a.uk-link-reset,
 .uk-list-divider > :nth-child(n+2) {
   margin-top: 0.875rem;
   padding-top: 0.875rem;
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid #e0e0e0;
 }
 /*
  * Striped
@@ -874,7 +874,7 @@ a.uk-link-reset,
 .uk-description-list-divider > dt:nth-child(n+2) {
   margin-top: 14px;
   padding-top: 14px;
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid #e0e0e0;
 }
 /* ========================================================================
    Component: Table
@@ -949,7 +949,7 @@ a.uk-link-reset,
 .uk-table-divider > tr:not(:first-child),
 .uk-table-divider > :not(:first-child) > tr,
 .uk-table-divider > :first-child > tr:not(:first-child) {
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid #e0e0e0;
 }
 /*
  * Striped
@@ -963,13 +963,13 @@ a.uk-link-reset,
  */
 .uk-table-hover > tr:hover,
 .uk-table-hover tbody tr:hover {
-  background: #ffd;
+  background: #e5f6ff;
 }
 /* Active state
  ========================================================================== */
 .uk-table > tr.uk-active,
 .uk-table tbody tr.uk-active {
-  background: #ffd;
+  background: #e5f6ff;
 }
 /* Size modifier
  ========================================================================== */
@@ -3320,7 +3320,7 @@ select.uk-form-width-xsmall {
  * Divider
  */
 .uk-dropdown-nav .uk-nav-divider {
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid #e0e0e0;
 }
 /*
  * Sublists
@@ -4448,7 +4448,7 @@ select.uk-form-width-xsmall {
   position: absolute;
   top: 0;
   bottom: 0;
-  border-left: 1px solid #e5e5e5;
+  border-left: 1px solid #e0e0e0;
 }
 /* Vertical */
 .uk-grid-divider.uk-grid-stack > .uk-grid-margin::before {
@@ -4456,7 +4456,7 @@ select.uk-form-width-xsmall {
   position: absolute;
   left: 0;
   right: 0;
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid #e0e0e0;
 }
 /*
  * Default
@@ -4759,7 +4759,7 @@ ul.uk-nav-sub {
  * Divider
  */
 .uk-nav-default .uk-nav-divider {
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid #e0e0e0;
 }
 /*
  * Sublists
@@ -4813,7 +4813,7 @@ ul.uk-nav-sub {
  * Divider
  */
 .uk-nav-primary .uk-nav-divider {
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid #e0e0e0;
 }
 /*
  * Sublists
@@ -4876,7 +4876,7 @@ ul.uk-nav-sub {
  * Divider
  */
 .uk-nav-secondary .uk-nav-divider {
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid #e0e0e0;
 }
 /*
  * Sublists
@@ -4926,7 +4926,7 @@ ul.uk-nav-sub {
 .uk-nav.uk-nav-divider > :not(.uk-nav-header, .uk-nav-divider) + :not(.uk-nav-header, .uk-nav-divider) {
   margin-top: 5px;
   padding-top: 5px;
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid #e0e0e0;
 }
 /* ========================================================================
    Component: Navbar
@@ -5269,7 +5269,7 @@ ul.uk-nav-sub {
  * Divider
  */
 .uk-navbar-dropdown-nav .uk-nav-divider {
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid #e0e0e0;
 }
 /*
  * Sublists
@@ -5387,7 +5387,7 @@ ul.uk-nav-sub {
 }
 /* 1 */
 .uk-subnav-divider > :nth-child(n+2):not(.uk-first-column)::before {
-  border-left-color: #e5e5e5;
+  border-left-color: #e0e0e0;
 }
 /* Pill modifier
  ========================================================================== */
@@ -7121,7 +7121,7 @@ td.uk-text-break {
  * 1. Double the column gap
  */
 .uk-column-divider {
-  column-rule: 1px solid #e5e5e5;
+  column-rule: 1px solid #e0e0e0;
   /* 1 */
   column-gap: 28px;
 }
@@ -7567,7 +7567,7 @@ iframe[data-uk-cover] {
 .uk-panel-scrollable {
   height: 170px;
   padding: 10px;
-  border: 1px solid #e5e5e5;
+  border: 1px solid #e0e0e0;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   resize: both;

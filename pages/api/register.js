@@ -1,16 +1,15 @@
-import { ObjectId } from "mongodb";
-
+import { MongoClient, ObjectId } from "mongodb";
+const client = new MongoClient(process.env.MONGO_DB_URI);
 const stripe = require("stripe")(
   process.env.NODE_ENV === "production"
     ? process.env.STRIPE_LIVE_KEY
     : process.env.STRIPE_TEST_KEY
 );
-const { MongoClient } = require("mongodb");
-const client = new MongoClient(process.env.MONGO_DB_URI);
 const bcrypt = require("bcrypt");
 
 export default async function handler(request, response) {
   const body = request.body;
+
   await client.connect();
 
   // Validate Email

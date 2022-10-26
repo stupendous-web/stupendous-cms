@@ -1,5 +1,6 @@
-import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { useGlobal } from "../../lib/context";
 
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
@@ -7,11 +8,17 @@ import Layout from "../../components/Layout";
 export default function Dashboard() {
   const { data: session } = useSession();
 
-  const checklist = [
-    "Create a project",
-    "Create a model",
-    "Invite your team",
-    "Start creating content",
+  const { projects } = useGlobal();
+
+  const listItems = [
+    {
+      name: "Create a project",
+      href: "/app/projects",
+      checked: !!projects?.length,
+    },
+    { name: "Create a model", href: "", checked: false },
+    { name: "Invite your team", href: "", checked: false },
+    { name: "Start creating content", href: "", checked: false },
   ];
 
   return (
@@ -24,16 +31,15 @@ export default function Dashboard() {
                 <div className={"uk-width-1-3"}>
                   <div className={"uk-card uk-card-default uk-card-body"}>
                     <h3>Let&apos;s get started!</h3>
-                    {checklist.map((item, key) => {
+                    {listItems.map((item, key) => {
                       return (
                         <div key={key}>
-                          <input
-                            type={"checkbox"}
-                            checked={!key}
-                            className={"uk-checkbox uk-margin-small-right"}
-                            style={{ cursor: "inherit" }}
-                          />
-                          {item}
+                          {item.checked ? "✅" : "❌"}
+                          <span className={"uk-margin-small-left"}>
+                            <Link href={item.href}>
+                              <a>{item.name}</a>
+                            </Link>
+                          </span>
                         </div>
                       );
                     })}

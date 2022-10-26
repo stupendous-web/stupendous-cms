@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useGlobal } from "../../lib/context";
-import { useSession } from "next-auth/react";
 import axios from "axios";
 import UIkit from "uikit";
 
@@ -10,16 +9,7 @@ import Layout from "../../components/Layout";
 export default function Projects() {
   const [name, setName] = useState();
 
-  const { data: session } = useSession();
-
-  const { projects, setProjects } = useGlobal();
-
-  useEffect(() => {
-    axios
-      .get("/api/projects", { params: { userId: session?.user?._id } })
-      .then((response) => setProjects(response.data))
-      .catch((error) => console.log(error));
-  }, [session]);
+  const { projects } = useGlobal();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -61,7 +51,9 @@ export default function Projects() {
                   <div className={"uk-width-1-1"}>
                     <div className={"uk-card uk-card-default uk-card-body"}>
                       <h3>Projects</h3>
-                      <table className="uk-table">
+                      <table
+                        className={"uk-table uk-table-divider uk-table-hover"}
+                      >
                         <thead>
                           <tr>
                             <th>Name</th>
