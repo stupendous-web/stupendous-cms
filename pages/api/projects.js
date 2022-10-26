@@ -13,31 +13,28 @@ export default async function handler(request, response) {
   const user = await client
     .db("stupendous-cms")
     .collection("users")
-    .aggregate([
-      {
-        $match: {
-          _id: ObjectId(session?.user?._id),
-        },
-      },
-      {
-        $limit: 1,
-      },
-    ])
-    .toArray();
+    .findOne({ _id: ObjectId(session?.user?._id) });
 
   switch (request.method) {
     case "POST":
-      const project = await client
+      await client
         .db("stupendous-cms")
         .collection("projects")
         .insertOne({
           ...request?.body,
-          accountId: ObjectId(user[0]?.accountId),
+          accountId: ObjectId(user?.accountId),
+        })
+        .then(async (result) => {
+          const project = await client
+            .db("stupendous-cms")
+            .collection("projects")
+            .findOne({ _id: ObjectId(result.insertedId) });
+
+          response.status(200).send(project);
+        })
+        .finally(() => {
+          client.close();
         });
-      await client.close();
-
-      response.status(200).send(project.insertedId);
-
       break;
     case "GET":
       const projects = await client
@@ -46,7 +43,7 @@ export default async function handler(request, response) {
         .aggregate([
           {
             $match: {
-              accountId: ObjectId(user[0]?.accountId),
+              accountId: ObjectId(user?.accountId),
             },
           },
         ])

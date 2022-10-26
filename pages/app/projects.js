@@ -9,11 +9,11 @@ import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
 
 export default function Projects() {
-  const [name, setName] = useState();
+  const [name, setName] = useState("");
   const [editingId, setEditingId] = useState();
   const [editingName, setEditingName] = useState();
 
-  const { projects } = useGlobal();
+  const { projects, setProjects } = useGlobal();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -21,13 +21,13 @@ export default function Projects() {
       .post("/api/projects", { name: name })
       .then((response) => {
         UIkit.modal("#create-project-modal").hide();
+        setProjects([...projects, response.data]);
         setName("");
       })
       .catch((error) => console.log(error));
   };
 
   const handleEdit = (event) => {
-    console.log(editingId);
     event.preventDefault();
     axios
       .patch("/api/projects", {
