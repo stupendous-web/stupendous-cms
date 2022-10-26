@@ -3524,7 +3524,7 @@ select.uk-form-width-xsmall {
 .uk-modal-footer {
   display: flow-root;
   padding: 10px 20px;
-  background: #f4f4f4;
+  background: #fff;
 }
 /* Phone landscape and bigger */
 @media (min-width: 640px) {
@@ -11890,7 +11890,8 @@ a:hover {
 .uk-alert {
   border-radius: 7px;
 }
-.uk-modal-dialog {
+.uk-modal-dialog,
+.uk-modal-footer {
   border-radius: 14px;
 }
 /*# sourceMappingURL=uikit.css.map */

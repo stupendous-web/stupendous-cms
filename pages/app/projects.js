@@ -2,25 +2,49 @@ import { useEffect, useState } from "react";
 import { useGlobal } from "../../lib/context";
 import axios from "axios";
 import UIkit from "uikit";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
 
 export default function Projects() {
   const [name, setName] = useState();
+  const [editingId, setEditingId] = useState();
+  const [editingName, setEditingName] = useState();
 
   const { projects } = useGlobal();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(name);
     axios
       .post("/api/projects", { name: name })
       .then((response) => {
-        console.log(response.data);
         UIkit.modal("#create-project-modal").hide();
         setName("");
       })
+      .catch((error) => console.log(error));
+  };
+
+  const handleEdit = (event) => {
+    console.log(editingId);
+    event.preventDefault();
+    axios
+      .patch("/api/projects", {
+        _id: editingId,
+        name: editingName,
+      })
+      .then((response) => {
+        UIkit.modal("#edit-project-modal").hide();
+        setEditingName("");
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const handleDelete = (_id) => {
+    axios
+      .delete("/api/projects", { data: { _id: _id } })
+      .then((response) => console.log(response.data))
       .catch((error) => console.log(error));
   };
 
@@ -56,7 +80,9 @@ export default function Projects() {
                       >
                         <thead>
                           <tr>
-                            <th>Name</th>
+                            <th className={"uk-table-expand"}>Name</th>
+                            <th />
+                            <th />
                           </tr>
                         </thead>
                         <tbody>
@@ -64,6 +90,34 @@ export default function Projects() {
                             return (
                               <tr key={project._id}>
                                 <td>{project.name}</td>
+                                <td>
+                                  <div
+                                    className={"uk-text-primary"}
+                                    style={{ cursor: "pointer" }}
+                                    onClick={() => {
+                                      setEditingId(project?._id);
+                                      setEditingName(project.name);
+                                      UIkit.modal("#edit-project-modal").show();
+                                    }}
+                                  >
+                                    <FontAwesomeIcon icon={faPenToSquare} />
+                                  </div>
+                                </td>
+                                <td>
+                                  <div
+                                    className={"uk-text-primary"}
+                                    style={{ cursor: "pointer" }}
+                                    onClick={() => {
+                                      UIkit.modal
+                                        .confirm(
+                                          "Are you sure you wish to permanently delete this project?"
+                                        )
+                                        .then(() => handleDelete(project._id));
+                                    }}
+                                  >
+                                    <FontAwesomeIcon icon={faTrash} />
+                                  </div>
+                                </td>
                               </tr>
                             );
                           })}
@@ -77,7 +131,7 @@ export default function Projects() {
           </div>
           <div id={"create-project-modal"} data-uk-modal={""}>
             <div className={"uk-modal-dialog uk-modal-body"}>
-              <h3>Create Project</h3>
+              <h3>Create a Project</h3>
               <form onSubmit={(event) => handleSubmit(event)}>
                 <div className={"uk-margin"}>
                   <label className={"uk-form-label"}>Name</label>
@@ -91,6 +145,29 @@ export default function Projects() {
                 </div>
                 <input
                   type={"submit"}
+                  value={"Create"}
+                  className={"uk-button uk-button-primary"}
+                />
+              </form>
+            </div>
+          </div>
+          <div id={"edit-project-modal"} data-uk-modal={""}>
+            <div className={"uk-modal-dialog uk-modal-body"}>
+              <h3>Edit a Project</h3>
+              <form onSubmit={(event) => handleEdit(event)}>
+                <div className={"uk-margin"}>
+                  <label className={"uk-form-label"}>Name</label>
+                  <input
+                    type={"text"}
+                    value={editingName}
+                    className={"uk-input"}
+                    onChange={(event) => setEditingName(event.target.value)}
+                    required
+                  />
+                </div>
+                <input
+                  type={"submit"}
+                  value={"Save"}
                   className={"uk-button uk-button-primary"}
                 />
               </form>
