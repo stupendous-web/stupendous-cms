@@ -8,7 +8,7 @@ import Layout from "../../components/Layout";
 export default function Dashboard() {
   const { data: session } = useSession();
 
-  const { projects } = useGlobal();
+  const { projects, models } = useGlobal();
 
   const listItems = [
     {
@@ -16,7 +16,7 @@ export default function Dashboard() {
       href: "/app/projects",
       checked: !!projects?.length,
     },
-    { name: "Create a model", href: "", checked: false },
+    { name: "Create a model", href: "", checked: !!models?.length },
     { name: "Invite your team", href: "", checked: false },
     { name: "Start creating content", href: "", checked: false },
   ];
@@ -55,10 +55,11 @@ export default function Dashboard() {
                       <h2>🎉</h2>
                       <div>You can access your API via:</div>
                       <Link
-                        href={`https://stupendouscms.com/api/${session?.user?._id}`}
+                        href={`https://stupendouscms.com/api/${session?.user?.accountId}`}
                       >
                         <a>
-                          https://stupendouscms.com/api/{session?.user?._id}
+                          https://stupendouscms.com/api/
+                          {session?.user?.accountId}
                         </a>
                       </Link>
                     </div>

@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-const { MongoClient } = require("mongodb");
+import { MongoClient } from "mongodb";
 const client = new MongoClient(process.env.MONGO_DB_URI);
 const bcrypt = require("bcrypt");
 
@@ -13,6 +13,8 @@ export const authOptions = {
       if (user?._id) token._id = user._id;
       if (user?.stripeCustomer) token.stripeCustomer = user.stripeCustomer;
       if (user?.isAccountOwner) token.isAccountOwner = user.isAccountOwner;
+      if (user?.account[0]._id) token.accountId = user?.account[0]._id;
+
       return token;
     },
     async session({ session, token }) {
@@ -21,6 +23,8 @@ export const authOptions = {
         session.user.stripeCustomer = token.stripeCustomer;
       if (token?.isAccountOwner)
         session.user.isAccountOwner = token.isAccountOwner;
+      if (token?.accountId) session.user.accountId = token.accountId;
+
       return session;
     },
   },
@@ -39,7 +43,30 @@ export const authOptions = {
         const user = await client
           .db("stupendous-cms")
           .collection("users")
-          .aggregate([{ $match: { email: credentials.email } }, { $limit: 1 }])
+          .aggregate([
+            {
+              $match: {
+                email: credentials.email,
+              },
+            },
+            {
+              $addFields: {
+                userId: {
+                  $toObjectId: "$userId",
+                },
+              },
+            },
+            {
+              $lookup: {
+                from: "accounts",
+                localField: "userId",
+                foreignField: "userId",
+                as: "account",
+                pipeline: [{ $limit: 1 }],
+              },
+            },
+            { $limit: 1 },
+          ])
           .toArray();
         await client.close();
         if (bcrypt.compareSync(credentials.password, user[0].password)) {
