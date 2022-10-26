@@ -57,7 +57,6 @@ export default async function handler(request, response) {
 
       break;
     case "PATCH":
-      console.log("patch", request?.body);
       await client
         .db("stupendous-cms")
         .collection("projects")
