@@ -32,9 +32,7 @@ export default async function handler(request, response) {
 
           response.status(200).send(project);
         })
-        .finally(() => {
-          client.close();
-        });
+        .finally(() => client.close());
 
       break;
     case "GET":
@@ -61,10 +59,11 @@ export default async function handler(request, response) {
         .updateOne(
           { _id: ObjectId(request?.body?._id) },
           { $set: { name: request?.body?.name } }
-        );
-      await client.close();
-
-      response.status(200).send("Good things come to those who wait.");
+        )
+        .then(() =>
+          response.status(200).send("Good things come to those who wait.")
+        )
+        .finally(() => client.close());
 
       break;
     case "DELETE":
@@ -72,12 +71,10 @@ export default async function handler(request, response) {
         .db("stupendous-cms")
         .collection("projects")
         .deleteOne({ _id: ObjectId(request?.body?._id) })
-        .then(() => {
-          response.status(200).send("Good things come to those who wait.");
-        })
-        .finally(() => {
-          client.close();
-        });
+        .then(() =>
+          response.status(200).send("Good things come to those who wait.")
+        )
+        .finally(() => client.close());
 
       break;
     default:
