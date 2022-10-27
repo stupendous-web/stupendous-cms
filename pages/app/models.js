@@ -96,7 +96,7 @@ export default function Models() {
                     </div>
                   </div>
                 </div>
-                {!!projects?.length && (
+                {!!models?.length && (
                   <div className={"uk-width-1-1"}>
                     <div className={"uk-card uk-card-default uk-card-body"}>
                       <h3>Models</h3>

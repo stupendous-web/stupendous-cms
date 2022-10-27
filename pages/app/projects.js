@@ -12,7 +12,7 @@ export default function Projects() {
   const [name, setName] = useState("");
   const [editingProject, setEditingProject] = useState({ name: "" });
 
-  const { projects, setProjects } = useGlobal();
+  const { projects, setProjects, models, setModels } = useGlobal();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -53,6 +53,7 @@ export default function Projects() {
       .delete("/api/projects", { data: { _id: _id } })
       .then(() => {
         setProjects(projects.filter((project) => project._id !== _id));
+        setModels(models.filter((model) => model.projectId !== _id));
       })
       .catch((error) => console.log(error));
   };

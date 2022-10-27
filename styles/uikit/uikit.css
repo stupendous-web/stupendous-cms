@@ -11895,4 +11895,9 @@ a:hover {
 .uk-modal-footer {
   border-radius: 14px;
 }
+.uk-dropdown {
+  border-top-right-radius: 7px;
+  border-bottom-right-radius: 14px;
+  border-bottom-left-radius: 7px;
+}
 /*# sourceMappingURL=uikit.css.map */

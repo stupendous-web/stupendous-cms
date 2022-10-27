@@ -30,23 +30,52 @@ export default function SideNavigation() {
   }, [session]);
 
   const publishingLinks = [
-    { href: "/app/content", tooltip: "Publish Content", icon: faFeather },
-    { href: "/app/media", tooltip: "Edit Media", icon: faImage },
+    {
+      href: "/app/content",
+      heading: "Content",
+      icon: faFeather,
+      description: "",
+    },
+    {
+      href: "/app/media",
+      heading: "Media",
+      icon: faImage,
+      description: "",
+    },
   ];
 
   const adminLinks = [
-    { href: "/app/projects", tooltip: "Edit Projects", icon: faProjectDiagram },
-    { href: "/app/models", tooltip: "Edit Models", icon: faDatabase },
-    { href: "/app/users", tooltip: "Invite Users", icon: faUser },
+    {
+      href: "/app/projects",
+      heading: "Projects",
+      icon: faProjectDiagram,
+      description:
+        "A way to help you manage your content. Create and manage your projects here. You can add models and users to your projects later.",
+    },
+    {
+      href: "/app/models",
+      heading: "Models",
+      icon: faDatabase,
+      description:
+        "Groups of attributes that users can add such as pages or blog posts. Here you can create models and add attributes to them.",
+    },
+    {
+      href: "/app/users",
+      heading: "Users",
+      icon: faUser,
+      description: "",
+    },
     {
       href: billingLink,
-      tooltip: "Billing",
+      heading: "Billing",
       icon: faWallet,
+      description:
+        "A portal for you to manage your subscription and view your invoices.",
     },
   ];
 
   return (
-    <div className={"uk-container uk-container-expand uk-text-center"}>
+    <div className={"uk-container uk-container-expand"}>
       <div
         className={"uk-flex uk-flex-center uk-flex-middle"}
         style={{ height: "6rem" }}
@@ -61,16 +90,22 @@ export default function SideNavigation() {
         {publishingLinks.map((link, key) => {
           return (
             <div key={key}>
-              <p
-                style={{ fontSize: "1.5rem" }}
-                data-uk-tooltip={`title: ${link.tooltip}; pos: right;`}
-              >
-                <Link href={link.href}>
-                  <a>
-                    <FontAwesomeIcon icon={link.icon} fixedWidth />
-                  </a>
-                </Link>
-              </p>
+              <div className={"uk-width-1-1 uk-inline"}>
+                <p className={"uk-text-center"} style={{ fontSize: "1.5rem" }}>
+                  <Link href={link.href}>
+                    <a>
+                      <FontAwesomeIcon icon={link.icon} fixedWidth />
+                    </a>
+                  </Link>
+                </p>
+                <div
+                  className={"uk-box-shadow-large"}
+                  data-uk-dropdown="pos: right-top; animation: reveal-left; offset: 14"
+                >
+                  <h3 style={{ color: "inherit" }}>{link.heading}</h3>
+                  <p>{link.description}</p>
+                </div>
+              </div>
             </div>
           );
         })}
@@ -79,16 +114,25 @@ export default function SideNavigation() {
             {adminLinks.map((link, key) => {
               return (
                 <div key={key}>
-                  <p
-                    style={{ fontSize: "1.5rem" }}
-                    data-uk-tooltip={`title: ${link.tooltip}; pos: right;`}
-                  >
-                    <Link href={link.href}>
-                      <a>
-                        <FontAwesomeIcon icon={link.icon} fixedWidth />
-                      </a>
-                    </Link>
-                  </p>
+                  <div className={"uk-width-1-1 uk-inline my-class"}>
+                    <p
+                      className={"uk-text-center"}
+                      style={{ fontSize: "1.5rem" }}
+                    >
+                      <Link href={link.href}>
+                        <a>
+                          <FontAwesomeIcon icon={link.icon} fixedWidth />
+                        </a>
+                      </Link>
+                    </p>
+                    <div
+                      className={"uk-box-shadow-large"}
+                      data-uk-dropdown="pos: right-top; animation: reveal-left; offset: 14"
+                    >
+                      <h3 style={{ color: "inherit" }}>{link.heading}</h3>
+                      <p>{link.description}</p>
+                    </div>
+                  </div>
                 </div>
               );
             })}

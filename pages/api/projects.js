@@ -4,6 +4,8 @@ import { authOptions } from "./auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 
 export default async function handler(request, response) {
+  const body = request?.body;
+
   await client.connect();
 
   const req = request;
@@ -21,7 +23,7 @@ export default async function handler(request, response) {
         .db("stupendous-cms")
         .collection("projects")
         .insertOne({
-          ...request?.body,
+          ...body,
           accountId: ObjectId(user?.accountId),
         })
         .then(async (result) => {
@@ -56,10 +58,7 @@ export default async function handler(request, response) {
       await client
         .db("stupendous-cms")
         .collection("projects")
-        .updateOne(
-          { _id: ObjectId(request?.body?._id) },
-          { $set: { name: request?.body?.name } }
-        )
+        .updateOne({ _id: ObjectId(body?._id) }, { $set: { name: body?.name } })
         .then(() =>
           response.status(200).send("Good things come to those who wait.")
         )
@@ -70,11 +69,18 @@ export default async function handler(request, response) {
       await client
         .db("stupendous-cms")
         .collection("projects")
-        .deleteOne({ _id: ObjectId(request?.body?._id) })
+        .deleteOne({ _id: ObjectId(body?._id) });
+
+      await client
+        .db("stupendous-cms")
+        .collection("models")
+        .deleteMany({ projectId: ObjectId(body?._id) })
         .then(() =>
           response.status(200).send("Good things come to those who wait.")
         )
         .finally(() => client.close());
+
+      // Delete Attributes
 
       break;
     default:
