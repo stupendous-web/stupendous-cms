@@ -9,17 +9,20 @@ import { formatModel } from "../../utils/helpers";
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
 
-export default function Projects() {
+export default function Models() {
   const [modelName, setModelName] = useState("");
-  const [project, setProject] = useState();
-  const [editingProject, setEditingProject] = useState();
+  const [projectId, setProjectId] = useState();
+  const [editingModel, setEditingModel] = useState({
+    name: "",
+    projectId: undefined,
+  });
 
   const { models, setModels, projects } = useGlobal();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .post("/api/models", { name: modelName, projectId: project })
+      .post("/api/models", { name: modelName, projectId: projectId })
       .then((response) => {
         UIkit.modal("#create-model-modal").hide();
         setModels([response.data[0], ...models]);
@@ -31,12 +34,21 @@ export default function Projects() {
   const handleEdit = (event) => {
     event.preventDefault();
     axios
-      .patch("/api/projects", editingProject)
-      .then(() => {
-        UIkit.modal("#edit-project-modal").hide();
-        setEditingProject({
-          ...editingProject,
+      .patch("/api/models", editingModel)
+      .then((response) => {
+        UIkit.modal("#edit-model-modal").hide();
+        const newState = models.map((model) => {
+          if (model._id === editingModel._id) {
+            return response.data[0];
+          }
+
+          return model;
+        });
+        setModels(newState);
+        setEditingModel({
+          ...editingModel,
           name: "",
+          projectId: undefined,
         });
       })
       .catch((error) => console.log(error));
@@ -44,16 +56,15 @@ export default function Projects() {
 
   const handleDelete = (_id) => {
     axios
-      .delete("/api/projects", { data: { _id: _id } })
-      .then(() => {})
+      .delete("/api/models", { data: { _id: _id } })
+      .then(() => {
+        setModels(models.filter((model) => model._id !== _id));
+      })
       .catch((error) => console.log(error));
   };
 
   useEffect(() => {
     UIkit.container = ".uk-scope";
-    UIkit.util.on("#sortable", "moved", function (event) {
-      console.log(event);
-    });
   }, []);
 
   return (
@@ -136,7 +147,7 @@ export default function Projects() {
                                     }
                                     style={{ cursor: "pointer" }}
                                     onClick={() => {
-                                      setEditingProject(model);
+                                      setEditingModel(model);
                                       UIkit.modal("#edit-model-modal").show();
                                     }}
                                   >
@@ -185,9 +196,9 @@ export default function Projects() {
                 <div className={"uk-margin"}>
                   <label className={"uk-form-label"}>Project</label>
                   <select
-                    value={project}
+                    value={projectId}
                     className={"uk-select"}
-                    onChange={(event) => setProject(event.target.value)}
+                    onChange={(event) => setProjectId(event.target.value)}
                     required
                   >
                     <option value={""}>Select</option>
@@ -206,24 +217,45 @@ export default function Projects() {
               </form>
             </div>
           </div>
-          <div id={"edit-project-modal"} data-uk-modal={""}>
+          <div id={"edit-model-modal"} data-uk-modal={""}>
             <div className={"uk-modal-dialog uk-modal-body"}>
-              <h3>Edit a Project</h3>
+              <h3>Edit a Model</h3>
               <form onSubmit={(event) => handleEdit(event)}>
                 <div className={"uk-margin"}>
                   <label className={"uk-form-label"}>Name</label>
                   <input
                     type={"text"}
-                    value={editingProject?.name}
+                    value={editingModel?.name}
                     className={"uk-input"}
                     onChange={(event) =>
-                      setEditingProject({
-                        ...editingProject,
+                      setEditingModel({
+                        ...editingModel,
                         name: event.target.value,
                       })
                     }
                     required
                   />
+                </div>
+                <div className={"uk-margin"}>
+                  <label className={"uk-form-label"}>Project</label>
+                  <select
+                    value={editingModel.projectId}
+                    className={"uk-select"}
+                    onChange={(event) =>
+                      setEditingModel({
+                        ...editingModel,
+                        projectId: event.target.value,
+                      })
+                    }
+                    required
+                  >
+                    <option value={""}>Select</option>
+                    {projects?.map((project) => (
+                      <option key={project._id} value={project._id}>
+                        {project.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <input
                   type={"submit"}

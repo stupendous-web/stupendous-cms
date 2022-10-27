@@ -10,7 +10,7 @@ import Layout from "../../components/Layout";
 
 export default function Projects() {
   const [name, setName] = useState("");
-  const [editingProject, setEditingProject] = useState();
+  const [editingProject, setEditingProject] = useState({ name: "" });
 
   const { projects, setProjects } = useGlobal();
 
@@ -32,6 +32,14 @@ export default function Projects() {
       .patch("/api/projects", editingProject)
       .then(() => {
         UIkit.modal("#edit-project-modal").hide();
+        const newState = projects.map((project) => {
+          if (project._id === editingProject._id) {
+            return { ...project, name: editingProject.name };
+          }
+
+          return project;
+        });
+        setProjects(newState);
         setEditingProject({
           ...editingProject,
           name: "",

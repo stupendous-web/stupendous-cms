@@ -91,6 +91,64 @@ export default async function handler(request, response) {
       response.status(200).json(models);
 
       break;
+    case "PATCH":
+      await client
+        .db("stupendous-cms")
+        .collection("models")
+        .updateOne(
+          { _id: ObjectId(request?.body?._id) },
+          {
+            $set: {
+              name: request?.body?.name,
+              projectId: request?.body?.projectId,
+            },
+          }
+        )
+        .then(async () => {
+          const model = await client
+            .db("stupendous-cms")
+            .collection("models")
+            .aggregate([
+              {
+                $match: {
+                  _id: ObjectId(request?.body?._id),
+                },
+              },
+              {
+                $addFields: {
+                  projectId: {
+                    $toObjectId: "$projectId",
+                  },
+                },
+              },
+              {
+                $lookup: {
+                  from: "projects",
+                  localField: "projectId",
+                  foreignField: "_id",
+                  as: "project",
+                  pipeline: [{ $limit: 1 }],
+                },
+              },
+            ])
+            .toArray();
+
+          response.status(200).send(model);
+        })
+        .finally(() => client.close());
+
+      break;
+    case "DELETE":
+      await client
+        .db("stupendous-cms")
+        .collection("models")
+        .deleteOne({ _id: ObjectId(request?.body?._id) })
+        .then(() =>
+          response.status(200).send("Good things come to those who wait.")
+        )
+        .finally(() => client.close());
+
+      break;
     default:
       return response.status(405).send();
   }
