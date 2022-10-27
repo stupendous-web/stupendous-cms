@@ -51,11 +51,12 @@ export default function Dashboard() {
                     {models?.map((model) => (
                       <div key={model._id}>
                         <Link
-                          href={`https://stupendouscms.com/api/${session?.user?.accountId}/${model.name}`}
+                          href={`https://stupendouscms.com/api/${session?.user?.accountId}/${model?.project[0]?.slug}/${model.slug}`}
                         >
                           <a>
                             https://stupendouscms.com/api/
-                            {session?.user?.accountId}/{model.name}
+                            {session?.user?.accountId}/{model?.project[0]?.slug}
+                            /{model.slug}
                           </a>
                         </Link>
                       </div>

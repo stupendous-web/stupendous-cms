@@ -4,16 +4,18 @@ import axios from "axios";
 import UIkit from "uikit";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { formatModel } from "../../utils/helpers";
+import { createSlug } from "../../utils/helpers";
 
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
 
 export default function Models() {
   const [modelName, setModelName] = useState("");
+  const [modelSlug, setModelSlug] = useState("");
   const [projectId, setProjectId] = useState();
   const [editingModel, setEditingModel] = useState({
     name: "",
+    slug: "",
     projectId: undefined,
   });
 
@@ -22,7 +24,11 @@ export default function Models() {
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .post("/api/models", { name: modelName, projectId: projectId })
+      .post("/api/models", {
+        name: modelName,
+        slug: modelSlug,
+        projectId: projectId,
+      })
       .then((response) => {
         UIkit.modal("#create-model-modal").hide();
         setModels([response.data[0], ...models]);
@@ -61,6 +67,19 @@ export default function Models() {
         setModels(models.filter((model) => model._id !== _id));
       })
       .catch((error) => console.log(error));
+  };
+
+  const handleModelNameChange = (event) => {
+    setModelName(event.target.value);
+    setModelSlug(createSlug(event.target.value));
+  };
+
+  const handleEditingModelNameChange = (event) => {
+    setEditingModel({
+      ...editingModel,
+      name: event.target.value,
+      slug: createSlug(event.target.value),
+    });
   };
 
   useEffect(() => {
@@ -106,6 +125,7 @@ export default function Models() {
                         <thead>
                           <tr>
                             <th>Name</th>
+                            <th>Slug</th>
                             <th>Project</th>
                             <th>Properties</th>
                             <th />
@@ -116,6 +136,7 @@ export default function Models() {
                             return (
                               <tr key={model._id}>
                                 <td>{model.name}</td>
+                                <td>{model.slug}</td>
                                 <td>{model?.project[0]?.name}</td>
                                 <td>
                                   <a
@@ -186,12 +207,12 @@ export default function Models() {
                   <label className={"uk-form-label"}>Name</label>
                   <input
                     type={"text"}
-                    value={formatModel(modelName)}
+                    value={modelName}
                     className={"uk-input"}
-                    onChange={(event) => setModelName(event.target.value)}
+                    onChange={(event) => handleModelNameChange(event)}
                     required
                   />
-                  <div className={"uk-text-small"}>ex: my-stupendous-pages</div>
+                  <div className={"uk-text-small"}>ex: My Stupendous Pages</div>
                 </div>
                 <div className={"uk-margin"}>
                   <label className={"uk-form-label"}>Project</label>
@@ -225,14 +246,9 @@ export default function Models() {
                   <label className={"uk-form-label"}>Name</label>
                   <input
                     type={"text"}
-                    value={formatModel(editingModel?.name)}
+                    value={editingModel?.name}
                     className={"uk-input"}
-                    onChange={(event) =>
-                      setEditingModel({
-                        ...editingModel,
-                        name: event.target.value,
-                      })
-                    }
+                    onChange={(event) => handleEditingModelNameChange(event)}
                     required
                   />
                 </div>

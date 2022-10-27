@@ -58,7 +58,10 @@ export default async function handler(request, response) {
       await client
         .db("stupendous-cms")
         .collection("projects")
-        .updateOne({ _id: ObjectId(body?._id) }, { $set: { name: body?.name } })
+        .updateOne(
+          { _id: ObjectId(body?._id) },
+          { $set: { name: body?.name, slug: body?.slug } }
+        )
         .then(() =>
           response.status(200).send("Good things come to those who wait.")
         )

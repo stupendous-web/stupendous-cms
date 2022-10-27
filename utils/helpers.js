@@ -1,7 +1,7 @@
-export const formatModel = (model) => {
-  model = model.replace(" ", "-");
-  model = model.replace(/[^\w\s-]/g, "");
-  model = model.toLowerCase();
+export const createSlug = (string) => {
+  string = string.replace(" ", "-");
+  string = string.replace(/[^\w\s-]/g, "");
+  string = string.toLowerCase();
 
-  return model;
+  return string;
 };

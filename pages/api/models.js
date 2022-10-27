@@ -24,6 +24,7 @@ export default async function handler(request, response) {
         .collection("models")
         .insertOne({
           name: body?.name,
+          slug: body?.slug,
           projectId: ObjectId(body?.projectId),
           accountId: ObjectId(user?.accountId),
         })
@@ -103,6 +104,7 @@ export default async function handler(request, response) {
           {
             $set: {
               name: body?.name,
+              slug: body?.slug,
               projectId: ObjectId(body?.projectId),
             },
           }

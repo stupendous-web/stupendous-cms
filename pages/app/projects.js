@@ -4,20 +4,22 @@ import axios from "axios";
 import UIkit from "uikit";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { createSlug } from "../../utils/helpers";
 
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
 
 export default function Projects() {
   const [name, setName] = useState("");
-  const [editingProject, setEditingProject] = useState({ name: "" });
+  const [slug, setSlug] = useState("");
+  const [editingProject, setEditingProject] = useState({ name: "", slug: "" });
 
   const { projects, setProjects, models, setModels } = useGlobal();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .post("/api/projects", { name: name })
+      .post("/api/projects", { name: name, slug: slug })
       .then((response) => {
         UIkit.modal("#create-project-modal").hide();
         setProjects([response.data, ...projects]);
@@ -34,7 +36,11 @@ export default function Projects() {
         UIkit.modal("#edit-project-modal").hide();
         const newState = projects.map((project) => {
           if (project._id === editingProject._id) {
-            return { ...project, name: editingProject.name };
+            return {
+              ...project,
+              name: editingProject.name,
+              slug: editingProject.slug,
+            };
           }
 
           return project;
@@ -56,6 +62,19 @@ export default function Projects() {
         setModels(models.filter((model) => model.projectId !== _id));
       })
       .catch((error) => console.log(error));
+  };
+
+  const handleProjectNameChange = (event) => {
+    setName(event.target.value);
+    setSlug(createSlug(event.target.value));
+  };
+
+  const handleEditingProjectNameChange = (event) => {
+    setEditingProject({
+      ...editingProject,
+      name: event.target.value,
+      slug: createSlug(event.target.value),
+    });
   };
 
   useEffect(() => {
@@ -91,6 +110,7 @@ export default function Projects() {
                         <thead>
                           <tr>
                             <th>Name</th>
+                            <th>Slug</th>
                             <th />
                           </tr>
                         </thead>
@@ -99,6 +119,7 @@ export default function Projects() {
                             return (
                               <tr key={project._id}>
                                 <td>{project.name}</td>
+                                <td>{project.slug}</td>
                                 <td className={"uk-text-right"}>
                                   <span
                                     className={
@@ -147,7 +168,7 @@ export default function Projects() {
                     type={"text"}
                     value={name}
                     className={"uk-input"}
-                    onChange={(event) => setName(event.target.value)}
+                    onChange={(event) => handleProjectNameChange(event)}
                     required
                   />
                   <div className={"uk-text-small"}>ex: My Stupendous Blog</div>
@@ -170,12 +191,7 @@ export default function Projects() {
                     type={"text"}
                     value={editingProject?.name}
                     className={"uk-input"}
-                    onChange={(event) =>
-                      setEditingProject({
-                        ...editingProject,
-                        name: event.target.value,
-                      })
-                    }
+                    onChange={(event) => handleEditingProjectNameChange(event)}
                     required
                   />
                 </div>
