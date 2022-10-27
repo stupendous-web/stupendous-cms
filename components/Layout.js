@@ -5,9 +5,8 @@ export default function Layout({ children }) {
   return (
     <>
       <div
-        className={"uk-grid-collapse"}
+        className={"uk-grid-collapse uk-position-fixed uk-width-1-1"}
         data-uk-grid={""}
-        data-uk-height-viewport={""}
       >
         <div
           className={"uk-section-secondary uk-width-auto uk-box-shadow-large"}
@@ -16,7 +15,9 @@ export default function Layout({ children }) {
         </div>
         <div className={"uk-width-expand"}>
           <Navigation />
-          {children}
+          <div style={{ height: "calc(100vh - 6rem)", overflow: "auto" }}>
+            {children}
+          </div>
         </div>
       </div>
     </>

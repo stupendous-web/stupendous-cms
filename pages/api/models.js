@@ -27,8 +27,31 @@ export default async function handler(request, response) {
         .then(async (result) => {
           const model = await client
             .db("stupendous-cms")
-            .collection("model")
-            .findOne({ _id: ObjectId(result.insertedId) });
+            .collection("models")
+            .aggregate([
+              {
+                $match: {
+                  _id: ObjectId(result.insertedId),
+                },
+              },
+              {
+                $addFields: {
+                  projectId: {
+                    $toObjectId: "$projectId",
+                  },
+                },
+              },
+              {
+                $lookup: {
+                  from: "projects",
+                  localField: "projectId",
+                  foreignField: "_id",
+                  as: "project",
+                  pipeline: [{ $limit: 1 }],
+                },
+              },
+            ])
+            .toArray();
 
           response.status(200).send(model);
         })

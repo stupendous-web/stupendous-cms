@@ -22,7 +22,7 @@ export default function Projects() {
       .post("/api/models", { name: modelName, projectId: project })
       .then((response) => {
         UIkit.modal("#create-model-modal").hide();
-        // setModels([response.data, ...models]);
+        setModels([response.data[0], ...models]);
         setModelName("");
       })
       .catch((error) => console.log(error));

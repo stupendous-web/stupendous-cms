@@ -46,20 +46,27 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <div className={"uk-width-2-3"}>
-                  <div
-                    className={
-                      "uk-card uk-card-default uk-card-body uk-flex uk-flex-center uk-flex-middle"
-                    }
-                  >
-                    <div className={"uk-text-center"}>
-                      <h2>🎉</h2>
-                      <div>You can access your API via:</div>
+                  <div className={"uk-card uk-card-default uk-card-body"}>
+                    <h3>Your API Endpoints</h3>
+                    {models?.map((model) => (
+                      <div key={model._id}>
+                        <Link
+                          href={`https://stupendouscms.com/api/${session?.user?.accountId}/${model.name}`}
+                        >
+                          <a>
+                            https://stupendouscms.com/api/
+                            {session?.user?.accountId}/{model.name}
+                          </a>
+                        </Link>
+                      </div>
+                    ))}
+                    <div>
                       <Link
-                        href={`https://stupendouscms.com/api/${session?.user?.accountId}`}
+                        href={`https://stupendouscms.com/api/${session?.user?.accountId}/media`}
                       >
                         <a>
                           https://stupendouscms.com/api/
-                          {session?.user?.accountId}
+                          {session?.user?.accountId}/media (COMING SOON!)
                         </a>
                       </Link>
                     </div>
