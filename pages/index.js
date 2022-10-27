@@ -26,13 +26,25 @@ export default function Home() {
         </div>
       </div>
       <div className={"uk-section"}>
-        <div className={"uk-container uk-container-xsmall"}>
-          <img
-            src={"/screenshot.jpg"}
-            alt={"Stupendous CMS Dashboard"}
-            className={"uk-box-shadow-medium"}
-            style={{ borderRadius: "7px" }}
-          />
+        <div className={"uk-container"}>
+          <div className={"uk-child-width-1-2@s"} data-uk-grid={""}>
+            <div>
+              <img
+                src={"/images/examples/dashboard.jpg"}
+                alt={"Stupendous CMS Dashboard"}
+                className={"uk-box-shadow-medium"}
+                style={{ borderRadius: "7px" }}
+              />
+            </div>
+            <div>
+              <img
+                src={"/images/examples/models.jpg"}
+                alt={"Stupendous CMS Dashboard"}
+                className={"uk-box-shadow-medium"}
+                style={{ borderRadius: "7px" }}
+              />
+            </div>
+          </div>
         </div>
       </div>
       <div className={"uk-section"}>
