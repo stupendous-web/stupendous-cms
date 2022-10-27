@@ -225,7 +225,7 @@ export default function Models() {
                   <label className={"uk-form-label"}>Name</label>
                   <input
                     type={"text"}
-                    value={editingModel?.name}
+                    value={formatModel(editingModel?.name)}
                     className={"uk-input"}
                     onChange={(event) =>
                       setEditingModel({
