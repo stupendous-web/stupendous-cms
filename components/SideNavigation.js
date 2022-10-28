@@ -100,7 +100,7 @@ export default function SideNavigation() {
                 </p>
                 <div
                   className={"uk-box-shadow-large"}
-                  data-uk-dropdown="pos: right-top; animation: reveal-left; offset: 14"
+                  data-uk-dropdown="pos: right-top; offset: 14"
                 >
                   <h3 style={{ color: "inherit" }}>{link.heading}</h3>
                   <p>{link.description}</p>
@@ -127,7 +127,7 @@ export default function SideNavigation() {
                     </p>
                     <div
                       className={"uk-box-shadow-large"}
-                      data-uk-dropdown="pos: right-top; animation: reveal-left; offset: 14"
+                      data-uk-dropdown="pos: right-top; offset: 14"
                     >
                       <h3 style={{ color: "inherit" }}>{link.heading}</h3>
                       <p>{link.description}</p>

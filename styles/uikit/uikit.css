@@ -11886,8 +11886,6 @@ a:hover {
   border-radius: 7px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
-.uk-input,
-.uk-select,
 .uk-alert {
   border-radius: 7px;
 }
@@ -11899,5 +11897,14 @@ a:hover {
   border-top-right-radius: 7px;
   border-bottom-right-radius: 14px;
   border-bottom-left-radius: 7px;
+}
+.uk-input,
+.uk-select,
+.uk-placeholder {
+  border-radius: 7px;
+}
+.uk-placeholder {
+  background: transparent;
+  border: 1px dashed #e0e0e0;
 }
 /*# sourceMappingURL=uikit.css.map */

@@ -3,7 +3,11 @@ import { useGlobal } from "../../lib/context";
 import axios from "axios";
 import UIkit from "uikit";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlus,
+  faPenToSquare,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import { createSlug } from "../../utils/helpers";
 
 import Authentication from "../../components/Authentication";
@@ -103,18 +107,7 @@ export default function Models() {
                     </div>
                   </div>
                 </div>
-                <div className={"uk-width-auto"}>
-                  <div>
-                    <div
-                      className={"uk-button uk-button-default uk-button-large"}
-                      onClick={() =>
-                        UIkit.modal("#create-project-modal").show()
-                      }
-                    >
-                      Add Property to a Model
-                    </div>
-                  </div>
-                </div>
+
                 {!!models?.length && (
                   <div className={"uk-width-1-1"}>
                     <div className={"uk-card uk-card-default uk-card-body"}>
@@ -138,28 +131,30 @@ export default function Models() {
                                 <td>{model.name}</td>
                                 <td>{model.slug}</td>
                                 <td>{model?.project[0]?.name}</td>
-                                <td>
-                                  <a
-                                    className={
-                                      "uk-button uk-button-default uk-button-small uk-margin-small-right"
-                                    }
-                                  >
-                                    Title
-                                  </a>
-                                  <a
-                                    className={
-                                      "uk-button uk-button-default uk-button-small uk-margin-small-right"
-                                    }
-                                  >
-                                    Body
-                                  </a>
-                                  <a
-                                    className={
-                                      "uk-button uk-button-default uk-button-small uk-margin-small-right"
-                                    }
-                                  >
-                                    Date
-                                  </a>
+                                <td
+                                  onClick={() =>
+                                    UIkit.modal("#edit-properties-modal").show()
+                                  }
+                                >
+                                  {!!model?.attributes?.length ? (
+                                    model?.attributes.map((attribute) => {
+                                      return (
+                                        <a
+                                          className={
+                                            "uk-button uk-button-default uk-button-small uk-margin-small-right"
+                                          }
+                                          key={attribute._id}
+                                        ></a>
+                                      );
+                                    })
+                                  ) : (
+                                    <span
+                                      className={"uk-text-primary"}
+                                      style={{ cursor: "pointer" }}
+                                    >
+                                      <FontAwesomeIcon icon={faPlus} /> Add
+                                    </span>
+                                  )}
                                 </td>
                                 <td className={"uk-text-right"}>
                                   <span
@@ -272,6 +267,55 @@ export default function Models() {
                       </option>
                     ))}
                   </select>
+                </div>
+                <input
+                  type={"submit"}
+                  value={"Save"}
+                  className={"uk-button uk-button-primary"}
+                />
+              </form>
+            </div>
+          </div>
+          <div
+            className={"uk-modal-container"}
+            id={"edit-properties-modal"}
+            data-uk-modal={""}
+          >
+            <div className={"uk-modal-dialog uk-modal-body"}>
+              <h3>Edit Properties</h3>
+              <form onSubmit={(event) => handleEdit(event)}>
+                <div className={"uk-grid-match uk-margin"} data-uk-grid={""}>
+                  <div className={"uk-width-auto uk-flex uk-flex-top"}>
+                    <div>
+                      <p>
+                        <a
+                          className={
+                            "uk-button uk-button-default uk-button-small uk-margin-small-right"
+                          }
+                        >
+                          Title
+                        </a>
+                      </p>
+                      <p>
+                        <a
+                          className={
+                            "uk-button uk-button-default uk-button-small uk-margin-small-right"
+                          }
+                        >
+                          Plain Text
+                        </a>
+                      </p>
+                    </div>
+                  </div>
+                  <div className={"uk-width-expand"}>
+                    <div
+                      className={
+                        "uk-placeholder uk-flex uk-flex-center uk-flex-middle"
+                      }
+                    >
+                      Click a property type to add it here.
+                    </div>
+                  </div>
                 </div>
                 <input
                   type={"submit"}

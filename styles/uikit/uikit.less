@@ -46,7 +46,7 @@ a:hover {
   border-radius: @global-font-size / 2;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
-.uk-input, .uk-select, .uk-alert {
+.uk-alert {
   border-radius: @global-font-size / 2;
 }
 // Modal
@@ -73,4 +73,14 @@ a:hover {
   border-top-right-radius: @global-font-size / 2;
   border-bottom-right-radius: @global-font-size;
   border-bottom-left-radius: @global-font-size /2;
+}
+
+// Form
+
+.uk-input, .uk-select, .uk-placeholder {
+  border-radius: @global-font-size / 2;
+}
+.uk-placeholder {
+  background: transparent;
+  border: 1px dashed @global-border;
 }
