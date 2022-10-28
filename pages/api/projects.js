@@ -12,11 +12,6 @@ export default async function handler(request, response) {
   const res = response;
   const session = await unstable_getServerSession(req, res, authOptions);
 
-  const user = await client
-    .db("stupendous-cms")
-    .collection("users")
-    .findOne({ _id: ObjectId(session?.user?._id) });
-
   switch (request.method) {
     case "POST":
       await client
@@ -24,7 +19,7 @@ export default async function handler(request, response) {
         .collection("projects")
         .insertOne({
           ...body,
-          accountId: ObjectId(user?.accountId),
+          accountId: ObjectId(session?.user?.accountId),
         })
         .then(async (result) => {
           const project = await client
@@ -44,7 +39,7 @@ export default async function handler(request, response) {
         .aggregate([
           {
             $match: {
-              accountId: ObjectId(user?.accountId),
+              accountId: ObjectId(session?.user?.accountId),
             },
           },
         ])

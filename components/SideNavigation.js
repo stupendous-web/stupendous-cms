@@ -75,11 +75,8 @@ export default function SideNavigation() {
   ];
 
   return (
-    <div className={"uk-container uk-container-expand"}>
-      <div
-        className={"uk-flex uk-flex-center uk-flex-middle"}
-        style={{ height: "6rem" }}
-      >
+    <>
+      <div className={"uk-flex uk-flex-center uk-flex-middle uk-padding"}>
         <img
           src={gravatar.url(session?.user?.email)}
           className={"uk-border-circle"}
@@ -91,16 +88,19 @@ export default function SideNavigation() {
           return (
             <div key={key}>
               <div className={"uk-width-1-1 uk-inline"}>
-                <p className={"uk-text-center"} style={{ fontSize: "1.5rem" }}>
-                  <Link href={link.href}>
-                    <a>
+                <Link href={link.href}>
+                  <a>
+                    <p
+                      className={"uk-text-center"}
+                      style={{ fontSize: "1.5rem" }}
+                    >
                       <FontAwesomeIcon icon={link.icon} fixedWidth />
-                    </a>
-                  </Link>
-                </p>
+                    </p>
+                  </a>
+                </Link>
                 <div
                   className={"uk-box-shadow-large"}
-                  data-uk-dropdown="pos: right-top; offset: 14"
+                  data-uk-dropdown="pos: right-top; offset: -14"
                 >
                   <h3 style={{ color: "inherit" }}>{link.heading}</h3>
                   <p>{link.description}</p>
@@ -110,24 +110,24 @@ export default function SideNavigation() {
           );
         })}
         {session?.user?.isAccountOwner && (
-          <div>
+          <>
             {adminLinks.map((link, key) => {
               return (
                 <div key={key}>
                   <div className={"uk-width-1-1 uk-inline my-class"}>
-                    <p
-                      className={"uk-text-center"}
-                      style={{ fontSize: "1.5rem" }}
-                    >
-                      <Link href={link.href}>
-                        <a>
+                    <Link href={link.href}>
+                      <a>
+                        <p
+                          className={"uk-text-center"}
+                          style={{ fontSize: "1.5rem" }}
+                        >
                           <FontAwesomeIcon icon={link.icon} fixedWidth />
-                        </a>
-                      </Link>
-                    </p>
+                        </p>
+                      </a>
+                    </Link>
                     <div
                       className={"uk-box-shadow-large"}
-                      data-uk-dropdown="pos: right-top; offset: 14"
+                      data-uk-dropdown="pos: right-top; offset: -14"
                     >
                       <h3 style={{ color: "inherit" }}>{link.heading}</h3>
                       <p>{link.description}</p>
@@ -136,9 +136,9 @@ export default function SideNavigation() {
                 </div>
               );
             })}
-          </div>
+          </>
         )}
       </div>
-    </div>
+    </>
   );
 }
