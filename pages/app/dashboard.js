@@ -8,7 +8,7 @@ import Layout from "../../components/Layout";
 export default function Dashboard() {
   const { data: session } = useSession();
 
-  const { projects, models } = useGlobal();
+  const { projects, filteredModels } = useGlobal();
 
   const listItems = [
     {
@@ -16,7 +16,7 @@ export default function Dashboard() {
       href: "/app/projects",
       checked: !!projects?.length,
     },
-    { name: "Create a model", href: "", checked: !!models?.length },
+    { name: "Create a model", href: "", checked: !!filteredModels?.length },
     { name: "Invite your team", href: "", checked: false },
     { name: "Start creating content", href: "", checked: false },
   ];
@@ -48,7 +48,7 @@ export default function Dashboard() {
                 <div className={"uk-width-2-3"}>
                   <div className={"uk-card uk-card-default uk-card-body"}>
                     <h3>Your API Endpoints</h3>
-                    {models?.map((model) => (
+                    {filteredModels?.map((model) => (
                       <div key={model._id}>
                         <Link
                           href={`https://stupendouscms.com/api/${session?.user?.accountId}/${model?.project[0]?.slug}/${model.slug}`}

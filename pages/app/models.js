@@ -12,26 +12,20 @@ import { createSlug } from "../../utils/helpers";
 
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
+import PropertiesModal from "../../components/PropertiesModal";
 
 export default function Models() {
   const [modelName, setModelName] = useState("");
   const [modelSlug, setModelSlug] = useState("");
-  const [projectId, setProjectId] = useState();
-  const [editingModel, setEditingModel] = useState({
-    _id: undefined,
-    name: "",
-    slug: "",
-    projectId: undefined,
-  });
-  const [editingProperties, setEditingProperties] = useState([]);
 
-  const { models, setModels, projects } = useGlobal();
-
-  const propertyTypes = [
-    { name: "Title", slug: "string" },
-    { name: "Plain Text", slug: "text" },
-    { name: "HTML", slug: "html" },
-  ];
+  const {
+    filteredModels,
+    setFilteredModels,
+    editingModel,
+    setEditingModel,
+    projects,
+    editingProject,
+  } = useGlobal();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -39,11 +33,12 @@ export default function Models() {
       .post("/api/models", {
         name: modelName,
         slug: modelSlug,
-        projectId: projectId,
+        projectId: editingProject?._id,
       })
       .then((response) => {
+        console.log(response.data);
         UIkit.modal("#create-model-modal").hide();
-        setModels([response.data[0], ...models]);
+        setFilteredModels([response.data[0], ...filteredModels]);
         setModelName("");
       })
       .catch((error) => console.log(error));
@@ -55,14 +50,14 @@ export default function Models() {
       .patch("/api/models", editingModel)
       .then((response) => {
         UIkit.modal("#edit-model-modal").hide();
-        const newState = models.map((model) => {
+        const newState = filteredModels.map((model) => {
           if (model._id === editingModel._id) {
             return response.data[0];
           }
 
           return model;
         });
-        setModels(newState);
+        setFilteredModels(newState);
         setEditingModel({
           ...editingModel,
           name: "",
@@ -76,24 +71,7 @@ export default function Models() {
     axios
       .delete("/api/models", { data: { _id: _id } })
       .then(() => {
-        setModels(models.filter((model) => model._id !== _id));
-      })
-      .catch((error) => console.log(error));
-  };
-
-  const handleSubmitProperty = (type) => {
-    axios
-      .post("/api/properties", {
-        ...editingProperty,
-        accountId: session?.user?.accountId,
-      })
-      .then((response) => {
-        setEditingProperty({
-          type: type,
-          modelId: undefined,
-          projectId: undefined,
-          accountId: session?.user?.accountId,
-        });
+        setFilteredModels(filteredModels.filter((model) => model._id !== _id));
       })
       .catch((error) => console.log(error));
   };
@@ -133,7 +111,7 @@ export default function Models() {
                   </div>
                 </div>
 
-                {!!models?.length && (
+                {!!filteredModels?.length && (
                   <div className={"uk-width-1-1"}>
                     <div className={"uk-card uk-card-default uk-card-body"}>
                       <h3>Models</h3>
@@ -150,7 +128,7 @@ export default function Models() {
                           </tr>
                         </thead>
                         <tbody>
-                          {models?.map((model) => {
+                          {filteredModels?.map((model) => {
                             return (
                               <tr key={model._id}>
                                 <td>{model.name}</td>
@@ -235,22 +213,6 @@ export default function Models() {
                   />
                   <div className={"uk-text-small"}>ex: My Stupendous Pages</div>
                 </div>
-                <div className={"uk-margin"}>
-                  <label className={"uk-form-label"}>Project</label>
-                  <select
-                    value={projectId}
-                    className={"uk-select"}
-                    onChange={(event) => setProjectId(event.target.value)}
-                    required
-                  >
-                    <option value={""}>Select</option>
-                    {projects?.map((project) => (
-                      <option key={project._id} value={project._id}>
-                        {project.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
                 <input
                   type={"submit"}
                   value={"Create"}
@@ -302,107 +264,7 @@ export default function Models() {
               </form>
             </div>
           </div>
-          <div
-            className={"uk-modal-container"}
-            id={"properties-modal"}
-            data-uk-modal={""}
-          >
-            <div className={"uk-modal-dialog uk-modal-body"}>
-              <h3>Edit Properties for {editingModel?.name}</h3>
-              <form onSubmit={(event) => handleEdit(event)}>
-                <div className={"uk-grid-match uk-margin"} data-uk-grid={""}>
-                  <div className={"uk-width-auto uk-flex uk-flex-top"}>
-                    <div>
-                      {propertyTypes.map((propertyType) => {
-                        return (
-                          <p key={propertyType.slug}>
-                            <a
-                              className={
-                                "uk-button uk-button-default uk-button-small uk-margin-small-right"
-                              }
-                              onClick={() =>
-                                setEditingProperties([
-                                  ...editingProperties,
-                                  {
-                                    name: propertyType.name,
-                                    slug: propertyType.slug,
-                                    isRequired: false,
-                                  },
-                                ])
-                              }
-                            >
-                              {propertyType?.name}
-                            </a>
-                          </p>
-                        );
-                      })}
-                    </div>
-                  </div>
-                  <div className={"uk-width-expand"}>
-                    {!editingProperties?.length ? (
-                      <div
-                        className={
-                          "uk-placeholder uk-flex uk-flex-center uk-flex-middle"
-                        }
-                      >
-                        Click a property type to add it here.
-                      </div>
-                    ) : (
-                      <div className={"uk-placeholder"}>
-                        {editingProperties?.map((editingProperty, key) => {
-                          return (
-                            <div
-                              className={
-                                "uk-card uk-card-body uk-animation-fade uk-margin"
-                              }
-                            >
-                              <div data-uk-grid={""}>
-                                <div className={"uk-width-expand"}>
-                                  <div className={"uk-text-bold"}>
-                                    {editingProperty?.name}
-                                  </div>
-                                </div>
-                                <div>
-                                  <label className={"uk-form-label"}>
-                                    Required
-                                    <input
-                                      type={"checkbox"}
-                                      value={editingProperty?.isRequired}
-                                      className={
-                                        "uk-checkbox uk-margin-small-left"
-                                      }
-                                    />
-                                  </label>
-                                </div>
-                                <div
-                                  className={"uk-text-danger"}
-                                  style={{ cursor: "pointer" }}
-                                >
-                                  <FontAwesomeIcon
-                                    icon={faTrash}
-                                    className={"uk-margin-small-left"}
-                                  />
-                                </div>
-                              </div>
-                              <div className={"uk-margin"}>
-                                <label>Name</label>
-                                <input type={"text"} className={"uk-input"} />
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <input
-                  type={"submit"}
-                  value={"Save"}
-                  className={"uk-button uk-button-primary"}
-                />
-              </form>
-            </div>
-          </div>
+          <PropertiesModal />
         </Layout>
       </Authentication>
     </div>

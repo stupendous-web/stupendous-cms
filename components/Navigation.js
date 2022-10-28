@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession, signOut } from "next-auth/react";
+import { useGlobal } from "../lib/context";
 
 export default function Navigation() {
   const { data: session } = useSession();
 
   const router = useRouter();
+
+  const { projects, editingProject, setEditingProject } = useGlobal();
 
   const noGreetingPaths = ["/", "/register", "/login"];
   const noDashboardLinkPaths = ["/app/dashboard"];
@@ -17,7 +20,32 @@ export default function Navigation() {
     >
       <div className={"uk-navbar-left"}>
         {!noGreetingPaths.includes(router.pathname) ? (
-          <div className={"uk-navbar-item"}>Hello, {session?.user?.name}!</div>
+          <>
+            <div className={"uk-navbar-item"}>
+              Hello, {session?.user?.name}!
+            </div>
+            {!!projects?.length && (
+              <div className={"uk-navbar-item"}>
+                <select
+                  value={editingProject?._id}
+                  className={"uk-select"}
+                  onChange={(event) =>
+                    setEditingProject(
+                      projects.find(
+                        (project) => project._id === event.target.value
+                      )
+                    )
+                  }
+                >
+                  {projects?.map((project) => (
+                    <option value={project._id} key={project._id}>
+                      {project?.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+          </>
         ) : (
           <Link href={"/"}>
             <a className={"uk-navbar-item uk-logo"}>Stupendous CMS</a>
