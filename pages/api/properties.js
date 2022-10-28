@@ -5,6 +5,7 @@ import { unstable_getServerSession } from "next-auth/next";
 
 export default async function handler(request, response) {
   const body = request?.body;
+  const { modelId } = request?.query;
 
   await client.connect();
 
@@ -18,16 +19,31 @@ export default async function handler(request, response) {
         .db("stupendous-cms")
         .collection("properties")
         .insertOne({
-          ...body,
+          type: body?.type,
+          modelId: ObjectId(body?.modelId),
+          projectId: ObjectId(body?.projectId),
           accountId: ObjectId(session?.user?.accountId),
         })
-        .then(async (result) => {
-          const project = await client
-            .db("stupendous-cms")
-            .collection("projects")
-            .findOne({ _id: ObjectId(result.insertedId) });
+        .then(() => {
+          response.status(200).send("Good things come to those who wait.");
+        })
+        .finally(() => client.close());
 
-          response.status(200).send(project);
+      break;
+    case "GET":
+      await client
+        .db("stupendous-cms")
+        .collection("properties")
+        .aggregate([
+          {
+            $match: {
+              modelId: ObjectId(modelId),
+            },
+          },
+        ])
+        .toArray()
+        .then((result) => {
+          response.status(200).json(result);
         })
         .finally(() => client.close());
 

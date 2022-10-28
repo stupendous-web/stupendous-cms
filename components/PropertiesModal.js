@@ -5,29 +5,29 @@ import { useEffect } from "react";
 import axios from "axios";
 
 export default function PropertiesModal() {
-  const { properties, setProperties, editingModel, setEditingModel } =
+  const { editingProject, editingModel, properties, setProperties } =
     useGlobal();
 
   const propertyTypes = [
-    { name: "Title", slug: "string" },
-    { name: "Plain Text", slug: "text" },
-    { name: "HTML", slug: "html" },
+    { name: "Title", type: "string" },
+    { name: "Plain Text", type: "text" },
+    { name: "HTML", type: "html" },
   ];
 
   useEffect(() => {
     axios
-      .get("/api/properties", { params: editingModel._id })
+      .get("/api/properties", { params: { modelId: editingModel._id } })
       .then((response) => setProperties(response.data))
       .catch((error) => console.log(error));
-  }, []);
+  }, [editingModel]);
 
   const handleSubmit = (type) => {
     axios
       .post("/api/properties", {
         type: type,
         isRequired: false,
-        modelId: editingModel._id,
-        projectId: editingProject_id,
+        modelId: editingModel?._id,
+        projectId: editingProject?._id,
       })
       .then((response) => {})
       .catch((error) => console.log(error));
@@ -46,12 +46,12 @@ export default function PropertiesModal() {
             <div>
               {propertyTypes.map((propertyType) => {
                 return (
-                  <p key={propertyType.slug}>
+                  <p key={propertyType.type}>
                     <a
                       className={
                         "uk-button uk-button-default uk-button-small uk-margin-small-right"
                       }
-                      onClick={() => handleSubmit(propertyType.slug)}
+                      onClick={() => handleSubmit(propertyType.type)}
                     >
                       {propertyType?.name}
                     </a>
@@ -71,7 +71,7 @@ export default function PropertiesModal() {
               </div>
             ) : (
               <div className={"uk-placeholder"}>
-                {properties?.map((property, key) => {
+                {properties?.map((property) => {
                   return (
                     <div
                       className={
@@ -81,7 +81,14 @@ export default function PropertiesModal() {
                     >
                       <div data-uk-grid={""}>
                         <div className={"uk-width-expand"}>
-                          <div className={"uk-text-bold"}>{property?.name}</div>
+                          <div className={"uk-text-bold"}>
+                            {
+                              propertyTypes?.find(
+                                (propertyType) =>
+                                  propertyType?.type === property?.type
+                              ).name
+                            }
+                          </div>
                         </div>
                         <div>
                           <label className={"uk-form-label"}>
