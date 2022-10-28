@@ -18,12 +18,20 @@ export default function Models() {
   const [modelSlug, setModelSlug] = useState("");
   const [projectId, setProjectId] = useState();
   const [editingModel, setEditingModel] = useState({
+    _id: undefined,
     name: "",
     slug: "",
     projectId: undefined,
   });
+  const [editingProperties, setEditingProperties] = useState([]);
 
   const { models, setModels, projects } = useGlobal();
+
+  const propertyTypes = [
+    { name: "Title", slug: "string" },
+    { name: "Plain Text", slug: "text" },
+    { name: "HTML", slug: "html" },
+  ];
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -69,6 +77,23 @@ export default function Models() {
       .delete("/api/models", { data: { _id: _id } })
       .then(() => {
         setModels(models.filter((model) => model._id !== _id));
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const handleSubmitProperty = (type) => {
+    axios
+      .post("/api/properties", {
+        ...editingProperty,
+        accountId: session?.user?.accountId,
+      })
+      .then((response) => {
+        setEditingProperty({
+          type: type,
+          modelId: undefined,
+          projectId: undefined,
+          accountId: session?.user?.accountId,
+        });
       })
       .catch((error) => console.log(error));
   };
@@ -132,9 +157,10 @@ export default function Models() {
                                 <td>{model.slug}</td>
                                 <td>{model?.project[0]?.name}</td>
                                 <td
-                                  onClick={() =>
-                                    UIkit.modal("#edit-properties-modal").show()
-                                  }
+                                  onClick={() => {
+                                    setEditingModel(model);
+                                    UIkit.modal("#properties-modal").show();
+                                  }}
                                 >
                                   {!!model?.attributes?.length ? (
                                     model?.attributes.map((attribute) => {
@@ -278,43 +304,95 @@ export default function Models() {
           </div>
           <div
             className={"uk-modal-container"}
-            id={"edit-properties-modal"}
+            id={"properties-modal"}
             data-uk-modal={""}
           >
             <div className={"uk-modal-dialog uk-modal-body"}>
-              <h3>Edit Properties</h3>
+              <h3>Edit Properties for {editingModel?.name}</h3>
               <form onSubmit={(event) => handleEdit(event)}>
                 <div className={"uk-grid-match uk-margin"} data-uk-grid={""}>
                   <div className={"uk-width-auto uk-flex uk-flex-top"}>
                     <div>
-                      <p>
-                        <a
-                          className={
-                            "uk-button uk-button-default uk-button-small uk-margin-small-right"
-                          }
-                        >
-                          Title
-                        </a>
-                      </p>
-                      <p>
-                        <a
-                          className={
-                            "uk-button uk-button-default uk-button-small uk-margin-small-right"
-                          }
-                        >
-                          Plain Text
-                        </a>
-                      </p>
+                      {propertyTypes.map((propertyType) => {
+                        return (
+                          <p key={propertyType.slug}>
+                            <a
+                              className={
+                                "uk-button uk-button-default uk-button-small uk-margin-small-right"
+                              }
+                              onClick={() =>
+                                setEditingProperties([
+                                  ...editingProperties,
+                                  {
+                                    name: propertyType.name,
+                                    slug: propertyType.slug,
+                                    isRequired: false,
+                                  },
+                                ])
+                              }
+                            >
+                              {propertyType?.name}
+                            </a>
+                          </p>
+                        );
+                      })}
                     </div>
                   </div>
                   <div className={"uk-width-expand"}>
-                    <div
-                      className={
-                        "uk-placeholder uk-flex uk-flex-center uk-flex-middle"
-                      }
-                    >
-                      Click a property type to add it here.
-                    </div>
+                    {!editingProperties?.length ? (
+                      <div
+                        className={
+                          "uk-placeholder uk-flex uk-flex-center uk-flex-middle"
+                        }
+                      >
+                        Click a property type to add it here.
+                      </div>
+                    ) : (
+                      <div className={"uk-placeholder"}>
+                        {editingProperties?.map((editingProperty, key) => {
+                          return (
+                            <div
+                              className={
+                                "uk-card uk-card-body uk-animation-fade uk-margin"
+                              }
+                            >
+                              <div data-uk-grid={""}>
+                                <div className={"uk-width-expand"}>
+                                  <div className={"uk-text-bold"}>
+                                    {editingProperty?.name}
+                                  </div>
+                                </div>
+                                <div>
+                                  <label className={"uk-form-label"}>
+                                    Required
+                                    <input
+                                      type={"checkbox"}
+                                      value={editingProperty?.isRequired}
+                                      className={
+                                        "uk-checkbox uk-margin-small-left"
+                                      }
+                                    />
+                                  </label>
+                                </div>
+                                <div
+                                  className={"uk-text-danger"}
+                                  style={{ cursor: "pointer" }}
+                                >
+                                  <FontAwesomeIcon
+                                    icon={faTrash}
+                                    className={"uk-margin-small-left"}
+                                  />
+                                </div>
+                              </div>
+                              <div className={"uk-margin"}>
+                                <label>Name</label>
+                                <input type={"text"} className={"uk-input"} />
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
                   </div>
                 </div>
                 <input
