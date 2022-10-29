@@ -99,6 +99,24 @@ export default function Models() {
           <div className={"uk-section uk-section-small"}>
             <div className={"uk-container uk-container-expand"}>
               <div className={"uk-grid-match"} data-uk-grid={""}>
+                {!filteredModels?.length && (
+                  <>
+                    <div className={"uk-width-1-1"}>
+                      <div
+                        className={"uk-alert-warning uk-flex uk-flex-middle"}
+                        data-uk-alert={""}
+                      >
+                        <span className={"uk-text-large uk-margin-right"}>
+                          👇
+                        </span>
+                        <div>
+                          Looks like you don&apos;t have any models. Add one to
+                          get started!
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
                 <div className={"uk-width-auto"}>
                   <div>
                     <div
@@ -109,7 +127,6 @@ export default function Models() {
                     </div>
                   </div>
                 </div>
-
                 {!!filteredModels?.length && (
                   <div className={"uk-width-1-1"}>
                     <div className={"uk-card uk-card-default uk-card-body"}>
