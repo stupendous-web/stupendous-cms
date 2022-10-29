@@ -72,7 +72,7 @@ export default function Models() {
           filteredModels.filter((model) => model._id !== modelId)
         );
         setProperties(
-          properties?.filter((property) => property?.modelId === modelId)
+          properties?.filter((property) => property?.modelId !== modelId)
         );
       })
       .catch((error) => console.log(error));
