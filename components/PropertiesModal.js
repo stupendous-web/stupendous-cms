@@ -24,7 +24,7 @@ export default function PropertiesModal() {
         modelId: editingModel?._id,
         projectId: editingProject?._id,
       })
-      .then((response) => {})
+      .then((response) => setProperties([response?.data, ...properties]))
       .catch((error) => console.log(error));
   };
 
@@ -92,7 +92,7 @@ export default function PropertiesModal() {
                               propertyTypes?.find(
                                 (propertyType) =>
                                   propertyType?.type === property?.type
-                              ).name
+                              )?.name
                             }
                           </div>
                         </div>

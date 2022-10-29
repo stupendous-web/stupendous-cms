@@ -23,8 +23,13 @@ export default async function handler(request, response) {
           projectId: ObjectId(body?.projectId),
           accountId: ObjectId(session?.user?.accountId),
         })
-        .then(() => {
-          response.status(200).send("Good things come to those who wait.");
+        .then(async (result) => {
+          const property = await client
+            .db("stupendous-cms")
+            .collection("properties")
+            .findOne({ _id: ObjectId(result.insertedId) });
+
+          response.status(200).send(property);
         })
         .finally(() => client.close());
 

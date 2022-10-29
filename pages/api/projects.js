@@ -78,7 +78,7 @@ export default async function handler(request, response) {
         )
         .finally(() => client.close());
 
-      // Delete Attributes
+      // Nedd to Delete Properties
 
       break;
     default:
