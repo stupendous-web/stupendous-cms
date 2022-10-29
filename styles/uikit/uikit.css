@@ -2704,7 +2704,7 @@ select.uk-form-width-xsmall {
 .uk-alert {
   position: relative;
   margin-bottom: 14px;
-  padding: 15px 29px 15px 15px;
+  padding: 14px 28px 14px 14px;
   background: #f4f4f4;
   color: #262626;
 }
@@ -2723,8 +2723,8 @@ select.uk-form-width-xsmall {
  ========================================================================== */
 .uk-alert-close {
   position: absolute;
-  top: 20px;
-  right: 15px;
+  top: 19px;
+  right: 14px;
 }
 /*
  * Remove margin from adjacent element
@@ -11881,13 +11881,13 @@ iframe[data-uk-cover] {
 a:hover {
   text-decoration: none;
 }
-.uk-button,
-.uk-card {
+.uk-button {
   border-radius: 7px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
-.uk-alert {
+.uk-card {
   border-radius: 7px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 .uk-modal-dialog,
 .uk-modal-footer {
@@ -11906,5 +11906,9 @@ a:hover {
 .uk-placeholder {
   background: transparent;
   border: 1px dashed #e0e0e0;
+}
+.uk-alert {
+  border-radius: 7px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 /*# sourceMappingURL=uikit.css.map */
