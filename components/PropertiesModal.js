@@ -3,18 +3,19 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useGlobal } from "../lib/context";
 import { useState } from "react";
 import axios from "axios";
+import UIkit from "uikit";
 
 export default function PropertiesModal() {
   const { properties, setProperties, editingProject, editingModel } =
     useGlobal();
+
+  const [name, setName] = useState("");
 
   const propertyTypes = [
     { name: "Title", type: "string" },
     { name: "Plain Text", type: "text" },
     { name: "HTML", type: "html" },
   ];
-
-  const [editingName, setEditingName] = useState();
 
   const handleSubmit = (type) => {
     axios
@@ -26,6 +27,12 @@ export default function PropertiesModal() {
       })
       .then((response) => {
         setProperties([response?.data, ...properties]);
+        setName(name.response?.data?.insertedId);
+        UIkit.notification({
+          message: "Saved!",
+          status: "success",
+          pos: "bottom-right",
+        });
       })
       .catch((error) => console.log(error));
   };
@@ -37,6 +44,11 @@ export default function PropertiesModal() {
         setProperties(
           properties.filter((property) => property._id !== propertyId)
         );
+        UIkit.notification({
+          message: "Saved!",
+          status: "success",
+          pos: "bottom-right",
+        });
       })
       .catch((error) => console.log(error));
   };
@@ -127,14 +139,12 @@ export default function PropertiesModal() {
                           </div>
                         </div>
                         <div className={"uk-margin"}>
-                          <label>Name</label>
+                          <label>Name</label>{" "}
                           <input
                             type={"text"}
-                            value={editingName}
+                            value={name}
                             className={"uk-input"}
-                            onChange={(event) =>
-                              setEditingName(event.target.value)
-                            }
+                            onChange={(event) => setName(event.target.value)}
                           />
                         </div>
                       </div>
