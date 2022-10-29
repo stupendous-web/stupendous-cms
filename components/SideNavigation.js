@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useGlobal } from "../lib/context";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import gravatar from "gravatar";
@@ -15,6 +16,8 @@ import {
 
 export default function SideNavigation() {
   const [billingLink, setBillingLink] = useState("");
+
+  const { projects } = useGlobal();
 
   const { data: session } = useSession();
 
@@ -35,12 +38,14 @@ export default function SideNavigation() {
       heading: "Content",
       icon: faFeather,
       description: "",
+      visible: false,
     },
     {
       href: "/app/media",
       heading: "Media",
       icon: faImage,
       description: "",
+      visible: false,
     },
   ];
 
@@ -51,6 +56,7 @@ export default function SideNavigation() {
       icon: faProjectDiagram,
       description:
         "A way to help you manage your content. Create and manage your projects here. You can add models and users to your projects later.",
+      visible: true,
     },
     {
       href: "/app/models",
@@ -58,12 +64,14 @@ export default function SideNavigation() {
       icon: faDatabase,
       description:
         "Groups of attributes that users can add such as pages or blog posts. Here you can create models and add attributes to them.",
+      visible: !!projects?.length,
     },
     {
       href: "/app/users",
       heading: "Users",
       icon: faUser,
       description: "",
+      visible: false,
     },
     {
       href: billingLink,
@@ -71,6 +79,7 @@ export default function SideNavigation() {
       icon: faWallet,
       description:
         "A portal for you to manage your subscription and view your invoices.",
+      visible: true,
     },
   ];
 
@@ -83,10 +92,10 @@ export default function SideNavigation() {
           style={{ width: "3rem" }}
         />
       </div>
-      <div className={"uk-padding uk-padding-remove-horizontal"}>
+      <div>
         {publishingLinks.map((link, key) => {
           return (
-            <div key={key}>
+            <div className={link?.visible ? undefined : "uk-hidden"} key={key}>
               <div className={"uk-width-1-1 uk-inline"}>
                 <Link href={link.href}>
                   <a>
@@ -113,7 +122,10 @@ export default function SideNavigation() {
           <>
             {adminLinks.map((link, key) => {
               return (
-                <div key={key}>
+                <div
+                  className={link?.visible ? undefined : "uk-hidden"}
+                  key={key}
+                >
                   <div className={"uk-width-1-1 uk-inline my-class"}>
                     <Link href={link.href}>
                       <a>

@@ -1,14 +1,21 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { useGlobal } from "../../lib/context";
 
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
+import { useEffect } from "react";
 
 export default function Dashboard() {
+  const router = useRouter();
+  useEffect(() => {
+    router.replace("/app/projects");
+  }, []);
+
   const { data: session } = useSession();
 
-  const { projects, filteredModels } = useGlobal();
+  const { filteredModels } = useGlobal();
 
   return (
     <>
@@ -17,22 +24,6 @@ export default function Dashboard() {
           <div className={"uk-section uk-section-small"}>
             <div className={"uk-container uk-container-expand"}>
               <div className={"uk-grid-match"} data-uk-grid={""}>
-                {!projects?.length && (
-                  <div className={"uk-width-1-1"}>
-                    <div
-                      className={"uk-alert-warning uk-flex uk-flex-middle"}
-                      data-uk-alert={""}
-                    >
-                      <span className={"uk-text-large uk-margin-right"}>
-                        💡
-                      </span>
-                      <div>
-                        Looks like you don&apos;t have any projects. Navigate to
-                        the projects page to add one.
-                      </div>
-                    </div>
-                  </div>
-                )}
                 {!!filteredModels?.length && (
                   <div className={"uk-width-auto"}>
                     <div className={"uk-card uk-card-default uk-card-body"}>

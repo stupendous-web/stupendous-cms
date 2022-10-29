@@ -97,6 +97,22 @@ export default function Projects() {
           <div className={"uk-section uk-section-small"}>
             <div className={"uk-container uk-container-expand"}>
               <div className={"uk-grid-match"} data-uk-grid={""}>
+                {!projects?.length && (
+                  <div className={"uk-width-1-1"}>
+                    <div
+                      className={"uk-alert-warning uk-flex uk-flex-middle"}
+                      data-uk-alert={""}
+                    >
+                      <span className={"uk-text-large uk-margin-right"}>
+                        👇
+                      </span>
+                      <div>
+                        Looks like you don&apos;t have any projects. Add one to
+                        get started!
+                      </div>
+                    </div>
+                  </div>
+                )}
                 <div className={"uk-width-1-1"}>
                   <div>
                     <div
