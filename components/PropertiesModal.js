@@ -67,7 +67,9 @@ export default function PropertiesModal() {
             </div>
           </div>
           <div className={"uk-width-expand"}>
-            {!properties?.length ? (
+            {!properties?.filter(
+              (property) => property?.modelId === editingModel?._id
+            )?.length ? (
               <div
                 className={
                   "uk-placeholder uk-flex uk-flex-center uk-flex-middle"
@@ -77,61 +79,65 @@ export default function PropertiesModal() {
               </div>
             ) : (
               <div className={"uk-placeholder"}>
-                {properties?.map((property) => {
-                  return (
-                    <div
-                      className={
-                        "uk-card uk-card-body uk-animation-fade uk-margin"
-                      }
-                      key={property._id}
-                    >
-                      <div data-uk-grid={""}>
-                        <div className={"uk-width-expand"}>
-                          <div className={"uk-text-bold"}>
-                            {
-                              propertyTypes?.find(
-                                (propertyType) =>
-                                  propertyType?.type === property?.type
-                              )?.name
-                            }
+                {properties
+                  ?.filter(
+                    (property) => property?.modelId === editingModel?._id
+                  )
+                  ?.map((property) => {
+                    return (
+                      <div
+                        className={
+                          "uk-card uk-card-body uk-animation-fade uk-margin"
+                        }
+                        key={property._id}
+                      >
+                        <div data-uk-grid={""}>
+                          <div className={"uk-width-expand"}>
+                            <div className={"uk-text-bold"}>
+                              {
+                                propertyTypes?.find(
+                                  (propertyType) =>
+                                    propertyType?.type === property?.type
+                                )?.name
+                              }
+                            </div>
+                          </div>
+                          <div>
+                            <label className={"uk-form-label"}>
+                              Required
+                              <input
+                                type={"checkbox"}
+                                value={property?.isRequired}
+                                className={"uk-checkbox uk-margin-small-left"}
+                              />
+                            </label>
+                          </div>
+                          <div
+                            className={"uk-text-danger"}
+                            style={{ cursor: "pointer" }}
+                            onClick={() => handleDelete(property._id)}
+                          >
+                            Delete
+                            <FontAwesomeIcon
+                              icon={faTrash}
+                              className={"uk-margin-small-left"}
+                            />
                           </div>
                         </div>
-                        <div>
-                          <label className={"uk-form-label"}>
-                            Required
-                            <input
-                              type={"checkbox"}
-                              value={property?.isRequired}
-                              className={"uk-checkbox uk-margin-small-left"}
-                            />
-                          </label>
-                        </div>
-                        <div
-                          className={"uk-text-danger"}
-                          style={{ cursor: "pointer" }}
-                          onClick={() => handleDelete(property._id)}
-                        >
-                          Delete
-                          <FontAwesomeIcon
-                            icon={faTrash}
-                            className={"uk-margin-small-left"}
+                        <div className={"uk-margin"}>
+                          <label>Name</label>
+                          <input
+                            type={"text"}
+                            value={editingName}
+                            className={"uk-input"}
+                            onChange={(event) =>
+                              setEditingName(event.target.value)
+                            }
                           />
                         </div>
                       </div>
-                      <div className={"uk-margin"}>
-                        <label>Name</label>
-                        <input
-                          type={"text"}
-                          value={editingName}
-                          className={"uk-input"}
-                          onChange={(event) =>
-                            setEditingName(event.target.value)
-                          }
-                        />
-                      </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
               </div>
             )}
           </div>

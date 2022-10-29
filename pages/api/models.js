@@ -127,12 +127,12 @@ export default async function handler(request, response) {
       await client
         .db("stupendous-cms")
         .collection("models")
-        .deleteOne({ _id: ObjectId(body?._id) });
+        .deleteOne({ _id: ObjectId(body?.modelId) });
 
       await client
         .db("stupendous-cms")
         .collection("properties")
-        .deleteMany({ modelId: ObjectId(body?._id) })
+        .deleteMany({ modelId: ObjectId(body?.modelId) })
         .then(() =>
           response.status(200).send("Good things come to those who wait.")
         )

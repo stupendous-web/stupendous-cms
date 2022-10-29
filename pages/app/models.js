@@ -22,6 +22,7 @@ export default function Models() {
     projects,
     editingProject,
     properties,
+    setProperties,
   } = useGlobal();
 
   const handleSubmit = (event) => {
@@ -63,11 +64,16 @@ export default function Models() {
       .catch((error) => console.log(error));
   };
 
-  const handleDelete = (_id) => {
+  const handleDelete = (modelId) => {
     axios
-      .delete("/api/models", { data: { _id: _id } })
+      .delete("/api/models", { data: { modelId: modelId } })
       .then(() => {
-        setFilteredModels(filteredModels.filter((model) => model._id !== _id));
+        setFilteredModels(
+          filteredModels.filter((model) => model._id !== modelId)
+        );
+        setProperties(
+          properties?.filter((property) => property?.modelId === modelId)
+        );
       })
       .catch((error) => console.log(error));
   };
@@ -107,8 +113,8 @@ export default function Models() {
                           👇
                         </span>
                         <div>
-                          Looks like you don&apos;t have any models. Add one to
-                          get started!
+                          Looks like you don&apos;t have any content types. Try
+                          adding a model to start publishing content.
                         </div>
                       </div>
                     </div>
@@ -151,7 +157,10 @@ export default function Models() {
                                     UIkit.modal("#properties-modal").show();
                                   }}
                                 >
-                                  {!!properties?.length ? (
+                                  {!!properties?.filter(
+                                    (property) =>
+                                      property?.modelId === model._id
+                                  )?.length ? (
                                     properties
                                       ?.filter(
                                         (property) =>
