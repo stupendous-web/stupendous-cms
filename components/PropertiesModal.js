@@ -24,7 +24,9 @@ export default function PropertiesModal() {
         modelId: editingModel?._id,
         projectId: editingProject?._id,
       })
-      .then((response) => setProperties([response?.data, ...properties]))
+      .then((response) => {
+        setProperties([response?.data, ...properties]);
+      })
       .catch((error) => console.log(error));
   };
 

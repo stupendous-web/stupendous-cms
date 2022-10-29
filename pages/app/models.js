@@ -160,7 +160,7 @@ export default function Models() {
                                   {!!properties?.filter(
                                     (property) =>
                                       property?.modelId === model._id
-                                  )?.length ? (
+                                  )?.length &&
                                     properties
                                       ?.filter(
                                         (property) =>
@@ -177,16 +177,14 @@ export default function Models() {
                                             {property?.type}
                                           </a>
                                         );
-                                      })
-                                  ) : (
-                                    <a
-                                      className={
-                                        "uk-button uk-button-primary uk-button-small uk-margin-small-right"
-                                      }
-                                    >
-                                      Add
-                                    </a>
-                                  )}
+                                      })}
+                                  <a
+                                    className={
+                                      "uk-button uk-button-primary uk-button-small uk-margin-small-right"
+                                    }
+                                  >
+                                    Add
+                                  </a>
                                 </td>
                                 <td className={"uk-text-right"}>
                                   <span

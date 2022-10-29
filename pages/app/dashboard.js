@@ -40,17 +40,7 @@ export default function Dashboard() {
                   <div className={"uk-card uk-card-default uk-card-body"}>
                     <h3>Your API Endpoints</h3>
                     {filteredModels?.map((model) => (
-                      <div key={model._id}>
-                        <Link
-                          href={`https://stupendouscms.com/api/${session?.user?.accountId}/${model?.project[0]?.slug}/${model.slug}`}
-                        >
-                          <a>
-                            https://stupendouscms.com/api/
-                            {session?.user?.accountId}/{model?.project[0]?.slug}
-                            /{model.slug}
-                          </a>
-                        </Link>
-                      </div>
+                      <div key={model._id}></div>
                     ))}
                     <div>
                       <Link
