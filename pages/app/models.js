@@ -135,7 +135,6 @@ export default function Models() {
                           <tr>
                             <th>Name</th>
                             <th>Slug</th>
-                            <th>Project</th>
                             <th>Properties</th>
                             <th />
                           </tr>
@@ -146,14 +145,13 @@ export default function Models() {
                               <tr key={model._id}>
                                 <td>{model.name}</td>
                                 <td>{model.slug}</td>
-                                <td>{model?.project[0]?.name}</td>
                                 <td
                                   onClick={() => {
                                     setEditingModel(model);
                                     UIkit.modal("#properties-modal").show();
                                   }}
                                 >
-                                  {!!model?.properties?.length ? (
+                                  {!!properties?.length ? (
                                     properties
                                       ?.filter(
                                         (property) =>

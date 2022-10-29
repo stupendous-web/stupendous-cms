@@ -67,33 +67,6 @@ export default async function handler(request, response) {
               accountId: ObjectId(session?.user?.accountId),
             },
           },
-          {
-            $addFields: {
-              projectId: {
-                $toObjectId: "$projectId",
-              },
-              modelId: {
-                $toObjectId: "$modelId",
-              },
-            },
-          },
-          {
-            $lookup: {
-              from: "projects",
-              localField: "projectId",
-              foreignField: "_id",
-              as: "project",
-              pipeline: [{ $limit: 1 }],
-            },
-          },
-          {
-            $lookup: {
-              from: "properties",
-              localField: "_id",
-              foreignField: "modelId",
-              as: "properties",
-            },
-          },
         ])
         .toArray()
         .then((result) => {
