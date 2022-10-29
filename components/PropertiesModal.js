@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useGlobal } from "../lib/context";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function PropertiesModal() {
@@ -20,6 +20,8 @@ export default function PropertiesModal() {
       .then((response) => setProperties(response.data))
       .catch((error) => console.log(error));
   }, [editingModel]);
+
+  const [editingName, setEditingName] = useState();
 
   const handleSubmit = (type) => {
     axios
@@ -112,7 +114,14 @@ export default function PropertiesModal() {
                       </div>
                       <div className={"uk-margin"}>
                         <label>Name</label>
-                        <input type={"text"} className={"uk-input"} />
+                        <input
+                          type={"text"}
+                          value={editingName}
+                          className={"uk-input"}
+                          onChange={(event) =>
+                            setEditingName(event.target.value)
+                          }
+                        />
                       </div>
                     </div>
                   );

@@ -10,17 +10,6 @@ export default function Dashboard() {
 
   const { projects, filteredModels } = useGlobal();
 
-  const listItems = [
-    {
-      name: "Create a project",
-      href: "/app/projects",
-      checked: !!projects?.length,
-    },
-    { name: "Create a model", href: "", checked: !!filteredModels?.length },
-    { name: "Invite your team", href: "", checked: false },
-    { name: "Start creating content", href: "", checked: false },
-  ];
-
   return (
     <>
       <Authentication>
@@ -28,24 +17,35 @@ export default function Dashboard() {
           <div className={"uk-section uk-section-small"}>
             <div className={"uk-container uk-container-expand"}>
               <div className={"uk-grid-match"} data-uk-grid={""}>
-                <div className={"uk-width-1-3"}>
-                  <div className={"uk-card uk-card-default uk-card-body"}>
-                    <h3>Let&apos;s get started!</h3>
-                    {listItems.map((item, key) => {
-                      return (
-                        <div key={key}>
-                          {item.checked ? "✅" : "❌"}
-                          <span className={"uk-margin-small-left"}>
-                            <Link href={item.href}>
-                              <a>{item.name}</a>
-                            </Link>
-                          </span>
-                        </div>
-                      );
-                    })}
+                {!projects?.length && (
+                  <div className={"uk-width-1-1"}>
+                    <div
+                      className={"uk-alert-warning uk-flex uk-flex-middle"}
+                      data-uk-alert={""}
+                    >
+                      <span className={"uk-text-large uk-margin-right"}>
+                        💡
+                      </span>
+                      <div>
+                        Looks like you don&apos;t have any projects. Navigate to
+                        the projects page to add one.
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className={"uk-width-2-3"}>
+                )}
+                {!!filteredModels?.length && (
+                  <div className={"uk-width-auto"}>
+                    <div className={"uk-card uk-card-default uk-card-body"}>
+                      {filteredModels?.map((model) => (
+                        <div key={model._id}>
+                          <span className={"uk-h1 uk-margin-right"}>12</span>
+                          {model.name}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                <div className={"uk-width-expand"}>
                   <div className={"uk-card uk-card-default uk-card-body"}>
                     <h3>Your API Endpoints</h3>
                     {filteredModels?.map((model) => (

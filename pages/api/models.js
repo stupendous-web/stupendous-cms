@@ -58,7 +58,7 @@ export default async function handler(request, response) {
 
       break;
     case "GET":
-      const models = await client
+      await client
         .db("stupendous-cms")
         .collection("models")
         .aggregate([
@@ -72,6 +72,9 @@ export default async function handler(request, response) {
               projectId: {
                 $toObjectId: "$projectId",
               },
+              modelId: {
+                $toObjectId: "$modelId",
+              },
             },
           },
           {
@@ -83,11 +86,20 @@ export default async function handler(request, response) {
               pipeline: [{ $limit: 1 }],
             },
           },
+          {
+            $lookup: {
+              from: "properties",
+              localField: "_id",
+              foreignField: "modelId",
+              as: "properties",
+            },
+          },
         ])
-        .toArray();
-      await client.close();
-
-      response.status(200).json(models);
+        .toArray()
+        .then((result) => {
+          response.status(200).json(result);
+        })
+        .finally(() => client.close());
 
       break;
     case "PATCH":

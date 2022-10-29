@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { useGlobal } from "../../lib/context";
 import axios from "axios";
 import UIkit from "uikit";
@@ -12,9 +13,17 @@ import Layout from "../../components/Layout";
 export default function Projects() {
   const [name, setName] = useState("");
   const [slug, setSlug] = useState("");
-  const [editingProject, setEditingProject] = useState({ name: "", slug: "" });
 
-  const { projects, setProjects, models, setModels } = useGlobal();
+  const router = useRouter();
+
+  const {
+    projects,
+    setProjects,
+    editingProject,
+    setEditingProject,
+    models,
+    setModels,
+  } = useGlobal();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -118,7 +127,16 @@ export default function Projects() {
                           {projects?.map((project) => {
                             return (
                               <tr key={project._id}>
-                                <td>{project.name}</td>
+                                <td>
+                                  <a
+                                    onClick={() => {
+                                      setEditingProject(project);
+                                      router.push("/app/models");
+                                    }}
+                                  >
+                                    {project.name}
+                                  </a>
+                                </td>
                                 <td>{project.slug}</td>
                                 <td className={"uk-text-right"}>
                                   <span

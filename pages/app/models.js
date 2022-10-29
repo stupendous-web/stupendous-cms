@@ -36,7 +36,6 @@ export default function Models() {
         projectId: editingProject?._id,
       })
       .then((response) => {
-        console.log(response.data);
         UIkit.modal("#create-model-modal").hide();
         setFilteredModels([response.data[0], ...filteredModels]);
         setModelName("");
@@ -140,15 +139,17 @@ export default function Models() {
                                     UIkit.modal("#properties-modal").show();
                                   }}
                                 >
-                                  {!!model?.attributes?.length ? (
-                                    model?.attributes.map((attribute) => {
+                                  {!!model?.properties?.length ? (
+                                    model?.properties.map((property) => {
                                       return (
                                         <a
                                           className={
                                             "uk-button uk-button-default uk-button-small uk-margin-small-right"
                                           }
-                                          key={attribute._id}
-                                        ></a>
+                                          key={property._id}
+                                        >
+                                          {property?.type}
+                                        </a>
                                       );
                                     })
                                   ) : (
