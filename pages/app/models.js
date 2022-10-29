@@ -3,11 +3,7 @@ import { useGlobal } from "../../lib/context";
 import axios from "axios";
 import UIkit from "uikit";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPlus,
-  faPenToSquare,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { createSlug } from "../../utils/helpers";
 
 import Authentication from "../../components/Authentication";
@@ -25,6 +21,7 @@ export default function Models() {
     setEditingModel,
     projects,
     editingProject,
+    properties,
   } = useGlobal();
 
   const handleSubmit = (event) => {
@@ -157,25 +154,31 @@ export default function Models() {
                                   }}
                                 >
                                   {!!model?.properties?.length ? (
-                                    model?.properties.map((property) => {
-                                      return (
-                                        <a
-                                          className={
-                                            "uk-button uk-button-default uk-button-small uk-margin-small-right"
-                                          }
-                                          key={property._id}
-                                        >
-                                          {property?.type}
-                                        </a>
-                                      );
-                                    })
+                                    properties
+                                      ?.filter(
+                                        (property) =>
+                                          property?.modelId === model._id
+                                      )
+                                      ?.map((property) => {
+                                        return (
+                                          <a
+                                            className={
+                                              "uk-button uk-button-default uk-button-small uk-margin-small-right"
+                                            }
+                                            key={property._id}
+                                          >
+                                            {property?.type}
+                                          </a>
+                                        );
+                                      })
                                   ) : (
-                                    <span
-                                      className={"uk-text-primary"}
-                                      style={{ cursor: "pointer" }}
+                                    <a
+                                      className={
+                                        "uk-button uk-button-primary uk-button-small uk-margin-small-right"
+                                      }
                                     >
-                                      <FontAwesomeIcon icon={faPlus} /> Add
-                                    </span>
+                                      Add
+                                    </a>
                                   )}
                                 </td>
                                 <td className={"uk-text-right"}>

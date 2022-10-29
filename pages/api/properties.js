@@ -5,7 +5,6 @@ import { unstable_getServerSession } from "next-auth/next";
 
 export default async function handler(request, response) {
   const body = request?.body;
-  const { modelId } = request?.query;
 
   await client.connect();
 
@@ -37,7 +36,7 @@ export default async function handler(request, response) {
         .aggregate([
           {
             $match: {
-              modelId: ObjectId(modelId),
+              accountId: ObjectId(session?.user?.accountId),
             },
           },
         ])
@@ -45,6 +44,17 @@ export default async function handler(request, response) {
         .then((result) => {
           response.status(200).json(result);
         })
+        .finally(() => client.close());
+
+      break;
+    case "DELETE":
+      await client
+        .db("stupendous-cms")
+        .collection("properties")
+        .deleteOne({ _id: ObjectId(body?.propertyId) })
+        .then(() =>
+          response.status(200).send("Good things come to those who wait.")
+        )
         .finally(() => client.close());
 
       break;

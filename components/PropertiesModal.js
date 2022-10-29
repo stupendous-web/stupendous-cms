@@ -1,11 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useGlobal } from "../lib/context";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 export default function PropertiesModal() {
-  const { editingProject, editingModel, properties, setProperties } =
+  const { properties, setProperties, editingProject, editingModel } =
     useGlobal();
 
   const propertyTypes = [
@@ -13,13 +13,6 @@ export default function PropertiesModal() {
     { name: "Plain Text", type: "text" },
     { name: "HTML", type: "html" },
   ];
-
-  useEffect(() => {
-    axios
-      .get("/api/properties", { params: { modelId: editingModel._id } })
-      .then((response) => setProperties(response.data))
-      .catch((error) => console.log(error));
-  }, [editingModel]);
 
   const [editingName, setEditingName] = useState();
 
@@ -32,6 +25,17 @@ export default function PropertiesModal() {
         projectId: editingProject?._id,
       })
       .then((response) => {})
+      .catch((error) => console.log(error));
+  };
+
+  const handleDelete = (propertyId) => {
+    axios
+      .delete("/api/properties", { data: { propertyId: propertyId } })
+      .then(() => {
+        setProperties(
+          properties.filter((property) => property._id !== propertyId)
+        );
+      })
       .catch((error) => console.log(error));
   };
 
@@ -105,7 +109,9 @@ export default function PropertiesModal() {
                         <div
                           className={"uk-text-danger"}
                           style={{ cursor: "pointer" }}
+                          onClick={() => handleDelete(property._id)}
                         >
+                          Delete
                           <FontAwesomeIcon
                             icon={faTrash}
                             className={"uk-margin-small-left"}
