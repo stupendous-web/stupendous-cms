@@ -32,7 +32,6 @@ export default function Home() {
               <img
                 src={"/images/examples/dashboard.jpg"}
                 alt={"Stupendous CMS Dashboard"}
-                className={"uk-box-shadow-medium"}
                 style={{ borderRadius: "7px" }}
               />
             </div>
@@ -40,7 +39,6 @@ export default function Home() {
               <img
                 src={"/images/examples/models.jpg"}
                 alt={"Stupendous CMS Dashboard"}
-                className={"uk-box-shadow-medium"}
                 style={{ borderRadius: "7px" }}
               />
             </div>
