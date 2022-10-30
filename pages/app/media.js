@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 import { useGlobal } from "../../lib/context";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
@@ -51,24 +53,36 @@ export default function Media() {
                   </button>
                 </div>
               </div>
-              {isLoading ? (
-                <div data-uk-spinner={""}></div>
-              ) : (
-                <div className={"uk-width-1-1"}>
-                  <div
-                    className={"uk-child-width-1-6"}
-                    data-uk-grid={"masonry: true"}
-                  >
+              <div className={"uk-width-1-1"}>
+                {isLoading ? (
+                  <div data-uk-spinner={""}></div>
+                ) : (
+                  <div className={"uk-child-width-auto"} data-uk-grid={""}>
                     {files?.map((file) => (
                       <div key={file?._id}>
-                        <img
-                          src={`https://storage.cloud.google.com/stupendous-cms/${file?._id}?authuser=2`}
-                        />
+                        <div
+                          className={
+                            "uk-cover-container uk-height-medium cover-image"
+                          }
+                          style={{ width: "300px" }}
+                        >
+                          <img
+                            src={`https://storage.cloud.google.com/stupendous-cms/${file?._id}?authuser=2`}
+                            data-uk-cover={""}
+                          />
+                          <a
+                            className={
+                              "uk-position-top-right uk-light uk-padding-small"
+                            }
+                          >
+                            <FontAwesomeIcon icon={faTrash} />
+                          </a>
+                        </div>
                       </div>
                     ))}
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </div>
