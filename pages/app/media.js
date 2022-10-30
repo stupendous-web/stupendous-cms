@@ -41,7 +41,9 @@ export default function Media() {
                   <input
                     type={"file"}
                     aria-label="Custom controls"
-                    accept={"image/*"}
+                    accept={
+                      "image/jpeg, image/pjpeg, image/png, image/gif, image/webp, image/x-icon"
+                    }
                     onChange={(event) => handleUpload(event)}
                   />
                   <button

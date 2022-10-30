@@ -27,6 +27,8 @@ export default handler.post(async (request, response) => {
   const res = response;
   const session = await unstable_getServerSession(req, res, authOptions);
 
+  await client.connect();
+
   await client
     .db("stupendous-cms")
     .collection("files")
@@ -34,18 +36,23 @@ export default handler.post(async (request, response) => {
       accountId: ObjectId(session?.user?.accountId),
     })
     .then(async (result) => {
-      uploadFile(request?.files?.files[0]?.path, result?.insertedId).catch(
-        (error) => response.status(500).send(error)
-      );
-      await client
-        .db("stupendous-cms")
-        .collection("files")
-        .findOne({ _id: ObjectId(result.insertedId) })
-        .then((result) => {
-          response.status(200).json(result);
+      uploadFile(request?.files?.files[0]?.path, result?.insertedId)
+        .then(async () => {
+          await client
+            .db("stupendous-cms")
+            .collection("files")
+            .findOne({ _id: ObjectId(result.insertedId) })
+            .then((result) => {
+              response.status(200).json(result);
+            })
+            .finally(() => {
+              client.close();
+            });
+        })
+        .catch((error) => {
+          response.status(500).send(error);
         });
-    })
-    .finally(() => client.close());
+    });
 });
 
 export const config = {

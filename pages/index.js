@@ -29,6 +29,7 @@ export default function Home() {
           <p className={"uk-h1 uk-text-right"}>
             <i className={"devicon-nextjs-original-wordmark"} />
             <i className={"devicon-mongodb-plain-wordmark"} />
+            <i className={"devicon-googlecloud-plain-wordmark"} />
           </p>
         </div>
       </div>
