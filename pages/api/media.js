@@ -17,20 +17,15 @@ export const uploadFile = async (file) => {
   await storage.bucket("stupendous-cms").upload(file, {
     destination: `test.${file.split(".").pop()}`,
   });
-  console.log("Success!");
 };
 
 export default handler.post(async (request, response) => {
   const files = request?.files?.files;
   console.log(files);
 
-  try {
-    uploadFile(files[0]?.path).catch(console.error);
-  } catch (error) {
-    console.log(error);
-  }
+  uploadFile(files[0]?.path).catch(response.status(500).send(error));
 
-  response.status("200").send("Good things come to those who wait.");
+  response.status(200).send("Good things come to those who wait.");
 });
 
 export const config = {
