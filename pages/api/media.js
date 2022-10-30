@@ -23,7 +23,7 @@ export default handler.post(async (request, response) => {
   const files = request?.files?.files;
   console.log(files);
 
-  uploadFile(files[0]?.path).catch(response.status(500).send(error));
+  uploadFile(files[0]?.path).catch((error) => response.status(500).send(error));
 
   response.status(200).send("Good things come to those who wait.");
 });
