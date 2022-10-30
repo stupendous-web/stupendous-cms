@@ -52,7 +52,7 @@ export default function Navigation() {
               title={
                 "Stupendous CMS by Stupendous Web | Clients manage their content. You manage their software."
               }
-              className={"uk-navbar-item uk-logo"}
+              className={"uk-navbar-item uk-logo uk-visible@s"}
             >
               Stupendous CMS
             </a>
