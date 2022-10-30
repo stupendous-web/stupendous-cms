@@ -1,8 +1,17 @@
+import { useState } from "react";
 import axios from "axios";
+import { useGlobal } from "../../lib/context";
+
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
+
 export default function Media() {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { files, setFiles } = useGlobal();
+
   const handleUpload = (event) => {
+    setIsLoading(true);
     axios
       .post(
         "/api/media",
@@ -14,7 +23,8 @@ export default function Media() {
         }
       )
       .then((response) => {
-        console.log(response.data);
+        setFiles([response.data, ...files]);
+        setIsLoading(false);
       })
       .catch((error) => console.log(error));
   };
@@ -41,6 +51,24 @@ export default function Media() {
                   </button>
                 </div>
               </div>
+              {isLoading ? (
+                <div data-uk-spinner={""}></div>
+              ) : (
+                <div className={"uk-width-1-1"}>
+                  <div
+                    className={"uk-child-width-1-6"}
+                    data-uk-grid={"masonry: true"}
+                  >
+                    {files?.map((file) => (
+                      <div key={file?._id}>
+                        <img
+                          src={`https://storage.cloud.google.com/stupendous-cms/${file?._id}?authuser=2`}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

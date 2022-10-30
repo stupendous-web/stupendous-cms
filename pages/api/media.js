@@ -29,16 +29,21 @@ export default handler.post(async (request, response) => {
 
   await client
     .db("stupendous-cms")
-    .collection("media")
+    .collection("files")
     .insertOne({
       accountId: ObjectId(session?.user?.accountId),
     })
     .then(async (result) => {
-      uploadFile(request?.files?.files[0]?.path, result?.insertedId)
-        .then(() =>
-          response.status(200).send("Good things come to those who wait.")
-        )
-        .catch((error) => response.status(500).send(error));
+      uploadFile(request?.files?.files[0]?.path, result?.insertedId).catch(
+        (error) => response.status(500).send(error)
+      );
+      await client
+        .db("stupendous-cms")
+        .collection("files")
+        .findOne({ _id: ObjectId(result.insertedId) })
+        .then((result) => {
+          response.status(200).json(result);
+        });
     })
     .finally(() => client.close());
 });
