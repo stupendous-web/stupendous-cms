@@ -9,7 +9,7 @@ const { Storage } = require("@google-cloud/storage");
 const handler = nextConnect();
 handler.use(middleware);
 
-export const uploadFile = async (file, destination) => {
+export const uploadFile = async (file, insertedId) => {
   const storage = new Storage({
     project_id: "stupendous-web",
     credentials: {
@@ -18,7 +18,7 @@ export const uploadFile = async (file, destination) => {
     },
   });
   await storage.bucket("stupendous-cms").upload(file, {
-    destination: destination,
+    destination: `${insertedId}`,
   });
 };
 
