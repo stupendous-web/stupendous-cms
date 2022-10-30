@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Link from "next/link";
 
 import Navigation from "../components/Navigation";
@@ -5,6 +6,12 @@ import Navigation from "../components/Navigation";
 export default function Home() {
   return (
     <>
+      <Head>
+        <title>
+          Stupendous CMS by Stupendous Web | Clients manage their content. You
+          manage their software.
+        </title>
+      </Head>
       <Navigation />
       <div className={"uk-section"}>
         <div className={"uk-container uk-container-xsmall"}>
@@ -50,6 +57,9 @@ export default function Home() {
           <p>
             <Link href={"/register"}>
               <a
+                title={
+                  "Get Started | Stupendous CMS by Stupendous Web | Clients manage their content. You manage their software."
+                }
                 className={
                   "uk-button uk-button-primary uk-button-large uk-margin-right"
                 }
@@ -58,7 +68,13 @@ export default function Home() {
               </a>
             </Link>
             <Link href={"/login"}>
-              <a>Login</a>
+              <a
+                title={
+                  "Login | Stupendous CMS by Stupendous Web | Clients manage their content. You manage their software."
+                }
+              >
+                Login
+              </a>
             </Link>
           </p>
           <p>

@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 
@@ -10,6 +11,12 @@ export default function Login() {
 
   return (
     <>
+      <Head>
+        <title>
+          Login | Stupendous CMS by Stupendous Web | Clients manage their
+          content. You manage their software.
+        </title>
+      </Head>
       <Navigation />
       <div className={"uk-section"}>
         <div className={"uk-container uk-container-xsmall"}>
@@ -51,7 +58,13 @@ export default function Login() {
               className={"uk-button uk-button-primary uk-margin-right"}
             />
             <Link href={"/register"}>
-              <a>Register</a>
+              <a
+                title={
+                  "Get Started | Stupendous CMS by Stupendous Web | Clients manage their content. You manage their software."
+                }
+              >
+                Register
+              </a>
             </Link>
           </form>
         </div>

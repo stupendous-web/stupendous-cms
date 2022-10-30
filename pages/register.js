@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -32,6 +33,12 @@ export default function Register() {
 
   return (
     <>
+      <Head>
+        <title>
+          Get Started | Stupendous CMS by Stupendous Web | Clients manage their
+          content. You manage their software.
+        </title>
+      </Head>
       <Navigation />
       <div className={"uk-section"}>
         <div className={"uk-container uk-container-xsmall"}>
@@ -86,7 +93,13 @@ export default function Register() {
               className={"uk-button uk-button-primary uk-margin-right"}
             />
             <Link href={"/login"}>
-              <a>Login</a>
+              <a
+                title={
+                  "Login | Stupendous CMS by Stupendous Web | Clients manage their content. You manage their software."
+                }
+              >
+                Login
+              </a>
             </Link>
           </form>
         </div>

@@ -48,7 +48,14 @@ export default function Navigation() {
           </>
         ) : (
           <Link href={"/"}>
-            <a className={"uk-navbar-item uk-logo"}>Stupendous CMS</a>
+            <a
+              title={
+                "Stupendous CMS by Stupendous Web | Clients manage their content. You manage their software."
+              }
+              className={"uk-navbar-item uk-logo"}
+            >
+              Stupendous CMS
+            </a>
           </Link>
         )}
       </div>
@@ -72,12 +79,24 @@ export default function Navigation() {
         ) : (
           <div className={"uk-navbar-item"}>
             <Link href={"/register"}>
-              <a className={"uk-button uk-button-primary uk-margin-right"}>
+              <a
+                title={
+                  "Get Started | Stupendous CMS by Stupendous Web | Clients manage their content. You manage their software."
+                }
+                className={"uk-button uk-button-primary uk-margin-right"}
+              >
                 Get Started
               </a>
             </Link>
             <Link href={"/login"}>
-              <a className={"uk-button uk-button-primary"}>Login</a>
+              <a
+                title={
+                  "Login | Stupendous CMS by Stupendous Web | Clients manage their content. You manage their software."
+                }
+                className={"uk-button uk-button-primary"}
+              >
+                Login
+              </a>
             </Link>
           </div>
         )}
