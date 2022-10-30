@@ -1,3 +1,7 @@
+import { MongoClient, ObjectId } from "mongodb";
+const client = new MongoClient(process.env.MONGO_DB_URI);
+import { authOptions } from "./auth/[...nextauth]";
+import { unstable_getServerSession } from "next-auth/next";
 import middleware from "../../middleware/middleware";
 import nextConnect from "next-connect";
 const { Storage } = require("@google-cloud/storage");
@@ -5,7 +9,7 @@ const { Storage } = require("@google-cloud/storage");
 const handler = nextConnect();
 handler.use(middleware);
 
-export const uploadFile = async (file) => {
+export const uploadFile = async (file, destination) => {
   const storage = new Storage({
     project_id: "stupendous-web",
     credentials: {
@@ -13,19 +17,30 @@ export const uploadFile = async (file) => {
       private_key: process.env.GCS_PRIVATE_KEY,
     },
   });
-
   await storage.bucket("stupendous-cms").upload(file, {
-    destination: `test.${file.split(".").pop()}`,
+    destination: destination,
   });
 };
 
 export default handler.post(async (request, response) => {
-  const files = request?.files?.files;
-  console.log(files);
+  const req = request;
+  const res = response;
+  const session = await unstable_getServerSession(req, res, authOptions);
 
-  uploadFile(files[0]?.path).catch((error) => response.status(500).send(error));
-
-  response.status(200).send("Good things come to those who wait.");
+  await client
+    .db("stupendous-cms")
+    .collection("media")
+    .insertOne({
+      accountId: ObjectId(session?.user?.accountId),
+    })
+    .then(async (result) => {
+      uploadFile(request?.files?.files[0]?.path, result?.insertedId)
+        .then(() =>
+          response.status(200).send("Good things come to those who wait.")
+        )
+        .catch((error) => response.status(500).send(error));
+    })
+    .finally(() => client.close());
 });
 
 export const config = {
