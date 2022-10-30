@@ -23,6 +23,10 @@ export const uploadFile = async (file, insertedId) => {
 };
 
 export default handler.post(async (request, response) => {
+  if (request?.method !== "POST") {
+    return response.status(405).send();
+  }
+  console.log(request?.files?.files[0]);
   const req = request;
   const res = response;
   const session = await unstable_getServerSession(req, res, authOptions);
@@ -33,6 +37,7 @@ export default handler.post(async (request, response) => {
     .db("stupendous-cms")
     .collection("files")
     .insertOne({
+      type: request?.files?.files[0]?.headers?.["content-type"],
       projectId: ObjectId(request.body?.projectId[0]),
       accountId: ObjectId(session?.user?.accountId),
     })
