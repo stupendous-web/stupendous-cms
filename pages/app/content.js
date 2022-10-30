@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import { useGlobal } from "../../lib/context";
 import axios from "axios";
 import UIkit from "uikit";
@@ -14,14 +13,12 @@ export default function Content() {
   const [name, setName] = useState("");
   const [slug, setSlug] = useState("");
 
-  const router = useRouter();
-
   const {
     projects,
     setProjects,
     editingProject,
     setEditingProject,
-    models,
+    filteredModels,
     setModels,
   } = useGlobal();
 
@@ -73,11 +70,6 @@ export default function Content() {
       .catch((error) => console.log(error));
   };
 
-  const handleProjectNameChange = (event) => {
-    setName(event.target.value);
-    setSlug(createSlug(event.target.value));
-  };
-
   const handleEditingProjectNameChange = (event) => {
     setEditingProject({
       ...editingProject,
@@ -118,7 +110,7 @@ export default function Content() {
                     <div
                       className={"uk-button uk-button-primary uk-button-large"}
                       onClick={() =>
-                        UIkit.modal("#create-project-modal").show()
+                        UIkit.modal("#create-content-modal").show()
                       }
                     >
                       Create New Content
@@ -134,10 +126,8 @@ export default function Content() {
                       >
                         <thead>
                           <tr>
+                            <th>id</th>
                             <th>Name</th>
-                            <th>Slug</th>
-                            <th>Project</th>
-                            <th>Author</th>
                             <th />
                           </tr>
                         </thead>
@@ -145,19 +135,15 @@ export default function Content() {
                           {projects?.map((project) => {
                             return (
                               <tr key={project._id}>
+                                <td />
                                 <td>
-                                  <a
-                                    onClick={() => {
-                                      setEditingProject(project);
-                                      router.push("/app/models");
-                                    }}
+                                  {project.name}&nbsp;
+                                  <span
+                                    className={"uk-text-muted uk-text-italic"}
                                   >
-                                    {project.name}
-                                  </a>
+                                    by Topher on March 5th, 2099
+                                  </span>{" "}
                                 </td>
-                                <td>{project.slug}</td>
-                                <td />
-                                <td />
                                 <td className={"uk-text-right"}>
                                   <span
                                     className={
@@ -196,26 +182,20 @@ export default function Content() {
               </div>
             </div>
           </div>
-          <div id={"create-project-modal"} data-uk-modal={""}>
+          <div id={"create-content-modal"} data-uk-modal={""}>
             <div className={"uk-modal-dialog uk-modal-body"}>
-              <h3>Create a Project</h3>
+              <h3>Content Type</h3>
               <form onSubmit={(event) => handleSubmit(event)}>
                 <div className={"uk-margin"}>
-                  <label className={"uk-form-label"}>Name</label>
-                  <input
-                    type={"text"}
-                    value={name}
-                    className={"uk-input"}
-                    onChange={(event) => handleProjectNameChange(event)}
-                    required
-                  />
-                  <div className={"uk-text-small"}>ex: My Stupendous Blog</div>
+                  <select className={"uk-select"} required>
+                    <option value={""}>Select</option>
+                    {filteredModels?.map((model) => (
+                      <option key={model._id} value={model._id}>
+                        {model.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-                <input
-                  type={"submit"}
-                  value={"Create"}
-                  className={"uk-button uk-button-primary"}
-                />
               </form>
             </div>
           </div>
