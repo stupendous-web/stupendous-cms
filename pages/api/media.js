@@ -41,6 +41,18 @@ export default handler.post(async (request, response) => {
           await client
             .db("stupendous-cms")
             .collection("files")
+            .updateOne(
+              { _id: ObjectId(result?.insertedId) },
+              {
+                $set: {
+                  url: `https://storage.cloud.google.com/stupendous-cms/${result?.insertedId}?authuser=2`,
+                },
+              }
+            );
+
+          await client
+            .db("stupendous-cms")
+            .collection("files")
             .findOne({ _id: ObjectId(result.insertedId) })
             .then((result) => {
               response.status(200).json(result);

@@ -46,7 +46,7 @@ export default function SideNavigation() {
       heading: "Media",
       icon: faImage,
       description: "",
-      visible: true,
+      visible: !!projects?.length,
     },
   ];
 
