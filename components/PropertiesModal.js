@@ -20,6 +20,7 @@ export default function PropertiesModal() {
   const handleSubmit = (type) => {
     axios
       .post("/api/properties", {
+        name: "New Property",
         type: type,
         isRequired: false,
         modelId: editingModel?._id,

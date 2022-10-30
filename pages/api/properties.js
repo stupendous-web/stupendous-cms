@@ -18,6 +18,7 @@ export default async function handler(request, response) {
         .db("stupendous-cms")
         .collection("properties")
         .insertOne({
+          name: body?.name,
           type: body?.type,
           modelId: ObjectId(body?.modelId),
           projectId: ObjectId(body?.projectId),
