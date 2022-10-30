@@ -45,7 +45,8 @@ export default function SideNavigation() {
       href: "/app/media",
       heading: "Media",
       icon: faImage,
-      description: "",
+      description:
+        "Upload your files to the Stupendous Web bucket and access them via your API",
       visible: !!projects?.length,
     },
   ];

@@ -10,14 +10,17 @@ import Layout from "../../components/Layout";
 export default function Media() {
   const [isLoading, setIsLoading] = useState(false);
 
-  const { files, setFiles } = useGlobal();
+  const { filteredFiles, files, setFiles, editingProject } = useGlobal();
 
   const handleUpload = (event) => {
     setIsLoading(true);
     axios
       .post(
         "/api/media",
-        { files: event.target.files[0] },
+        {
+          projectId: editingProject?._id,
+          files: event.target.files[0],
+        },
         {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -60,7 +63,7 @@ export default function Media() {
                   <div data-uk-spinner={""}></div>
                 ) : (
                   <div className={"uk-child-width-auto"} data-uk-grid={""}>
-                    {files?.map((file) => (
+                    {filteredFiles?.map((file) => (
                       <div key={file?._id}>
                         <div
                           className={

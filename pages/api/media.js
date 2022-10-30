@@ -33,6 +33,7 @@ export default handler.post(async (request, response) => {
     .db("stupendous-cms")
     .collection("files")
     .insertOne({
+      projectId: ObjectId(request.body?.projectId[0]),
       accountId: ObjectId(session?.user?.accountId),
     })
     .then(async (result) => {
