@@ -24,9 +24,13 @@ export default handler.post(async (request, response) => {
   const files = request?.files?.files;
   console.log(files);
 
-  uploadFile(files[0]?.path).catch(console.error);
+  try {
+    uploadFile(files[0]?.path).catch(console.error);
+  } catch (error) {
+    console.log(error);
+  }
 
-  response.status("200").send({ paths: files[0]?.path });
+  response.status("200").send("Good things come to those who wait.");
 });
 
 export const config = {
