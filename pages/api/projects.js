@@ -72,13 +72,16 @@ export default async function handler(request, response) {
       await client
         .db("stupendous-cms")
         .collection("models")
+        .deleteMany({ projectId: ObjectId(body?._id) });
+
+      await client
+        .db("stupendous-cms")
+        .collection("properties")
         .deleteMany({ projectId: ObjectId(body?._id) })
         .then(() =>
           response.status(200).send("Good things come to those who wait.")
         )
         .finally(() => client.close());
-
-      // Nedd to Delete Properties
 
       break;
     default:

@@ -17,7 +17,7 @@ import {
 export default function SideNavigation() {
   const [billingLink, setBillingLink] = useState("");
 
-  const { projects } = useGlobal();
+  const { projects, properties } = useGlobal();
 
   const { data: session } = useSession();
 
@@ -37,8 +37,9 @@ export default function SideNavigation() {
       href: "/app/content",
       heading: "Content",
       icon: faFeather,
-      description: "",
-      visible: false,
+      description:
+        "This is the the bread and butter of your API. See and edit all the data that's accessible via your API.",
+      visible: !!properties?.length,
     },
     {
       href: "/app/media",
