@@ -10,7 +10,8 @@ import Layout from "../../components/Layout";
 export default function Media() {
   const [isLoading, setIsLoading] = useState(false);
 
-  const { filteredFiles, files, setFiles, editingProject } = useGlobal();
+  const { filteredFiles, setFilteredFiles, files, setFiles, editingProject } =
+    useGlobal();
 
   const handleUpload = (event) => {
     setIsLoading(true);
@@ -33,6 +34,16 @@ export default function Media() {
       })
       .catch((error) => console.log(error));
   };
+
+  const handleDelete = (fileId) => {
+    axios
+      .delete("/api/files", { data: { fileId: fileId } })
+      .then(() => {
+        setFilteredFiles(filteredFiles?.filter((file) => file._id !== fileId));
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
     <Authentication>
       <Layout>
@@ -79,6 +90,7 @@ export default function Media() {
                             className={
                               "uk-position-top-right uk-light uk-padding-small"
                             }
+                            onClick={() => handleDelete(file?._id)}
                           >
                             <FontAwesomeIcon icon={faTrash} />
                           </a>

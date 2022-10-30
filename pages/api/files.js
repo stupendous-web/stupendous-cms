@@ -4,6 +4,8 @@ import { authOptions } from "./auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 
 export default async function handler(request, response) {
+  const body = request?.body;
+
   await client.connect();
 
   const req = request;
@@ -26,6 +28,17 @@ export default async function handler(request, response) {
         .then((result) => {
           response.status(200).json(result);
         })
+        .finally(() => client.close());
+
+      break;
+    case "DELETE":
+      await client
+        .db("stupendous-cms")
+        .collection("files")
+        .deleteOne({ _id: ObjectId(body?.fileId) })
+        .then(() =>
+          response.status(200).send("Good things come to those who wait.")
+        )
         .finally(() => client.close());
 
       break;
