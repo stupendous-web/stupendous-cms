@@ -36,7 +36,17 @@ export default function Media() {
           pos: "bottom-right",
         });
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        if (error?.response?.status === 413) {
+          UIkit.notification({
+            message: "Try uploading less.",
+            status: "danger",
+            pos: "bottom-right",
+          });
+        }
+        setIsLoading(false);
+      });
   };
 
   const handleDelete = (fileId) => {
