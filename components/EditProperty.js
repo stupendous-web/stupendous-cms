@@ -110,7 +110,7 @@ export default function EditProperty({ model, property }) {
             </div>
             <input
               type={"submit"}
-              value={"Create"}
+              value={"Save"}
               className={"uk-button uk-button-primary"}
             />
           </form>
