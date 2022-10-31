@@ -1,9 +1,11 @@
 import { useGlobal } from "../lib/context";
 import { useState } from "react";
 import axios from "axios";
+import UIkit from "uikit";
 
 export default function CreateProperty({ id }) {
-  const { editingProject, editingModel, filteredModels } = useGlobal();
+  const { editingProject, filteredModels, properties, setProperties } =
+    useGlobal();
 
   const [type, setType] = useState("");
   const [name, setName] = useState("");
@@ -22,16 +24,21 @@ export default function CreateProperty({ id }) {
         type: type,
         name: name,
         isRequired: isRequired,
-        modelId: editingModel?._id,
+        modelId: id,
         projectId: editingProject?._id,
-        accountId: session?.user?.accountId,
       })
-      .then((response) => {})
+      .then((response) => {
+        setProperties([...properties, response.data]);
+        UIkit.modal(`#create-property-modal-${id}`).hide();
+        setType("");
+        setName("");
+        setIsRequired(false);
+      })
       .catch((error) => console.log(error));
   };
 
   return (
-    <div id={`create-property-${id}`} data-uk-modal={""}>
+    <div id={`create-property-modal-${id}`} data-uk-modal={""}>
       <div className={"uk-modal-dialog uk-modal-body"}>
         <h3>
           Create Property for{" "}

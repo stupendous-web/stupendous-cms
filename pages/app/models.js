@@ -8,7 +8,6 @@ import { createSlug } from "../../utils/helpers";
 
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
-import PropertiesModal from "../../components/PropertiesModal";
 import CreateProperty from "../../components/CreateProperty";
 
 export default function Models() {
@@ -24,6 +23,7 @@ export default function Models() {
     editingProject,
     properties,
     setProperties,
+    filteredProperties,
   } = useGlobal();
 
   const handleSubmit = (event) => {
@@ -153,11 +153,11 @@ export default function Models() {
                                 <td>{model.name}</td>
                                 <td>{model.slug}</td>
                                 <td>
-                                  {!!properties?.filter(
+                                  {!!filteredProperties?.filter(
                                     (property) =>
                                       property?.modelId === model._id
                                   )?.length &&
-                                    properties
+                                    filteredProperties
                                       ?.filter(
                                         (property) =>
                                           property?.modelId === model._id
@@ -170,7 +170,7 @@ export default function Models() {
                                             }
                                             key={property._id}
                                           >
-                                            {property?.type}
+                                            {property?.name}
                                           </a>
                                         );
                                       })}
@@ -289,7 +289,6 @@ export default function Models() {
               </form>
             </div>
           </div>
-          <PropertiesModal />
         </Layout>
       </Authentication>
     </div>

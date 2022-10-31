@@ -20,6 +20,7 @@ export default async function handler(request, response) {
         .insertOne({
           name: body?.name,
           type: body?.type,
+          isRequired: body?.isRequired,
           modelId: ObjectId(body?.modelId),
           projectId: ObjectId(body?.projectId),
           accountId: ObjectId(session?.user?.accountId),

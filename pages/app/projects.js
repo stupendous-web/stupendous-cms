@@ -30,8 +30,8 @@ export default function Projects() {
     axios
       .post("/api/projects", { name: name, slug: slug })
       .then((response) => {
-        UIkit.modal("#create-project-modal").hide();
         setProjects([response.data, ...projects]);
+        UIkit.modal("#create-project-modal").hide();
         setName("");
       })
       .catch((error) => console.log(error));
