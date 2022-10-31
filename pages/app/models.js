@@ -16,6 +16,8 @@ export default function Models() {
   const [modelSlug, setModelSlug] = useState("");
 
   const {
+    models,
+    setModels,
     filteredModels,
     setFilteredModels,
     editingModel,
@@ -70,9 +72,7 @@ export default function Models() {
     axios
       .delete("/api/models", { data: { modelId: modelId } })
       .then(() => {
-        setFilteredModels(
-          filteredModels.filter((model) => model._id !== modelId)
-        );
+        setModels(models?.filter((model) => model._id !== modelId));
         setProperties(
           properties?.filter((property) => property?.modelId !== modelId)
         );

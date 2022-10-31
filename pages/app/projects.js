@@ -31,6 +31,7 @@ export default function Projects() {
       .post("/api/projects", { name: name, slug: slug })
       .then((response) => {
         setProjects([response.data, ...projects]);
+        setEditingProject(response.data);
         UIkit.modal("#create-project-modal").hide();
         setName("");
       })

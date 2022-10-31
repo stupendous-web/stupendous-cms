@@ -17,7 +17,7 @@ import {
 export default function SideNavigation() {
   const [billingLink, setBillingLink] = useState("");
 
-  const { projects, properties } = useGlobal();
+  const { projects, filteredModels, filteredProperties } = useGlobal();
 
   const { data: session } = useSession();
 
@@ -39,7 +39,10 @@ export default function SideNavigation() {
       icon: faFeather,
       description:
         "This is the the bread and butter of your API. See and edit all the data that's accessible via your API.",
-      visible: !!properties?.length,
+      visible:
+        !!projects?.length &&
+        filteredModels?.length &&
+        filteredProperties?.length,
     },
     {
       href: "/app/media",
