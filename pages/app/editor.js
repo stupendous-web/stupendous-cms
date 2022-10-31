@@ -1,11 +1,13 @@
-import { useState } from "react";
-import { Editor } from "@tinymce/tinymce-react";
+import dynamic from "next/dynamic";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import "react-quill/dist/quill.snow.css";
 
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
+import { useState } from "react";
 
 export default function Projects() {
-  const [body, setBody] = useState();
+  const { value, setValue } = useState();
 
   return (
     <div className={"uk-scope"}>
@@ -39,16 +41,9 @@ export default function Projects() {
                   </div>
                 </div>
                 <div className={"uk-width-1-1"}>
-                  <Editor
-                    tinymceScriptSrc={"/tinymce/tinymce.min.js"}
-                    init={{
-                      menubar: "",
-                      toolbar:
-                        "undo redo | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | removeformat",
-                      plugins: ["wordcount", "lists"],
-                    }}
-                    onEditorChange={setBody}
-                  />
+                  <div style={{ width: "600px", height: "300px" }}>
+                    <ReactQuill value={value} onChange={setValue} />
+                  </div>{" "}
                 </div>
               </div>
             </div>

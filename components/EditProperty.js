@@ -14,8 +14,8 @@ export default function EditProperty({ model, property }) {
   );
 
   const propertyTypes = [
-    { option: "Title", value: "string" },
-    { option: "Plain Text", value: "text" },
+    { option: "String of Text", value: "string" },
+    { option: "Plain Text Block", value: "text" },
     { option: "HTML", value: "html" },
   ];
 
