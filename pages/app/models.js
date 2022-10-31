@@ -9,6 +9,7 @@ import { createSlug } from "../../utils/helpers";
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
 import PropertiesModal from "../../components/PropertiesModal";
+import CreateProperty from "../../components/CreateProperty";
 
 export default function Models() {
   const [modelName, setModelName] = useState("");
@@ -151,12 +152,7 @@ export default function Models() {
                               <tr key={model._id}>
                                 <td>{model.name}</td>
                                 <td>{model.slug}</td>
-                                <td
-                                  onClick={() => {
-                                    setEditingModel(model);
-                                    UIkit.modal("#properties-modal").show();
-                                  }}
-                                >
+                                <td>
                                   {!!properties?.filter(
                                     (property) =>
                                       property?.modelId === model._id
@@ -182,9 +178,12 @@ export default function Models() {
                                     className={
                                       "uk-button uk-button-primary uk-button-small uk-margin-small-right"
                                     }
+                                    href={`#create-property-${model?._id}`}
+                                    data-uk-toggle={""}
                                   >
                                     Add
                                   </a>
+                                  <CreateProperty id={model?._id} />
                                 </td>
                                 <td className={"uk-text-right"}>
                                   <span

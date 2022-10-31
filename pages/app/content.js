@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useGlobal } from "../../lib/context";
 import axios from "axios";
 import UIkit from "uikit";
@@ -145,18 +146,11 @@ export default function Content() {
                                   </span>{" "}
                                 </td>
                                 <td className={"uk-text-right"}>
-                                  <span
-                                    className={
-                                      "uk-text-primary uk-margin-right"
-                                    }
-                                    style={{ cursor: "pointer" }}
-                                    onClick={() => {
-                                      setEditingProject(project);
-                                      UIkit.modal("#edit-project-modal").show();
-                                    }}
-                                  >
-                                    <FontAwesomeIcon icon={faPenToSquare} />
-                                  </span>
+                                  <Link href={"/app/editor"}>
+                                    <a className={"uk-margin-right"}>
+                                      <FontAwesomeIcon icon={faPenToSquare} />
+                                    </a>
+                                  </Link>
                                   <span
                                     className={"uk-text-primary"}
                                     style={{ cursor: "pointer" }}

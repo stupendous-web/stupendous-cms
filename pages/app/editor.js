@@ -11,12 +11,12 @@ export default function Projects() {
     <div className={"uk-scope"}>
       <Authentication>
         <Layout>
-          <div className={"uk-grid-collapse"} data-uk-grid={""}>
-            <div className={"uk-width-expand"}>
-              <div className={"uk-section uk-section-small"}>
-                <div className={"uk-container uk-container-expand"}>
-                  <div className={"uk-grid-match"} data-uk-grid={""}>
-                    <div className={"uk-width-1-1"}>
+          <div className={"uk-section uk-section-small"}>
+            <div className={"uk-container uk-container-expand"}>
+              <div className={"uk-grid-match"} data-uk-grid={""}>
+                <div className={"uk-width-1-1"}>
+                  <div className={"uk-flex-middle"} data-uk-grid={""}>
+                    <div className={"uk-width-expand"}>
                       <h1>
                         <input
                           type={"text"}
@@ -27,33 +27,28 @@ export default function Projects() {
                         />
                       </h1>
                     </div>
-                    <div className={"uk-width-1-1"}>
-                      <Editor
-                        tinymceScriptSrc={"/tinymce/tinymce.min.js"}
-                        init={{
-                          menubar: "",
-                          toolbar:
-                            "undo redo | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | removeformat",
-                          plugins: ["wordcount", "lists"],
-                        }}
-                        onEditorChange={setBody}
-                      />
+                    <div>
+                      <a
+                        className={
+                          "uk-button uk-button-primary uk-button-large"
+                        }
+                      >
+                        Publish
+                      </a>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div className={"uk-width-auto"}>
-              <div
-                className={"uk-section uk-section-muted"}
-                data-uk-height-viewport={"offset-top: true"}
-              >
-                <div className={"uk-container uk-container-expand"}>
-                  <div
-                    className={"uk-button uk-button-primary uk-button-large"}
-                  >
-                    Publish
-                  </div>
+                <div className={"uk-width-1-1"}>
+                  <Editor
+                    tinymceScriptSrc={"/tinymce/tinymce.min.js"}
+                    init={{
+                      menubar: "",
+                      toolbar:
+                        "undo redo | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | removeformat",
+                      plugins: ["wordcount", "lists"],
+                    }}
+                    onEditorChange={setBody}
+                  />
                 </div>
               </div>
             </div>
