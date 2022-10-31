@@ -41,9 +41,7 @@ export default function Projects() {
                   </div>
                 </div>
                 <div className={"uk-width-1-1"}>
-                  <div style={{ width: "600px", height: "300px" }}>
-                    <ReactQuill value={value} onChange={setValue} />
-                  </div>{" "}
+                  <ReactQuill value={value} onChange={setValue} />
                 </div>
               </div>
             </div>
