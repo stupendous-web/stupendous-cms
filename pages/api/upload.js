@@ -22,18 +22,7 @@ export const uploadFile = async (file, insertedId) => {
   });
 };
 
-export default handler.post(async (request, response) => {
-  if (request?.method !== "POST") {
-    return response.status(405).send();
-  }
-
-  const files = request?.files["files[]"];
-  const body = request?.body;
-
-  const req = request;
-  const res = response;
-  const session = await unstable_getServerSession(req, res, authOptions);
-
+export const uploadManyFiles = async (files, body, session) => {
   files?.map(async (file) => {
     await client.connect();
     await client
@@ -60,9 +49,25 @@ export default handler.post(async (request, response) => {
         });
       });
   });
-  await client.close();
+};
 
-  response.status(200).send("Good things come to those who wait.");
+export default handler.post(async (request, response) => {
+  if (request?.method !== "POST") {
+    return response.status(405).send();
+  }
+
+  const files = request?.files["files[]"];
+  const body = request?.body;
+
+  const req = request;
+  const res = response;
+  const session = await unstable_getServerSession(req, res, authOptions);
+
+  await uploadManyFiles(files, body, session, response).finally(() => {
+    client.close();
+
+    response.status(200).send("Good things come to those who wait.");
+  });
 });
 
 export const config = {

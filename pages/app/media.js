@@ -9,13 +9,15 @@ import Layout from "../../components/Layout";
 import UIkit from "uikit";
 
 export default function Media() {
-  const [isLoading, setIsLoading] = useState(false);
-
   const { filteredFiles, setFilteredFiles, files, setFiles, editingProject } =
     useGlobal();
 
   const handleUpload = (event) => {
-    setIsLoading(true);
+    UIkit.notification({
+      message: "Uploading!",
+      status: "primary",
+      pos: "bottom-right",
+    });
     let formData = new FormData();
     for (let counter = 0; counter < event.target.files.length; counter++) {
       formData.append("files[]", event.target.files[counter]);
@@ -29,7 +31,6 @@ export default function Media() {
       })
       .then((response) => {
         setFiles([response.data, ...files]);
-        setIsLoading(false);
         UIkit.notification({
           message: "Saved!",
           status: "success",
@@ -45,7 +46,6 @@ export default function Media() {
             pos: "bottom-right",
           });
         }
-        setIsLoading(false);
       });
   };
 
@@ -85,35 +85,31 @@ export default function Media() {
                 </div>
               </div>
               <div className={"uk-width-1-1"}>
-                {isLoading ? (
-                  <div data-uk-spinner={""}></div>
-                ) : (
-                  <div className={"uk-child-width-auto"} data-uk-grid={""}>
-                    {filteredFiles?.map((file) => (
-                      <div key={file?._id}>
-                        <div
+                <div className={"uk-child-width-auto"} data-uk-grid={""}>
+                  {filteredFiles?.map((file) => (
+                    <div key={file?._id}>
+                      <div
+                        className={
+                          "uk-cover-container uk-height-medium cover-image"
+                        }
+                        style={{ width: "300px" }}
+                      >
+                        <img
+                          src={`https://storage.cloud.google.com/stupendous-cms/${file?._id}?authuser=2`}
+                          data-uk-cover={""}
+                        />
+                        <a
                           className={
-                            "uk-cover-container uk-height-medium cover-image"
+                            "uk-position-top-right uk-light uk-padding-small"
                           }
-                          style={{ width: "300px" }}
+                          onClick={() => handleDelete(file?._id)}
                         >
-                          <img
-                            src={`https://storage.cloud.google.com/stupendous-cms/${file?._id}?authuser=2`}
-                            data-uk-cover={""}
-                          />
-                          <a
-                            className={
-                              "uk-position-top-right uk-light uk-padding-small"
-                            }
-                            onClick={() => handleDelete(file?._id)}
-                          >
-                            <FontAwesomeIcon icon={faTrash} />
-                          </a>
-                        </div>
+                          <FontAwesomeIcon icon={faTrash} />
+                        </a>
                       </div>
-                    ))}
-                  </div>
-                )}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
