@@ -6,6 +6,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
+import UIkit from "uikit";
 
 export default function Media() {
   const [isLoading, setIsLoading] = useState(false);
@@ -15,22 +16,25 @@ export default function Media() {
 
   const handleUpload = (event) => {
     setIsLoading(true);
+    let formData = new FormData();
+    for (let counter = 0; counter < event.target.files.length; counter++) {
+      formData.append("files[]", event.target.files[counter]);
+    }
+    formData.append("projectId", editingProject?._id);
     axios
-      .post(
-        "/api/media",
-        {
-          projectId: editingProject?._id,
-          files: event.target.files[0],
+      .post("/api/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
         },
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      )
+      })
       .then((response) => {
         setFiles([response.data, ...files]);
         setIsLoading(false);
+        UIkit.notification({
+          message: "Saved!",
+          status: "success",
+          pos: "bottom-right",
+        });
       })
       .catch((error) => console.log(error));
   };
@@ -58,6 +62,7 @@ export default function Media() {
                     accept={
                       "image/jpeg, image/pjpeg, image/png, image/gif, image/webp, image/x-icon"
                     }
+                    multiple
                     onChange={(event) => handleUpload(event)}
                   />
                   <button
