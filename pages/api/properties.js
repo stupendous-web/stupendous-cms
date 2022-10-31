@@ -54,6 +54,27 @@ export default async function handler(request, response) {
         .finally(() => client.close());
 
       break;
+    case "PATCH":
+      await client
+        .db("stupendous-cms")
+        .collection("properties")
+        .updateOne(
+          { _id: ObjectId(body?._id) },
+          {
+            $set: {
+              type: body?.type,
+              name: body?.name,
+              isRequired: body?.isRequired,
+            },
+          }
+        )
+        .then(() =>
+          response.status(200).send("Good things come to those who wait.")
+        )
+        .finally(() => client.close());
+
+      break;
+    /*
     case "DELETE":
       await client
         .db("stupendous-cms")
@@ -65,6 +86,7 @@ export default async function handler(request, response) {
         .finally(() => client.close());
 
       break;
+      */
     default:
       return response.status(405).send();
   }

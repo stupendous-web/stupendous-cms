@@ -4,9 +4,9 @@ import axios from "axios";
 import UIkit from "uikit";
 
 export default function EditProperty({ model, property }) {
-  const { editingProject, filteredModels, properties, setProperties } =
-    useGlobal();
+  const { filteredModels, properties, setProperties } = useGlobal();
 
+  const [editingId, setEditingId] = useState(property?._id);
   const [editingType, setEditingType] = useState(property?.type);
   const [editingName, setEditingName] = useState(property?.type);
   const [editingIsRequired, setEditingIsRequired] = useState(
@@ -23,16 +23,14 @@ export default function EditProperty({ model, property }) {
     event.preventDefault();
     axios
       .patch("/api/properties", {
-        _id: property._id,
+        _id: editingId,
         type: editingType,
         name: editingName,
         isRequired: editingIsRequired,
-        modelId: model._id,
-        projectId: editingProject?._id,
       })
       .then(() => {
         const newState = properties.map((property) => {
-          if (property._id === property._id) {
+          if (property._id === editingId) {
             return {
               ...property,
               type: editingType,
@@ -44,7 +42,7 @@ export default function EditProperty({ model, property }) {
           return property;
         });
         setProperties(newState);
-        UIkit.modal(`#edit-property-modal-${property._id}`).hide();
+        UIkit.modal(`#edit-property-modal-${editingId}`).hide();
       })
       .catch((error) => console.log(error));
   };
@@ -52,7 +50,7 @@ export default function EditProperty({ model, property }) {
   return (
     <>
       <a
-        href={`#edit-property-modal-${property._id}`}
+        href={`#edit-property-modal-${editingId}`}
         className={
           "uk-button uk-button-default uk-button-small uk-margin-small-right"
         }
@@ -60,7 +58,7 @@ export default function EditProperty({ model, property }) {
       >
         {property?.name}
       </a>
-      <div id={`edit-property-modal-${property._id}`} data-uk-modal={""}>
+      <div id={`edit-property-modal-${editingId}`} data-uk-modal={""}>
         <div className={"uk-modal-dialog uk-modal-body"}>
           <h3>
             Edit Property for{" "}
@@ -105,8 +103,6 @@ export default function EditProperty({ model, property }) {
               </label>
               <input
                 type={"checkbox"}
-                name={`checkbox-${property._id}`}
-                value={`checkbox-${property._id}`}
                 checked={editingIsRequired}
                 className={"uk-checkbox"}
                 onChange={() => setEditingIsRequired(!editingIsRequired)}
