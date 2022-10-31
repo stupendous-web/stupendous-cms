@@ -1,4 +1,3 @@
-import { useState } from "react";
 import axios from "axios";
 import { useGlobal } from "../../lib/context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -32,7 +31,7 @@ export default function Media() {
       .then((response) => {
         setFiles([response.data, ...files]);
         UIkit.notification({
-          message: "Saved!",
+          message: "All set!",
           status: "success",
           pos: "bottom-right",
         });
