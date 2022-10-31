@@ -3,13 +3,15 @@ import { useState } from "react";
 import axios from "axios";
 import UIkit from "uikit";
 
-export default function CreateProperty({ id }) {
+export default function EditProperty({ model, property }) {
   const { editingProject, filteredModels, properties, setProperties } =
     useGlobal();
 
-  const [type, setType] = useState("");
-  const [name, setName] = useState("");
-  const [isRequired, setIsRequired] = useState(false);
+  const [editingType, setEditingType] = useState(property?.type);
+  const [editingName, setEditingName] = useState(property?.type);
+  const [editingIsRequired, setEditingIsRequired] = useState(
+    property?.isRequired
+  );
 
   const propertyTypes = [
     { option: "Title", value: "string" },
@@ -20,19 +22,29 @@ export default function CreateProperty({ id }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .post("/api/properties", {
-        type: type,
-        name: name,
-        isRequired: isRequired,
-        modelId: id,
+      .patch("/api/properties", {
+        _id: property._id,
+        type: editingType,
+        name: editingName,
+        isRequired: editingIsRequired,
+        modelId: model._id,
         projectId: editingProject?._id,
       })
-      .then((response) => {
-        setProperties([...properties, response.data]);
-        UIkit.modal(`#create-property-modal-${id}`).hide();
-        setType("");
-        setName("");
-        setIsRequired(false);
+      .then(() => {
+        const newState = properties.map((property) => {
+          if (property._id === property._id) {
+            return {
+              ...property,
+              type: editingType,
+              name: editingName,
+              isRequired: editingIsRequired,
+            };
+          }
+
+          return property;
+        });
+        setProperties(newState);
+        UIkit.modal(`#edit-property-modal-${property._id}`).hide();
       })
       .catch((error) => console.log(error));
   };
@@ -40,26 +52,31 @@ export default function CreateProperty({ id }) {
   return (
     <>
       <a
-        href={`#create-property-modal-${id}`}
+        href={`#edit-property-modal-${property._id}`}
         className={
-          "uk-button uk-button-primary uk-button-small uk-margin-small-right"
+          "uk-button uk-button-default uk-button-small uk-margin-small-right"
         }
         data-uk-toggle={""}
       >
-        Add
+        {property?.name}
       </a>
-      <div id={`create-property-modal-${id}`} data-uk-modal={""}>
+      <div id={`edit-property-modal-${property._id}`} data-uk-modal={""}>
         <div className={"uk-modal-dialog uk-modal-body"}>
           <h3>
-            Create Property for{" "}
-            {filteredModels?.find((model) => model?._id === id).name}
+            Edit Property for{" "}
+            {
+              filteredModels?.find(
+                (filteredModel) => filteredModel?._id === model._id
+              ).name
+            }
           </h3>
           <form onSubmit={(event) => handleSubmit(event)}>
             <div className={"uk-margin"}>
               <label className={"uk-form-label"}>Type</label>
               <select
+                value={editingType}
                 className={"uk-select"}
-                onChange={(event) => setType(event.target.value)}
+                onChange={(event) => setEditingType(event.target.value)}
                 required
               >
                 <option value={""}>Select</option>
@@ -76,9 +93,9 @@ export default function CreateProperty({ id }) {
               <label className={"uk-form-label"}>Name</label>
               <input
                 type={"text"}
-                value={name}
+                value={editingName}
                 className={"uk-input"}
-                onChange={(event) => setName(event.target.value)}
+                onChange={(event) => setEditingName(event.target.value)}
                 required
               />
             </div>
@@ -88,9 +105,11 @@ export default function CreateProperty({ id }) {
               </label>
               <input
                 type={"checkbox"}
-                checked={isRequired}
+                name={`checkbox-${property._id}`}
+                value={`checkbox-${property._id}`}
+                checked={editingIsRequired}
                 className={"uk-checkbox"}
-                onChange={(event) => setIsRequired(event.target.checked)}
+                onChange={() => setEditingIsRequired(!editingIsRequired)}
               />
             </div>
             <input

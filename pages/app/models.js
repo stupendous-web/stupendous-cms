@@ -9,6 +9,7 @@ import { createSlug } from "../../utils/helpers";
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
 import CreateProperty from "../../components/CreateProperty";
+import EditProperty from "../../components/EditProperty";
 
 export default function Models() {
   const [modelName, setModelName] = useState("");
@@ -148,42 +149,25 @@ export default function Models() {
                         </thead>
                         <tbody>
                           {filteredModels?.map((model) => {
+                            const modelProperties = filteredProperties?.filter(
+                              (property) => property?.modelId === model._id
+                            );
                             return (
                               <tr key={model._id}>
                                 <td>{model.name}</td>
                                 <td>{model.slug}</td>
                                 <td>
-                                  {!!filteredProperties?.filter(
-                                    (property) =>
-                                      property?.modelId === model._id
-                                  )?.length &&
-                                    filteredProperties
-                                      ?.filter(
-                                        (property) =>
-                                          property?.modelId === model._id
-                                      )
-                                      ?.map((property) => {
-                                        return (
-                                          <a
-                                            className={
-                                              "uk-button uk-button-default uk-button-small uk-margin-small-right"
-                                            }
-                                            key={property._id}
-                                          >
-                                            {property?.name}
-                                          </a>
-                                        );
-                                      })}
-                                  <a
-                                    className={
-                                      "uk-button uk-button-primary uk-button-small uk-margin-small-right"
-                                    }
-                                    href={`#create-property-${model?._id}`}
-                                    data-uk-toggle={""}
-                                  >
-                                    Add
-                                  </a>
-                                  <CreateProperty id={model?._id} />
+                                  {!!modelProperties?.length &&
+                                    modelProperties?.map((property) => {
+                                      return (
+                                        <EditProperty
+                                          model={model}
+                                          property={property}
+                                          key={property._id}
+                                        />
+                                      );
+                                    })}
+                                  <CreateProperty id={model._id} />
                                 </td>
                                 <td className={"uk-text-right"}>
                                   <span
