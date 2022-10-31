@@ -4,9 +4,12 @@ import multiparty from "multiparty";
 const middleware = nextConnect();
 
 export default middleware.use(async (request, response, next) => {
-  const form = new multiparty.Form();
+  const form = new multiparty.Form({ maxFilesSize: 4500000 }); // per Vercel
 
   await form.parse(request, function (error, fields, files) {
+    if (error) {
+      response.status(500).send(error);
+    }
     request.body = fields;
     request.files = files;
     next();
