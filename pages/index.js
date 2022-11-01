@@ -66,7 +66,12 @@ export default function Home() {
           <div className={"uk-container uk-container-small"}>
             <div className={"uk-child-width-1-2@s"} data-uk-grid={""}>
               <div>
-                <h3>Cloud Hosted</h3>
+                <h3>
+                  <span className={"material-symbols-rounded uk-margin-right"}>
+                    cloud
+                  </span>
+                  Cloud Hosted
+                </h3>
                 <p>
                   Make things easy for your clients and yourself! You can host
                   and manage all your content, media, and JSON endpoints right
@@ -74,7 +79,12 @@ export default function Home() {
                 </p>
               </div>
               <div>
-                <h3>REST API</h3>
+                <h3>
+                  <span className={"material-symbols-rounded uk-margin-right"}>
+                    data_object
+                  </span>
+                  REST API
+                </h3>
                 <p>
                   This is a developer&apos;s dream. Your REST API is accessible
                   through your own custom endpoints and your media is hosted via
@@ -82,14 +92,24 @@ export default function Home() {
                 </p>
               </div>
               <div>
-                <h3>Project and Content Management</h3>
+                <h3>
+                  <span className={"material-symbols-rounded uk-margin-right"}>
+                    assignment
+                  </span>
+                  Project Management
+                </h3>
                 <p>
                   Keep it cool! Stay organized by managing your content by type
                   and into projects that your clients can easily access.
                 </p>
               </div>
               <div>
-                <h3>Media</h3>
+                <h3>
+                  <span className={"material-symbols-rounded uk-margin-right"}>
+                    image
+                  </span>
+                  Media
+                </h3>
                 <p>
                   That&apos;s right! You can upload media as well and access it
                   through a Google Cloud endpoint in your API.
