@@ -74,7 +74,6 @@ export default async function handler(request, response) {
         .finally(() => client.close());
 
       break;
-    /*
     case "DELETE":
       await client
         .db("stupendous-cms")
@@ -85,8 +84,9 @@ export default async function handler(request, response) {
         )
         .finally(() => client.close());
 
+      // Patch objects
+
       break;
-      */
     default:
       return response.status(405).send();
   }

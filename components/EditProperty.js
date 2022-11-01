@@ -47,6 +47,16 @@ export default function EditProperty({ model, property }) {
       .catch((error) => console.log(error));
   };
 
+  const handleDelete = () => {
+    axios
+      .delete("/api/properties", { data: { propertyId: editingId } })
+      .then(() => {
+        // This doesn't work: setProperties(properties?.filter((property) => property !== editingId));
+        UIkit.modal(`#edit-property-modal-${editingId}`).hide();
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
     <>
       <a
@@ -60,14 +70,32 @@ export default function EditProperty({ model, property }) {
       </a>
       <div id={`edit-property-modal-${editingId}`} data-uk-modal={""}>
         <div className={"uk-modal-dialog uk-modal-body"}>
-          <h3>
-            Edit Property for{" "}
-            {
-              filteredModels?.find(
-                (filteredModel) => filteredModel?._id === model._id
-              ).name
-            }
-          </h3>
+          <div className={"uk-flex-middle"} data-uk-grid={""}>
+            <div className={"uk-width-expand"}>
+              <h3>
+                Edit Property for{" "}
+                {
+                  filteredModels?.find(
+                    (filteredModel) => filteredModel?._id === model._id
+                  ).name
+                }
+              </h3>
+            </div>
+            <div>
+              <div
+                className={"uk-text-primary"}
+                style={{ cursor: "pointer" }}
+                onClick={() => handleDelete()}
+              >
+                <span
+                  className={"material-symbols-rounded"}
+                  style={{ display: "flex", alignItems: "center" }}
+                >
+                  delete
+                </span>
+              </div>
+            </div>
+          </div>
           <form onSubmit={(event) => handleSubmit(event)}>
             <div className={"uk-margin"}>
               <label className={"uk-form-label"}>Type</label>
