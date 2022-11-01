@@ -81,14 +81,19 @@ export default function SideNavigation() {
 
   return (
     <>
-      <div className={"uk-flex uk-flex-center uk-flex-middle uk-padding"}>
-        <img
-          src={gravatar.url(session?.user?.email)}
-          className={"uk-border-circle"}
-          style={{ width: "3rem" }}
-        />
+      <div
+        className={"uk-navbar-container uk-navbar-transparent"}
+        data-uk-navbar={""}
+      >
+        <div className={"uk-navbar-item"}>
+          <img
+            src={gravatar.url(session.user.email)}
+            className={"uk-border-circle"}
+            style={{ width: "4rem" }}
+          />
+        </div>
       </div>
-      <div>
+      <div className={"uk-margin"}>
         {publishingLinks.map((link, key) => {
           return (
             <div className={link?.visible ? undefined : "uk-hidden"} key={key}>
