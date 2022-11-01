@@ -7,6 +7,7 @@ import Navigation from "../components/Navigation";
 import rest from "../images/screenshots/rest.jpg";
 import projects from "../images/screenshots/projects.jpg";
 import models from "../images/screenshots/models.jpg";
+import editor from "../images/screenshots/editor.jpg";
 
 export default function Home() {
   return (
@@ -43,21 +44,19 @@ export default function Home() {
         </div>
         <div className={"uk-section"}>
           <div className={"uk-container"}>
-            <div className={"uk-child-width-1-3@s"} data-uk-grid={""}>
-              <div>
+            <div className={"uk-flex-middle"} data-uk-grid={""}>
+              <div className={"uk-width-2-3@s"}>
                 <div className={"next-image"}>
-                  <Image src={rest} alt={"Stupendous CMS"} />
+                  <Image src={editor} alt={"Stupendous CMS"} />
                 </div>
               </div>
-              <div>
-                <div className={"next-image"}>
-                  <Image src={projects} alt={"Stupendous CMS"} />
-                </div>
-              </div>
-              <div>
-                <div className={"next-image"}>
-                  <Image src={models} alt={"Stupendous CMS"} />
-                </div>
+              <div className={"uk-width-1-3@s"}>
+                <h3>Publish Content</h3>
+                <p>
+                  Distraction free editing makes it easy for your clients to
+                  publish their content in a way that&apos;s accessible to you
+                  as a developer.
+                </p>
               </div>
             </div>
           </div>
@@ -114,6 +113,27 @@ export default function Home() {
                   That&apos;s right! You can upload media as well and access it
                   through a Google Cloud endpoint in your API.
                 </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className={"uk-section"}>
+          <div className={"uk-container"}>
+            <div className={"uk-child-width-1-3@s"} data-uk-grid={""}>
+              <div>
+                <div className={"next-image"}>
+                  <Image src={rest} alt={"Stupendous CMS"} />
+                </div>
+              </div>
+              <div>
+                <div className={"next-image"}>
+                  <Image src={projects} alt={"Stupendous CMS"} />
+                </div>
+              </div>
+              <div>
+                <div className={"next-image"}>
+                  <Image src={models} alt={"Stupendous CMS"} />
+                </div>
               </div>
             </div>
           </div>
