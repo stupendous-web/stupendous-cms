@@ -3,8 +3,6 @@ import Link from "next/link";
 import { useGlobal } from "../../lib/context";
 import axios from "axios";
 import UIkit from "uikit";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { createSlug } from "../../utils/helpers";
 
 import Authentication from "../../components/Authentication";
@@ -148,7 +146,9 @@ export default function Content() {
                                 <td className={"uk-text-right"}>
                                   <Link href={"/app/editor"}>
                                     <a className={"uk-margin-right"}>
-                                      <FontAwesomeIcon icon={faPenToSquare} />
+                                      <span class={"material-symbols-rounded"}>
+                                        edit
+                                      </span>
                                     </a>
                                   </Link>
                                   <span
@@ -162,7 +162,9 @@ export default function Content() {
                                         .then(() => handleDelete(project._id));
                                     }}
                                   >
-                                    <FontAwesomeIcon icon={faTrash} />
+                                    <span class={"material-symbols-rounded"}>
+                                      delete
+                                    </span>
                                   </span>
                                 </td>
                               </tr>

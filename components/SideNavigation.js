@@ -4,15 +4,6 @@ import { useGlobal } from "../lib/context";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import gravatar from "gravatar";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faDatabase,
-  faFeather,
-  faImage,
-  faProjectDiagram,
-  faUser,
-  faWallet,
-} from "@fortawesome/free-solid-svg-icons";
 
 export default function SideNavigation() {
   const [billingLink, setBillingLink] = useState("");
@@ -36,7 +27,7 @@ export default function SideNavigation() {
     {
       href: "/app/content",
       heading: "Content",
-      icon: faFeather,
+      icon: "edit_document",
       description:
         "This is the the bread and butter of your API. See and edit all the data that's accessible via your API.",
       visible:
@@ -47,7 +38,7 @@ export default function SideNavigation() {
     {
       href: "/app/media",
       heading: "Media",
-      icon: faImage,
+      icon: "image",
       description:
         "Upload your files to the Stupendous Web bucket and access them via your API",
       visible: !!projects?.length,
@@ -58,7 +49,7 @@ export default function SideNavigation() {
     {
       href: "/app/projects",
       heading: "Projects",
-      icon: faProjectDiagram,
+      icon: "assignment",
       description:
         "A way to help you manage your content. Create and manage your projects here. You can add models and users to your projects later.",
       visible: true,
@@ -66,7 +57,7 @@ export default function SideNavigation() {
     {
       href: "/app/models",
       heading: "Models",
-      icon: faDatabase,
+      icon: "database",
       description:
         "Groups of attributes that users can add such as pages or blog posts. Here you can create models and add attributes to them.",
       visible: !!projects?.length,
@@ -74,14 +65,14 @@ export default function SideNavigation() {
     {
       href: "/app/users",
       heading: "Users",
-      icon: faUser,
+      icon: "database",
       description: "",
       visible: false,
     },
     {
       href: billingLink,
       heading: "Billing",
-      icon: faWallet,
+      icon: "credit_card",
       description:
         "A portal for you to manage your subscription and view your invoices.",
       visible: true,
@@ -108,7 +99,9 @@ export default function SideNavigation() {
                       className={"uk-text-center"}
                       style={{ fontSize: "1.5rem" }}
                     >
-                      <FontAwesomeIcon icon={link.icon} fixedWidth />
+                      <span class={"material-symbols-rounded"}>
+                        {link.icon}
+                      </span>
                     </p>
                   </a>
                 </Link>
@@ -138,7 +131,9 @@ export default function SideNavigation() {
                           className={"uk-text-center"}
                           style={{ fontSize: "1.5rem" }}
                         >
-                          <FontAwesomeIcon icon={link.icon} fixedWidth />
+                          <span class={"material-symbols-rounded"}>
+                            {link.icon}
+                          </span>
                         </p>
                       </a>
                     </Link>

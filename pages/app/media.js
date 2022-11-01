@@ -1,7 +1,5 @@
 import axios from "axios";
 import { useGlobal } from "../../lib/context";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
@@ -121,7 +119,7 @@ export default function Media() {
                           }
                           onClick={() => handleDelete(file?._id)}
                         >
-                          <FontAwesomeIcon icon={faTrash} />
+                          <span class={"material-symbols-rounded"}>delete</span>
                         </a>
                       </div>
                     </div>

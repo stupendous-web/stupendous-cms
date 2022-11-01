@@ -3,8 +3,6 @@ import { useRouter } from "next/router";
 import { useGlobal } from "../../lib/context";
 import axios from "axios";
 import UIkit from "uikit";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { createSlug } from "../../utils/helpers";
 
 import Authentication from "../../components/Authentication";
@@ -166,7 +164,9 @@ export default function Projects() {
                                       UIkit.modal("#edit-project-modal").show();
                                     }}
                                   >
-                                    <FontAwesomeIcon icon={faPenToSquare} />
+                                    <span class={"material-symbols-rounded"}>
+                                      edit
+                                    </span>
                                   </span>
                                   <span
                                     className={"uk-text-primary"}
@@ -179,7 +179,9 @@ export default function Projects() {
                                         .then(() => handleDelete(project._id));
                                     }}
                                   >
-                                    <FontAwesomeIcon icon={faTrash} />
+                                    <span class={"material-symbols-rounded"}>
+                                      delete
+                                    </span>
                                   </span>
                                 </td>
                               </tr>
