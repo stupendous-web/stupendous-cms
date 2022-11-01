@@ -92,7 +92,7 @@ export default function Objects() {
                           {filteredObjects?.map((object) => {
                             return (
                               <tr key={object._id}>
-                                <td>{object?.type}&nbsp;</td>
+                                <td>{object?.model[0]?.name}&nbsp;</td>
                                 <td>
                                   {dayjs().calendar(dayjs(object?.object))}
                                 </td>

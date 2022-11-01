@@ -164,7 +164,9 @@ export default function Projects() {
                                       UIkit.modal("#edit-project-modal").show();
                                     }}
                                   >
-                                    <span class={"material-symbols-rounded"}>
+                                    <span
+                                      className={"material-symbols-rounded"}
+                                    >
                                       edit
                                     </span>
                                   </span>
@@ -179,7 +181,9 @@ export default function Projects() {
                                         .then(() => handleDelete(project._id));
                                     }}
                                   >
-                                    <span class={"material-symbols-rounded"}>
+                                    <span
+                                      className={"material-symbols-rounded"}
+                                    >
                                       delete
                                     </span>
                                   </span>

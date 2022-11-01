@@ -178,7 +178,9 @@ export default function Models() {
                                       UIkit.modal("#edit-model-modal").show();
                                     }}
                                   >
-                                    <span class={"material-symbols-rounded"}>
+                                    <span
+                                      className={"material-symbols-rounded"}
+                                    >
                                       edit
                                     </span>
                                   </span>
@@ -193,7 +195,9 @@ export default function Models() {
                                         .then(() => handleDelete(model._id));
                                     }}
                                   >
-                                    <span class={"material-symbols-rounded"}>
+                                    <span
+                                      className={"material-symbols-rounded"}
+                                    >
                                       delete
                                     </span>
                                   </span>

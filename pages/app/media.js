@@ -111,6 +111,7 @@ export default function Media() {
                       >
                         <img
                           src={`https://storage.cloud.google.com/stupendous-cms/${file?._id}?authuser=2`}
+                          alt={file._id}
                           data-uk-cover={""}
                         />
                         <a
@@ -119,7 +120,9 @@ export default function Media() {
                           }
                           onClick={() => handleDelete(file?._id)}
                         >
-                          <span class={"material-symbols-rounded"}>delete</span>
+                          <span className={"material-symbols-rounded"}>
+                            delete
+                          </span>
                         </a>
                       </div>
                     </div>

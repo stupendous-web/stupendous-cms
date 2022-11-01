@@ -19,6 +19,8 @@ export default async function handler(request, response) {
         .collection("objects")
         .insertOne({
           ...body,
+          modelId: ObjectId(body?.modelId),
+          projectId: ObjectId(body?.projectId),
           accountId: ObjectId(session?.user?.accountId),
           createdAt: new Date(),
         })
@@ -40,6 +42,22 @@ export default async function handler(request, response) {
           {
             $match: {
               accountId: ObjectId(session?.user?.accountId),
+            },
+          },
+          {
+            $addFields: {
+              modelId: {
+                $toObjectId: "$modelId",
+              },
+            },
+          },
+          {
+            $lookup: {
+              from: "models",
+              localField: "modelId",
+              foreignField: "_id",
+              as: "model",
+              pipeline: [{ $limit: 1 }],
             },
           },
         ])
