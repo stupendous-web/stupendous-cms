@@ -22,6 +22,7 @@ export default async function handler(request, response) {
           slug: body?.slug,
           projectId: ObjectId(body?.projectId),
           accountId: ObjectId(session?.user?.accountId),
+          createdAt: new Date(),
         })
         .then(async (result) => {
           const model = await client

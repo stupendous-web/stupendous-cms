@@ -40,6 +40,7 @@ export default handler.post(async (request, response) => {
       type: request?.files?.files[0]?.headers?.["content-type"],
       projectId: ObjectId(request.body?.projectId[0]),
       accountId: ObjectId(session?.user?.accountId),
+      createdAt: new Date(),
     })
     .then(async (result) => {
       uploadFile(request?.files?.files[0]?.path, result?.insertedId)

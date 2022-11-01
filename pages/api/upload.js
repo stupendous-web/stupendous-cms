@@ -32,6 +32,7 @@ export const uploadManyFiles = async (files, body, session) => {
         type: file?.headers?.["content-type"],
         projectId: ObjectId(body?.projectId[0]),
         accountId: ObjectId(session?.user?.accountId),
+        createdAt: new Date(),
       })
       .then(async (result) => {
         uploadFile(file?.path, result?.insertedId).then(async () => {
