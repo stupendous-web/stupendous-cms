@@ -37,7 +37,7 @@ export default async function handler(request, response) {
     const account = await client
       .db("stupendous-cms")
       .collection("accounts")
-      .insertOne({ created_at: new Date() });
+      .insertOne({ createdAt: new Date() });
 
     // Create User
 
@@ -51,7 +51,7 @@ export default async function handler(request, response) {
         stripeCustomer: customer.id,
         isAccountOwner: true,
         accountId: ObjectId(account.insertedId),
-        created_at: new Date(),
+        createdAt: new Date(),
       });
   } else {
     await client.close();
