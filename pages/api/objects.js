@@ -20,6 +20,7 @@ export default async function handler(request, response) {
         .insertOne({
           ...body,
           accountId: ObjectId(session?.user?.accountId),
+          createdAt: new Date(),
         })
         .then(async (result) => {
           await client

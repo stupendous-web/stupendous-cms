@@ -3,10 +3,14 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useGlobal } from "../../lib/context";
 import axios from "axios";
+import dayjs from "dayjs";
 import UIkit from "uikit";
+let calendar = require("dayjs/plugin/calendar");
 
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
+
+dayjs.extend(calendar);
 
 export default function Objects() {
   const {
@@ -28,7 +32,7 @@ export default function Objects() {
       .then((response) => {
         UIkit.modal("#create-object-modal").hide();
         setEditingObject(response?.data);
-        router.replace("/app/editor");
+        router.push("/app/editor");
       })
       .catch((error) => console.log(error));
   };
@@ -80,8 +84,8 @@ export default function Objects() {
                       >
                         <thead>
                           <tr>
-                            <th>id</th>
-                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Date</th>
                             <th />
                           </tr>
                         </thead>
@@ -89,27 +93,28 @@ export default function Objects() {
                           {filteredObjects?.map((project) => {
                             return (
                               <tr key={project._id}>
-                                <td />
+                                <td>{project?.type}&nbsp;</td>
                                 <td>
-                                  {project.name}&nbsp;
-                                  <span
-                                    className={"uk-text-muted uk-text-italic"}
-                                  >
-                                    by Topher on March 5th, 2099
-                                  </span>{" "}
+                                  {dayjs().calendar(dayjs(project?.createdAt))}
                                 </td>
                                 <td className={"uk-text-right"}>
-                                  <Link href={"/app/editor"}>
-                                    <a className={"uk-margin-right"}>
-                                      <span
-                                        className={"material-symbols-rounded"}
-                                      >
-                                        edit
-                                      </span>
-                                    </a>
-                                  </Link>
+                                  <a
+                                    className={"uk-margin-right"}
+                                    onClick={() => {
+                                      setEditingObject();
+                                      router.push("/app/editor");
+                                    }}
+                                  >
+                                    <span
+                                      className={"material-symbols-rounded"}
+                                    >
+                                      edit
+                                    </span>
+                                  </a>
                                   <span
-                                    className={"uk-text-primary"}
+                                    className={
+                                      "uk-text-primary uk-margin-right"
+                                    }
                                     style={{ cursor: "pointer" }}
                                     onClick={() => {
                                       UIkit.modal
@@ -125,6 +130,15 @@ export default function Objects() {
                                       delete
                                     </span>
                                   </span>
+                                  <Link href={""}>
+                                    <a>
+                                      <span
+                                        className={"material-symbols-rounded"}
+                                      >
+                                        link
+                                      </span>
+                                    </a>
+                                  </Link>
                                 </td>
                               </tr>
                             );
