@@ -33,7 +33,7 @@ export default async function handler(request, response) {
 
       break;
     case "GET":
-      const projects = await client
+      await client
         .db("stupendous-cms")
         .collection("projects")
         .aggregate([
@@ -43,10 +43,9 @@ export default async function handler(request, response) {
             },
           },
         ])
-        .toArray();
-      await client.close();
-
-      response.status(200).json(projects);
+        .toArray()
+        .then((result) => response.status(200).json(result))
+        .finally(() => client.close());
 
       break;
     case "PATCH":

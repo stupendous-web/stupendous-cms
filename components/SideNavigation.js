@@ -104,7 +104,7 @@ export default function SideNavigation() {
                       className={"uk-text-center"}
                       style={{ fontSize: "1.5rem" }}
                     >
-                      <span class={"material-symbols-rounded"}>
+                      <span className={"material-symbols-rounded"}>
                         {link.icon}
                       </span>
                     </p>
@@ -136,7 +136,7 @@ export default function SideNavigation() {
                           className={"uk-text-center"}
                           style={{ fontSize: "1.5rem" }}
                         >
-                          <span class={"material-symbols-rounded"}>
+                          <span className={"material-symbols-rounded"}>
                             {link.icon}
                           </span>
                         </p>

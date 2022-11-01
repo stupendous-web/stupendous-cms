@@ -1,80 +1,36 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useGlobal } from "../../lib/context";
 import axios from "axios";
 import UIkit from "uikit";
-import { createSlug } from "../../utils/helpers";
 
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
 
 export default function Objects() {
-  const [name, setName] = useState("");
-  const [slug, setSlug] = useState("");
-
   const {
     projects,
-    setProjects,
     editingProject,
-    setEditingProject,
     filteredModels,
-    setModels,
+    filteredObjects,
+    setEditingObject,
   } = useGlobal();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const router = useRouter();
+
+  const createObject = (modelId) => {
     axios
-      .post("/api/projects", { name: name, slug: slug })
+      .post("/api/objects", {
+        projectId: editingProject._id,
+        modelId: modelId,
+      })
       .then((response) => {
-        UIkit.modal("#create-project-modal").hide();
-        setProjects([response.data, ...projects]);
-        setName("");
+        UIkit.modal("#create-object-modal").hide();
+        setEditingObject(response?.data);
+        router.replace("/app/editor");
       })
       .catch((error) => console.log(error));
-  };
-
-  const handleEdit = (event) => {
-    event.preventDefault();
-    axios
-      .patch("/api/projects", editingProject)
-      .then(() => {
-        UIkit.modal("#edit-project-modal").hide();
-        const newState = projects.map((project) => {
-          if (project._id === editingProject._id) {
-            return {
-              ...project,
-              name: editingProject.name,
-              slug: editingProject.slug,
-            };
-          }
-
-          return project;
-        });
-        setProjects(newState);
-        setEditingProject({
-          ...editingProject,
-          name: "",
-        });
-      })
-      .catch((error) => console.log(error));
-  };
-
-  const handleDelete = (_id) => {
-    axios
-      .delete("/api/projects", { data: { _id: _id } })
-      .then(() => {
-        setProjects(projects.filter((project) => project._id !== _id));
-        setModels(models.filter((model) => model.projectId !== _id));
-      })
-      .catch((error) => console.log(error));
-  };
-
-  const handleEditingProjectNameChange = (event) => {
-    setEditingProject({
-      ...editingProject,
-      name: event.target.value,
-      slug: createSlug(event.target.value),
-    });
   };
 
   useEffect(() => {
@@ -106,17 +62,16 @@ export default function Objects() {
                 )}
                 <div className={"uk-width-1-1"}>
                   <div>
-                    <div
+                    <a
+                      href={"#create-object-modal"}
                       className={"uk-button uk-button-primary uk-button-large"}
-                      onClick={() =>
-                        UIkit.modal("#create-content-modal").show()
-                      }
+                      data-uk-toggle={""}
                     >
                       Create New Content
-                    </div>
+                    </a>
                   </div>
                 </div>
-                {!!projects?.length && (
+                {!!filteredObjects?.length && (
                   <div className={"uk-width-1-1"}>
                     <div className={"uk-card uk-card-default uk-card-body"}>
                       <h3>Your Content</h3>
@@ -131,7 +86,7 @@ export default function Objects() {
                           </tr>
                         </thead>
                         <tbody>
-                          {projects?.map((project) => {
+                          {filteredObjects?.map((project) => {
                             return (
                               <tr key={project._id}>
                                 <td />
@@ -146,7 +101,9 @@ export default function Objects() {
                                 <td className={"uk-text-right"}>
                                   <Link href={"/app/editor"}>
                                     <a className={"uk-margin-right"}>
-                                      <span class={"material-symbols-rounded"}>
+                                      <span
+                                        className={"material-symbols-rounded"}
+                                      >
                                         edit
                                       </span>
                                     </a>
@@ -162,7 +119,9 @@ export default function Objects() {
                                         .then(() => handleDelete(project._id));
                                     }}
                                   >
-                                    <span class={"material-symbols-rounded"}>
+                                    <span
+                                      className={"material-symbols-rounded"}
+                                    >
                                       delete
                                     </span>
                                   </span>
@@ -178,12 +137,17 @@ export default function Objects() {
               </div>
             </div>
           </div>
-          <div id={"create-content-modal"} data-uk-modal={""}>
+          <div id={"create-object-modal"} data-uk-modal={""}>
             <div className={"uk-modal-dialog uk-modal-body"}>
               <h3>Content Type</h3>
-              <form onSubmit={(event) => handleSubmit(event)}>
+              <form>
                 <div className={"uk-margin"}>
-                  <select className={"uk-select"} required>
+                  <select
+                    defaultValue={""}
+                    className={"uk-select"}
+                    onChange={(event) => createObject(event.target.value)}
+                    required
+                  >
                     <option value={""}>Select</option>
                     {filteredModels?.map((model) => (
                       <option key={model._id} value={model._id}>
@@ -192,28 +156,6 @@ export default function Objects() {
                     ))}
                   </select>
                 </div>
-              </form>
-            </div>
-          </div>
-          <div id={"edit-project-modal"} data-uk-modal={""}>
-            <div className={"uk-modal-dialog uk-modal-body"}>
-              <h3>Edit a Project</h3>
-              <form onSubmit={(event) => handleEdit(event)}>
-                <div className={"uk-margin"}>
-                  <label className={"uk-form-label"}>Name</label>
-                  <input
-                    type={"text"}
-                    value={editingProject?.name}
-                    className={"uk-input"}
-                    onChange={(event) => handleEditingProjectNameChange(event)}
-                    required
-                  />
-                </div>
-                <input
-                  type={"submit"}
-                  value={"Save"}
-                  className={"uk-button uk-button-primary"}
-                />
               </form>
             </div>
           </div>
