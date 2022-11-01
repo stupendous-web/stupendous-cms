@@ -25,7 +25,7 @@ export default function SideNavigation() {
 
   const publishingLinks = [
     {
-      href: "/app/content",
+      href: "/app/objects",
       heading: "Content",
       icon: "edit_document",
       description:

@@ -8,7 +8,7 @@ import { createSlug } from "../../utils/helpers";
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
 
-export default function Content() {
+export default function Objects() {
   const [name, setName] = useState("");
   const [slug, setSlug] = useState("");
 

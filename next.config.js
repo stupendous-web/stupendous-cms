@@ -7,7 +7,7 @@ const nextConfig = {
     "/app/dashboard",
     "/app/models",
     "/app/projects",
-    "/app/content",
+    "/app/objects",
     "/app/editor",
     "/app/media",
   ], // For sitemap
