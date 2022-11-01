@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useGlobal } from "../../lib/context";
 import axios from "axios";
@@ -90,12 +89,12 @@ export default function Objects() {
                           </tr>
                         </thead>
                         <tbody>
-                          {filteredObjects?.map((project) => {
+                          {filteredObjects?.map((object) => {
                             return (
-                              <tr key={project._id}>
-                                <td>{project?.type}&nbsp;</td>
+                              <tr key={object._id}>
+                                <td>{object?.type}&nbsp;</td>
                                 <td>
-                                  {dayjs().calendar(dayjs(project?.createdAt))}
+                                  {dayjs().calendar(dayjs(object?.object))}
                                 </td>
                                 <td className={"uk-text-right"}>
                                   <a
@@ -121,7 +120,7 @@ export default function Objects() {
                                         .confirm(
                                           "Are you sure you wish to permanently delete this project?"
                                         )
-                                        .then(() => handleDelete(project._id));
+                                        .then(() => handleDelete(object._id));
                                     }}
                                   >
                                     <span
@@ -130,15 +129,6 @@ export default function Objects() {
                                       delete
                                     </span>
                                   </span>
-                                  <Link href={""}>
-                                    <a>
-                                      <span
-                                        className={"material-symbols-rounded"}
-                                      >
-                                        link
-                                      </span>
-                                    </a>
-                                  </Link>
                                 </td>
                               </tr>
                             );
