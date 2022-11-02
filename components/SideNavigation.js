@@ -86,11 +86,15 @@ export default function SideNavigation() {
         data-uk-navbar={""}
       >
         <div className={"uk-navbar-item"}>
-          <img
-            src={gravatar.url(session.user.email)}
-            className={"uk-border-circle"}
-            style={{ width: "4rem" }}
-          />
+          <Link href={"/app/account"}>
+            <a>
+              <img
+                src={gravatar.url(session.user.email)}
+                className={"uk-border-circle"}
+                style={{ width: "4rem" }}
+              />
+            </a>
+          </Link>
         </div>
       </div>
       <div className={"uk-margin"}>

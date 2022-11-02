@@ -15,7 +15,7 @@ export default function Dashboard() {
   const { projects, editingProject, filteredModels } = useGlobal();
 
   useEffect(() => {
-    !projects?.length && router.replace("/app/projects");
+    projects?.length < 1 && router.replace("/app/projects");
   }, [projects]);
 
   return (
