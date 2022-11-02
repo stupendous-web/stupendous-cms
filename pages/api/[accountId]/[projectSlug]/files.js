@@ -8,7 +8,6 @@ export default async function handler(request, response) {
 
   switch (request.method) {
     case "GET":
-      console.log(accountId, projectSlug);
       await client
         .db("stupendous-cms")
         .collection("files")

@@ -1,10 +1,10 @@
+import { useState } from "react";
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
-import { useState } from "react";
 
 export default function Projects() {
   const { value, setValue } = useState();
