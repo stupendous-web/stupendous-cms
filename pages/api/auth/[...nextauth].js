@@ -51,16 +51,16 @@ export const authOptions = {
             },
             {
               $addFields: {
-                userId: {
-                  $toObjectId: "$userId",
+                accountId: {
+                  $toObjectId: "$accountId",
                 },
               },
             },
             {
               $lookup: {
                 from: "accounts",
-                localField: "userId",
-                foreignField: "userId",
+                localField: "accountId",
+                foreignField: "_id",
                 as: "account",
                 pipeline: [{ $limit: 1 }],
               },

@@ -1,14 +1,22 @@
+import { useEffect } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useGlobal } from "../../lib/context";
 
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
+import { useRouter } from "next/router";
 
 export default function Dashboard() {
   const { data: session } = useSession();
 
-  const { editingProject, filteredModels } = useGlobal();
+  const router = useRouter();
+
+  const { projects, editingProject, filteredModels } = useGlobal();
+
+  useEffect(() => {
+    !projects?.length && router.replace("/app/projects");
+  }, [projects]);
 
   return (
     <>
