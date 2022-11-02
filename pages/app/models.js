@@ -17,7 +17,6 @@ export default function Models() {
     models,
     setModels,
     filteredModels,
-    setFilteredModels,
     editingModel,
     setEditingModel,
     projects,
@@ -37,7 +36,7 @@ export default function Models() {
       })
       .then((response) => {
         UIkit.modal("#create-model-modal").hide();
-        setFilteredModels([response.data[0], ...filteredModels]);
+        setModels([response.data[0], ...models]);
         setModelName("");
       })
       .catch((error) => console.log(error));
@@ -49,14 +48,14 @@ export default function Models() {
       .patch("/api/models", editingModel)
       .then((response) => {
         UIkit.modal("#edit-model-modal").hide();
-        const newState = filteredModels.map((model) => {
+        const newState = models.map((model) => {
           if (model._id === editingModel._id) {
             return response.data[0];
           }
 
           return model;
         });
-        setFilteredModels(newState);
+        setModels(newState);
         setEditingModel({
           ...editingModel,
           name: "",
