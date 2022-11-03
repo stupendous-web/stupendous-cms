@@ -26,14 +26,13 @@ export default function Home() {
               Clients manage their content. You manage their software.
             </h1>
             <p>
-              As a noob developer, I was frustrated with that lack of platforms
-              that would allow my clients to manager their content while
-              allowing me to insert it easily into their project via an API at
-              an affordable cost. Yeah! Yeah! Wordpress, right? Blah! Blah!
-              Let&apos;s do better! PHP is 💀! Stupendous CMS is a hosted,
-              headless content management system built with Javascript and
-              MongoDB. Your clients can login and easily manage their content
-              and you can access it through your REST API. Let&apos;s go!
+              As a developer, it can be frustrating to allow your clients to
+              manager their content while allowing you as the developer to
+              insert it easily into their project via an API and at an
+              affordable cost. Stupendous CMS is a hosted, headless content
+              management system with a focus on Javascript and JSON. Your
+              clients can login and easily manage their content and you can
+              access it through your REST API. Let&apos;s go!
             </p>
             <p className={"uk-h1 uk-text-right"}>
               <i className={"devicon-nextjs-original-wordmark"} />
@@ -51,7 +50,7 @@ export default function Home() {
                 </div>
               </div>
               <div className={"uk-width-1-3@s"}>
-                <h3>Publish Content</h3>
+                <h3>Content Management</h3>
                 <p>
                   Distraction free editing makes it easy for your clients to
                   publish their content in a way that&apos;s accessible to you
@@ -86,8 +85,8 @@ export default function Home() {
                 </h3>
                 <p>
                   This is a developer&apos;s dream. Your REST API is accessible
-                  through your own custom endpoints and your media is hosted via
-                  the Stupendous CMS Google Cloud Storage account.
+                  through your own custom endpoints including paths to your
+                  media.
                 </p>
               </div>
               <div>

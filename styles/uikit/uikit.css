@@ -249,12 +249,12 @@ h6,
 h1,
 .uk-h1 {
   font-size: 5.1rem;
-  line-height: 1.2;
+  line-height: 1;
 }
 h2,
 .uk-h2 {
   font-size: 3.4rem;
-  line-height: 1.3;
+  line-height: 1;
 }
 h3,
 .uk-h3 {
@@ -11882,7 +11882,7 @@ iframe[data-uk-cover] {
   font-family: 'Material Symbols Rounded';
   font-style: normal;
   font-weight: 700;
-  src: url(https://fonts.gstatic.com/s/materialsymbolsrounded/v62/syl0-zNym6YjUruM-QrEh7-nyTnjDwKNJ_190FjpZIvDmUSVOK7BDJ_vb9vUSzq3wzLK-P0J-V_Zs-QtQth3-jOc7TOVpeRL2w5rwZu2rGCiXxI.ttf) format('truetype');
+  src: url(https://fonts.gstatic.com/s/materialsymbolsrounded/v68/syl0-zNym6YjUruM-QrEh7-nyTnjDwKNJ_190FjpZIvDmUSVOK7BDJ_vb9vUSzq3wzLK-P0J-V_Zs-QtQth3-jOc7TOVpeRL2w5rwZu2rGCiXxI.ttf) format('truetype');
 }
 .material-symbols-rounded {
   font-family: 'Material Symbols Rounded';
@@ -11940,10 +11940,12 @@ img {
 /**********/
 /* CUSTOM */
 /**********/
-.next-image,
+.next-image {
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  border-radius: 7px;
+}
 .next-image > * {
   display: block !important;
-  box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12), 0 1px 8px 0 rgba(0, 0, 0, 0.2);
   border-radius: 7px;
 }
 .cover-image {
