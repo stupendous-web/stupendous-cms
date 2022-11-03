@@ -93,9 +93,7 @@ export default function Objects() {
                             return (
                               <tr key={object._id}>
                                 <td>{object?.model[0]?.name}&nbsp;</td>
-                                <td>
-                                  {dayjs().calendar(dayjs(object?.object))}
-                                </td>
+                                <td>{dayjs(object?.createdAt).calendar()}</td>
                                 <td className={"uk-text-right"}>
                                   <a
                                     className={"uk-margin-right"}
