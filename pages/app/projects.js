@@ -106,7 +106,7 @@ export default function Projects() {
                 >
                   <Image src={scrumBoard} />
                 </div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                <p>Projects help you organize your clients and content.</p>
                 <a
                   className={"uk-button uk-button-primary"}
                   href={"#create-project-modal"}
