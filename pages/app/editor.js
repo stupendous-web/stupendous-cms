@@ -10,44 +10,40 @@ export default function Projects() {
   const { value, setValue } = useState();
 
   return (
-    <div className={"uk-scope"}>
-      <Authentication>
-        <Layout>
-          <div className={"uk-section uk-section-small"}>
-            <div className={"uk-container uk-container-expand"}>
-              <div className={"uk-grid-match"} data-uk-grid={""}>
-                <div className={"uk-width-1-1"}>
-                  <div className={"uk-flex-middle"} data-uk-grid={""}>
-                    <div className={"uk-width-expand"}>
-                      <h1>
-                        <input
-                          type={"text"}
-                          className={"uk-input"}
-                          style={{ background: "none", height: "inherit" }}
-                          placeholder={"Title"}
-                          autoFocus
-                        />
-                      </h1>
-                    </div>
-                    <div>
-                      <a
-                        className={
-                          "uk-button uk-button-primary uk-button-large"
-                        }
-                      >
-                        Publish
-                      </a>
-                    </div>
+    <Authentication>
+      <Layout>
+        <div className={"uk-section uk-section-small"}>
+          <div className={"uk-container uk-container-expand"}>
+            <div className={"uk-grid-match"} data-uk-grid={""}>
+              <div className={"uk-width-1-1"}>
+                <div className={"uk-flex-middle"} data-uk-grid={""}>
+                  <div className={"uk-width-expand"}>
+                    <h1>
+                      <input
+                        type={"text"}
+                        className={"uk-input"}
+                        style={{ background: "none", height: "inherit" }}
+                        placeholder={"Title"}
+                        autoFocus
+                      />
+                    </h1>
+                  </div>
+                  <div>
+                    <a
+                      className={"uk-button uk-button-primary uk-button-large"}
+                    >
+                      Publish
+                    </a>
                   </div>
                 </div>
-                <div className={"uk-width-1-1"}>
-                  <ReactQuill value={value} onChange={setValue} />
-                </div>
+              </div>
+              <div className={"uk-width-1-1"}>
+                <ReactQuill value={value} onChange={setValue} />
               </div>
             </div>
           </div>
-        </Layout>
-      </Authentication>
-    </div>
+        </div>
+      </Layout>
+    </Authentication>
   );
 }

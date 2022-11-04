@@ -1,8 +1,10 @@
 import { SessionProvider } from "next-auth/react";
 import { Provider } from "../lib/context";
-import uikit from "uikit";
+import Uikit from "uikit";
 import devicon from "devicon";
 import "../styles/uikit/uikit.css";
+import { useEffect } from "react";
+import UIkit from "uikit";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   console.log(
@@ -13,10 +15,17 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       "              |_| ",
     "color: #ec008c"
   );
+
+  useEffect(() => {
+    UIkit.container = ".uk-scope";
+  }, []);
+
   return (
     <SessionProvider session={session}>
       <Provider>
-        <Component {...pageProps} />
+        <div className={"uk-scope"}>
+          <Component {...pageProps} />
+        </div>
       </Provider>
     </SessionProvider>
   );
