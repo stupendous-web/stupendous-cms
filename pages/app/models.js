@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Image from "next/image";
 import { useGlobal } from "../../lib/context";
 import axios from "axios";
 import UIkit from "uikit";
@@ -8,7 +9,6 @@ import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
 import CreateProperty from "../../components/CreateProperty";
 import EditProperty from "../../components/EditProperty";
-import Image from "next/image";
 
 import typewriter from "../../images/undraw/undraw_typewriter_re_u9i2.svg";
 

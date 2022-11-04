@@ -61,24 +61,6 @@ export default function Media() {
         <div className={"uk-section uk-section-small"}>
           <div className={"uk-container uk-container-expand"}>
             <div className={"uk-grid-match"} data-uk-grid={""}>
-              {!filteredFiles?.length && (
-                <>
-                  <div className={"uk-width-1-1"}>
-                    <div
-                      className={"uk-alert-warning uk-flex uk-flex-middle"}
-                      data-uk-alert={""}
-                    >
-                      <span className={"uk-text-large uk-margin-right"}>
-                        👇
-                      </span>
-                      <div>
-                        Try adding some images. You can access them via your
-                        media API.
-                      </div>
-                    </div>
-                  </div>
-                </>
-              )}
               <div className={"uk-width-1-1"}>
                 <div data-uk-form-custom={""}>
                   <input
