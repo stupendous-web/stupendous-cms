@@ -7,6 +7,9 @@ import { createSlug } from "../../utils/helpers";
 
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
+import GetStarted from "../../components/GetStarted";
+
+import scrumBoard from "../../images/undraw/undraw_scrum_board_re_wk7v.svg";
 
 export default function Projects() {
   const [name, setName] = useState("");
@@ -93,112 +96,111 @@ export default function Projects() {
     <div className={"uk-scope"}>
       <Authentication>
         <Layout>
-          <div className={"uk-section uk-section-small"}>
-            <div className={"uk-container uk-container-expand"}>
-              <div className={"uk-grid-match"} data-uk-grid={""}>
-                {!projects?.length && (
+          {!projects?.length ? (
+            <GetStarted
+              image={scrumBoard}
+              paragraph={"Projects help you organize your clients and content."}
+              button={"Create a Project"}
+              onClick={() => UIkit.modal("#create-project-modal").show()}
+            />
+          ) : (
+            <div className={"uk-section uk-section-small"}>
+              <div className={"uk-container uk-container-expand"}>
+                <div className={"uk-grid-match"} data-uk-grid={""}>
                   <div className={"uk-width-1-1"}>
-                    <div
-                      className={"uk-alert-warning uk-flex uk-flex-middle"}
-                      data-uk-alert={""}
-                    >
-                      <span className={"uk-text-large uk-margin-right"}>
-                        👇
-                      </span>
-                      <div>
-                        Looks like you don&apos;t have any projects. Add one to
-                        get started!
+                    <div>
+                      <div
+                        className={
+                          "uk-button uk-button-primary uk-button-large"
+                        }
+                        onClick={() =>
+                          UIkit.modal("#create-project-modal").show()
+                        }
+                      >
+                        Create a Project
                       </div>
                     </div>
                   </div>
-                )}
-                <div className={"uk-width-1-1"}>
-                  <div>
-                    <div
-                      className={"uk-button uk-button-primary uk-button-large"}
-                      onClick={() =>
-                        UIkit.modal("#create-project-modal").show()
-                      }
-                    >
-                      Create a Project
+                  {!!projects?.length && (
+                    <div className={"uk-width-1-1"}>
+                      <div className={"uk-card uk-card-default uk-card-body"}>
+                        <h3>Projects</h3>
+                        <table
+                          className={"uk-table uk-table-divider uk-table-hover"}
+                        >
+                          <thead>
+                            <tr>
+                              <th>Name</th>
+                              <th>Slug</th>
+                              <th />
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {projects?.map((project) => {
+                              return (
+                                <tr key={project._id}>
+                                  <td>
+                                    <a
+                                      onClick={() => {
+                                        setEditingProject(project);
+                                        router.push("/app/models");
+                                      }}
+                                    >
+                                      {project.name}
+                                    </a>
+                                  </td>
+                                  <td>{project.slug}</td>
+                                  <td className={"uk-text-right"}>
+                                    <span
+                                      className={
+                                        "uk-text-primary uk-margin-right"
+                                      }
+                                      style={{ cursor: "pointer" }}
+                                      onClick={() => {
+                                        setEditingProject(project);
+                                        UIkit.modal(
+                                          "#edit-project-modal"
+                                        ).show();
+                                      }}
+                                    >
+                                      <span
+                                        className={"material-symbols-rounded"}
+                                      >
+                                        edit
+                                      </span>
+                                    </span>
+                                    <span
+                                      className={"uk-text-primary"}
+                                      style={{ cursor: "pointer" }}
+                                      onClick={() => {
+                                        UIkit.modal
+                                          .confirm(
+                                            "Are you sure you wish to permanently delete this project?"
+                                          )
+                                          .then(() =>
+                                            handleDelete(project._id)
+                                          );
+                                      }}
+                                    >
+                                      <span
+                                        className={"material-symbols-rounded"}
+                                      >
+                                        delete
+                                      </span>
+                                    </span>
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
-                {!!projects?.length && (
-                  <div className={"uk-width-1-1"}>
-                    <div className={"uk-card uk-card-default uk-card-body"}>
-                      <h3>Projects</h3>
-                      <table
-                        className={"uk-table uk-table-divider uk-table-hover"}
-                      >
-                        <thead>
-                          <tr>
-                            <th>Name</th>
-                            <th>Slug</th>
-                            <th />
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {projects?.map((project) => {
-                            return (
-                              <tr key={project._id}>
-                                <td>
-                                  <a
-                                    onClick={() => {
-                                      setEditingProject(project);
-                                      router.push("/app/models");
-                                    }}
-                                  >
-                                    {project.name}
-                                  </a>
-                                </td>
-                                <td>{project.slug}</td>
-                                <td className={"uk-text-right"}>
-                                  <span
-                                    className={
-                                      "uk-text-primary uk-margin-right"
-                                    }
-                                    style={{ cursor: "pointer" }}
-                                    onClick={() => {
-                                      setEditingProject(project);
-                                      UIkit.modal("#edit-project-modal").show();
-                                    }}
-                                  >
-                                    <span
-                                      className={"material-symbols-rounded"}
-                                    >
-                                      edit
-                                    </span>
-                                  </span>
-                                  <span
-                                    className={"uk-text-primary"}
-                                    style={{ cursor: "pointer" }}
-                                    onClick={() => {
-                                      UIkit.modal
-                                        .confirm(
-                                          "Are you sure you wish to permanently delete this project?"
-                                        )
-                                        .then(() => handleDelete(project._id));
-                                    }}
-                                  >
-                                    <span
-                                      className={"material-symbols-rounded"}
-                                    >
-                                      delete
-                                    </span>
-                                  </span>
-                                </td>
-                              </tr>
-                            );
-                          })}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
-          </div>
+          )}
           <div id={"create-project-modal"} data-uk-modal={""}>
             <div className={"uk-modal-dialog uk-modal-body"}>
               <h3>Create a Project</h3>
