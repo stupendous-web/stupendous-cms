@@ -70,8 +70,6 @@ export default function Home() {
                     elit. Consequatur hic praesentium
                     quibusdam.&#60;/p&#62;&quot;,
                     <br />
-                    &nbsp;&nbsp;type: &quot;html&quot;,
-                    <br />
                     &nbsp;&nbsp;createdAt:
                     &quot;2022-07-09T10:06:55+00:00&quot;,
                     <br />
