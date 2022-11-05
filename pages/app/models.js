@@ -13,8 +13,8 @@ import EditProperty from "../../components/EditProperty";
 import typewriter from "../../images/undraw/undraw_typewriter_re_u9i2.svg";
 
 export default function Models() {
-  const [modelName, setModelName] = useState("");
-  const [modelSlug, setModelSlug] = useState("");
+  const [modelSingular, setModelSingular] = useState("");
+  const [modelPlural, setModelPlural] = useState("");
 
   const {
     models,
@@ -33,14 +33,16 @@ export default function Models() {
     event.preventDefault();
     axios
       .post("/api/models", {
-        name: modelName,
-        slug: modelSlug,
+        singular: modelSingular,
+        plural: modelPlural,
+        slug: createSlug(modelPlural),
         projectId: editingProject?._id,
       })
       .then((response) => {
         UIkit.modal("#create-model-modal").hide();
         setModels([response.data[0], ...models]);
-        setModelName("");
+        setModelSingular("");
+        setModelPlural("");
       })
       .catch((error) => console.log(error));
   };
@@ -61,7 +63,8 @@ export default function Models() {
         setModels(newState);
         setEditingModel({
           ...editingModel,
-          name: "",
+          singular: "",
+          plural: "",
           projectId: undefined,
         });
       })
@@ -78,19 +81,6 @@ export default function Models() {
         );
       })
       .catch((error) => console.log(error));
-  };
-
-  const handleModelNameChange = (event) => {
-    setModelName(event.target.value);
-    setModelSlug(createSlug(event.target.value));
-  };
-
-  const handleEditingModelNameChange = (event) => {
-    setEditingModel({
-      ...editingModel,
-      name: event.target.value,
-      slug: createSlug(event.target.value),
-    });
   };
 
   return (
@@ -162,7 +152,7 @@ export default function Models() {
                             );
                             return (
                               <tr key={model._id}>
-                                <td>{model.name}</td>
+                                <td>{model.plural}</td>
                                 <td>{model.slug}</td>
                                 <td>
                                   {!!modelProperties?.length &&
@@ -225,12 +215,23 @@ export default function Models() {
             <h3>Create a Model</h3>
             <form onSubmit={(event) => handleSubmit(event)}>
               <div className={"uk-margin"}>
-                <label className={"uk-form-label"}>Name</label>
+                <label className={"uk-form-label"}>Singular Name</label>
                 <input
                   type={"text"}
-                  value={modelName}
+                  value={modelSingular}
                   className={"uk-input"}
-                  onChange={(event) => handleModelNameChange(event)}
+                  onChange={(event) => setModelSingular(event.target.value)}
+                  required
+                />
+                <div className={"uk-text-small"}>ex: My Stupendous Page</div>
+              </div>
+              <div className={"uk-margin"}>
+                <label className={"uk-form-label"}>Plural Name</label>
+                <input
+                  type={"text"}
+                  value={modelPlural}
+                  className={"uk-input"}
+                  onChange={(event) => setModelPlural(event.target.value)}
                   required
                 />
                 <div className={"uk-text-small"}>ex: My Stupendous Pages</div>
@@ -248,12 +249,34 @@ export default function Models() {
             <h3>Edit a Model</h3>
             <form onSubmit={(event) => handleEdit(event)}>
               <div className={"uk-margin"}>
-                <label className={"uk-form-label"}>Name</label>
+                <label className={"uk-form-label"}>Singular Name</label>
                 <input
                   type={"text"}
-                  value={editingModel?.name}
+                  value={editingModel?.singular}
                   className={"uk-input"}
-                  onChange={(event) => handleEditingModelNameChange(event)}
+                  onChange={(event) =>
+                    setEditingModel({
+                      ...editingModel,
+                      singular: event.target.value,
+                      slug: createSlug(event.target.value),
+                    })
+                  }
+                  required
+                />
+              </div>
+              <div className={"uk-margin"}>
+                <label className={"uk-form-label"}>Plural Name</label>
+                <input
+                  type={"text"}
+                  value={editingModel?.plural}
+                  className={"uk-input"}
+                  onChange={(event) =>
+                    setEditingModel({
+                      ...editingModel,
+                      plural: event.target.value,
+                      // slug: createSlug(event.target.value),
+                    })
+                  }
                   required
                 />
               </div>

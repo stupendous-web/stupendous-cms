@@ -18,8 +18,7 @@ export default async function handler(request, response) {
         .db("stupendous-cms")
         .collection("models")
         .insertOne({
-          name: body?.name,
-          slug: body?.slug,
+          ...body,
           projectId: ObjectId(body?.projectId),
           accountId: ObjectId(session?.user?.accountId),
           createdAt: new Date(),
@@ -84,7 +83,8 @@ export default async function handler(request, response) {
           { _id: ObjectId(body?._id) },
           {
             $set: {
-              name: body?.name,
+              singular: body?.singular,
+              plural: body?.plural,
               slug: body?.slug,
               projectId: ObjectId(body?.projectId),
             },
