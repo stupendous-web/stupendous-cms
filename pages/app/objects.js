@@ -106,9 +106,12 @@ export default function Objects() {
                         </thead>
                         <tbody>
                           {filteredObjects?.map((object) => {
+                            const type = filteredModels?.find(
+                              (model) => model._id === object.modelId
+                            )?.singular;
                             return (
                               <tr key={object._id}>
-                                <td>{object?.model[0]?.name}&nbsp;</td>
+                                <td>{type}</td>
                                 <td>{dayjs(object?.createdAt).calendar()}</td>
                                 <td className={"uk-text-right"}>
                                   <a
@@ -166,7 +169,7 @@ export default function Objects() {
                   <option value={""}>Select</option>
                   {filteredModels?.map((model) => (
                     <option key={model._id} value={model._id}>
-                      {model.name}
+                      {model.singular}
                     </option>
                   ))}
                 </select>
