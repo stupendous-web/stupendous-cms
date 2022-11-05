@@ -34,7 +34,6 @@ export default function Objects() {
         return (data[property.name] = "");
       }
     });
-    console.log(data);
     axios
       .post("/api/objects", data)
       .then((response) => {
@@ -115,15 +114,15 @@ export default function Objects() {
                                   <a
                                     className={"uk-margin-right"}
                                     onClick={() => {
-                                      setEditingObject();
+                                      setEditingObject(object);
                                       router.push("/app/editor");
                                     }}
                                   >
-                                    <span
-                                      className={"material-symbols-rounded"}
-                                    >
-                                      edit
-                                    </span>
+                                    <i
+                                      className={
+                                        "ri-pencil-fill uk-margin-right"
+                                      }
+                                    />
                                   </a>
                                   <span
                                     className={
@@ -138,11 +137,7 @@ export default function Objects() {
                                         .then(() => handleDelete(object._id));
                                     }}
                                   >
-                                    <span
-                                      className={"material-symbols-rounded"}
-                                    >
-                                      delete
-                                    </span>
+                                    <i className={"ri-delete-bin-fill"} />
                                   </span>
                                 </td>
                               </tr>

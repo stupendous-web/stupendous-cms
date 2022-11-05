@@ -13,8 +13,7 @@ export default function CreateProperty({ id }) {
   const [isRequired, setIsRequired] = useState(false);
 
   const propertyTypes = [
-    { option: "String of Text", value: "string" },
-    { option: "Plain Text Block", value: "text" },
+    { option: "Plain Text", value: "string" },
     { option: "HTML", value: "html" },
   ];
 
