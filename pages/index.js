@@ -4,10 +4,10 @@ import Link from "next/link";
 
 import Navigation from "../components/Navigation";
 
+import editor from "../images/screenshots/editor.jpg";
 import rest from "../images/screenshots/rest.jpg";
 import projects from "../images/screenshots/projects.jpg";
 import models from "../images/screenshots/models.jpg";
-import editor from "../images/screenshots/editor.jpg";
 
 export default function Home() {
   return (
@@ -34,11 +34,6 @@ export default function Home() {
               clients can login and easily manage their content and you can
               access it through your REST API. Let&apos;s go!
             </p>
-            <p className={"uk-h1 uk-text-right"}>
-              <i className={"devicon-nextjs-original-wordmark"} />
-              <i className={"devicon-mongodb-plain-wordmark"} />
-              <i className={"devicon-googlecloud-plain-wordmark"} />
-            </p>
           </div>
         </div>
         <div className={"uk-section"}>
@@ -50,12 +45,39 @@ export default function Home() {
                 </div>
               </div>
               <div className={"uk-width-1-3@s"}>
-                <h3>Content Management</h3>
+                <h3>Content Meets Code</h3>
                 <p>
                   Distraction free editing makes it easy for your clients to
                   publish their content in a way that&apos;s accessible to you
                   as a developer.
                 </p>
+                <pre
+                  className={
+                    "uk-padding-small uk-margin-small-top uk-section-muted"
+                  }
+                >
+                  <code>
+                    {"{"}
+                    <br />
+                    &nbsp;&nbsp;id: 473057399,
+                    <br />
+                    &nbsp;&nbsp;slug: &quot;an-epic&quot;,
+                    <br />
+                    &nbsp;&nbsp;title: &quot;An Epic&quot;,
+                    <br />
+                    &nbsp;&nbsp;content: &quot;&#60;p&#62;&#60;em&#62;Lorem
+                    ipsum&#60;/em&#62; dolor sit amet, consectetur adipisicing
+                    elit. Consequatur hic praesentium
+                    quibusdam.&#60;/p&#62;&quot;,
+                    <br />
+                    &nbsp;&nbsp;type: &quot;html&quot;,
+                    <br />
+                    &nbsp;&nbsp;createdAt:
+                    &quot;2022-07-09T10:06:55+00:00&quot;,
+                    <br />
+                    {"}"}
+                  </code>
+                </pre>
               </div>
             </div>
           </div>

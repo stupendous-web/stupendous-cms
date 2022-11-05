@@ -1,6 +1,5 @@
 import { SessionProvider } from "next-auth/react";
 import { Provider } from "../lib/context";
-import devicon from "devicon";
 import "../styles/uikit/uikit.css";
 import { useEffect } from "react";
 import UIkit from "uikit";
