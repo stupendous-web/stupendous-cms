@@ -27,7 +27,7 @@ export default function SideNavigation() {
     {
       href: "/app/objects",
       heading: "Content",
-      icon: "edit_document",
+      icon: "ri-edit-2-fill",
       description:
         "This is the the bread and butter of your API. See and edit all the data that's accessible via your API.",
       visible:
@@ -38,7 +38,7 @@ export default function SideNavigation() {
     {
       href: "/app/media",
       heading: "Media",
-      icon: "image",
+      icon: "ri-image-fill",
       description:
         "Upload your files to the Stupendous Web bucket and access them via your API",
       visible: !!projects?.length,
@@ -49,7 +49,7 @@ export default function SideNavigation() {
     {
       href: "/app/projects",
       heading: "Projects",
-      icon: "assignment",
+      icon: "ri-clipboard-fill",
       description:
         "A way to help you manage your content. Create and manage your projects here. You can add models and users to your projects later.",
       visible: true,
@@ -57,7 +57,7 @@ export default function SideNavigation() {
     {
       href: "/app/models",
       heading: "Models",
-      icon: "database",
+      icon: "ri-database-2-fill",
       description:
         "Groups of attributes that users can add such as pages or blog posts. Here you can create models and add attributes to them.",
       visible: !!projects?.length,
@@ -65,14 +65,14 @@ export default function SideNavigation() {
     {
       href: "/app/users",
       heading: "Users",
-      icon: "database",
+      icon: "ri-user-fill",
       description: "",
       visible: false,
     },
     {
       href: billingLink,
       heading: "Billing",
-      icon: "credit_card",
+      icon: "ri-wallet-fill",
       description:
         "A portal for you to manage your subscription and view your invoices.",
       visible: true,
@@ -108,9 +108,7 @@ export default function SideNavigation() {
                       className={"uk-text-center"}
                       style={{ fontSize: "1.5rem" }}
                     >
-                      <span className={"material-symbols-rounded"}>
-                        {link.icon}
-                      </span>
+                      <i class={link.icon} />
                     </p>
                   </a>
                 </Link>
@@ -140,9 +138,7 @@ export default function SideNavigation() {
                           className={"uk-text-center"}
                           style={{ fontSize: "1.5rem" }}
                         >
-                          <span className={"material-symbols-rounded"}>
-                            {link.icon}
-                          </span>
+                          <i class={link.icon} />
                         </p>
                       </a>
                     </Link>
