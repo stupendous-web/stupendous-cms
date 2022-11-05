@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import Image from "next/image";
 import { useGlobal } from "../../lib/context";
 import axios from "axios";
 import dayjs from "dayjs";
@@ -8,25 +9,34 @@ let calendar = require("dayjs/plugin/calendar");
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
 
+import contentCreator from "../../images/undraw/undraw_content_creator_re_pt5b.svg";
+
 dayjs.extend(calendar);
 
 export default function Objects() {
   const {
-    projects,
     editingProject,
     filteredModels,
     filteredObjects,
     setEditingObject,
+    properties,
   } = useGlobal();
 
   const router = useRouter();
 
   const createObject = (modelId) => {
+    const data = {
+      projectId: editingProject._id,
+      modelId: modelId,
+    };
+    properties?.map((property) => {
+      if (property.modelId === modelId) {
+        return (data[property.name] = "");
+      }
+    });
+    console.log(data);
     axios
-      .post("/api/objects", {
-        projectId: editingProject._id,
-        modelId: modelId,
-      })
+      .post("/api/objects", data)
       .then((response) => {
         UIkit.modal("#create-object-modal").hide();
         setEditingObject(response?.data);
@@ -38,93 +48,115 @@ export default function Objects() {
   return (
     <Authentication>
       <Layout>
-        <div className={"uk-section uk-section-small"}>
-          <div className={"uk-container uk-container-expand"}>
-            <div className={"uk-grid-match"} data-uk-grid={""}>
-              {!projects?.length && (
-                <div className={"uk-width-1-1"}>
-                  <div
-                    className={"uk-alert-warning uk-flex uk-flex-middle"}
-                    data-uk-alert={""}
-                  >
-                    <span className={"uk-text-large uk-margin-right"}>👇</span>
+        {!filteredObjects?.length ? (
+          <>
+            <div
+              className={
+                "uk-height-1-1 uk-width-1-1 uk-flex uk-flex-center uk-flex-middle"
+              }
+            >
+              <div className={"uk uk-width-large uk-text-center"}>
+                <div
+                  className={
+                    "uk-width-small uk-margin-auto-right uk-margin-auto-left"
+                  }
+                >
+                  <Image src={contentCreator} />
+                </div>
+                <p>Publish content to your site or application.</p>
+                <a
+                  className={"uk-button uk-button-primary"}
+                  href={"#create-object-modal"}
+                  data-uk-toggle={""}
+                >
+                  Create New Content
+                </a>
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className={"uk-section uk-section-small"}>
+              <div className={"uk-container uk-container-expand"}>
+                <div className={"uk-grid-match"} data-uk-grid={""}>
+                  <div className={"uk-width-1-1"}>
                     <div>
-                      Looks like you don&apos;t have any projects. Add one to
-                      get started!
+                      <a
+                        href={"#create-object-modal"}
+                        className={
+                          "uk-button uk-button-primary uk-button-large"
+                        }
+                        data-uk-toggle={""}
+                      >
+                        Create New Content
+                      </a>
+                    </div>
+                  </div>
+                  <div className={"uk-width-1-1"}>
+                    <div className={"uk-card uk-card-default uk-card-body"}>
+                      <h3>Your Content</h3>
+                      <table
+                        className={"uk-table uk-table-divider uk-table-hover"}
+                      >
+                        <thead>
+                          <tr>
+                            <th>Type</th>
+                            <th>Date</th>
+                            <th />
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {filteredObjects?.map((object) => {
+                            return (
+                              <tr key={object._id}>
+                                <td>{object?.model[0]?.name}&nbsp;</td>
+                                <td>{dayjs(object?.createdAt).calendar()}</td>
+                                <td className={"uk-text-right"}>
+                                  <a
+                                    className={"uk-margin-right"}
+                                    onClick={() => {
+                                      setEditingObject();
+                                      router.push("/app/editor");
+                                    }}
+                                  >
+                                    <span
+                                      className={"material-symbols-rounded"}
+                                    >
+                                      edit
+                                    </span>
+                                  </a>
+                                  <span
+                                    className={
+                                      "uk-text-primary uk-margin-right"
+                                    }
+                                    style={{ cursor: "pointer" }}
+                                    onClick={() => {
+                                      UIkit.modal
+                                        .confirm(
+                                          "Are you sure you wish to permanently delete this project?"
+                                        )
+                                        .then(() => handleDelete(object._id));
+                                    }}
+                                  >
+                                    <span
+                                      className={"material-symbols-rounded"}
+                                    >
+                                      delete
+                                    </span>
+                                  </span>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 </div>
-              )}
-              <div className={"uk-width-1-1"}>
-                <div>
-                  <a
-                    href={"#create-object-modal"}
-                    className={"uk-button uk-button-primary uk-button-large"}
-                    data-uk-toggle={""}
-                  >
-                    Create New Content
-                  </a>
-                </div>
               </div>
-              {!!filteredObjects?.length && (
-                <div className={"uk-width-1-1"}>
-                  <div className={"uk-card uk-card-default uk-card-body"}>
-                    <h3>Your Content</h3>
-                    <table
-                      className={"uk-table uk-table-divider uk-table-hover"}
-                    >
-                      <thead>
-                        <tr>
-                          <th>Type</th>
-                          <th>Date</th>
-                          <th />
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {filteredObjects?.map((object) => {
-                          return (
-                            <tr key={object._id}>
-                              <td>{object?.model[0]?.name}&nbsp;</td>
-                              <td>{dayjs(object?.createdAt).calendar()}</td>
-                              <td className={"uk-text-right"}>
-                                <a
-                                  className={"uk-margin-right"}
-                                  onClick={() => {
-                                    setEditingObject();
-                                    router.push("/app/editor");
-                                  }}
-                                >
-                                  <span className={"material-symbols-rounded"}>
-                                    edit
-                                  </span>
-                                </a>
-                                <span
-                                  className={"uk-text-primary uk-margin-right"}
-                                  style={{ cursor: "pointer" }}
-                                  onClick={() => {
-                                    UIkit.modal
-                                      .confirm(
-                                        "Are you sure you wish to permanently delete this project?"
-                                      )
-                                      .then(() => handleDelete(object._id));
-                                  }}
-                                >
-                                  <span className={"material-symbols-rounded"}>
-                                    delete
-                                  </span>
-                                </span>
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              )}
             </div>
-          </div>
-        </div>
+          </>
+        )}
         <div id={"create-object-modal"} data-uk-modal={""}>
           <div className={"uk-modal-dialog uk-modal-body"}>
             <h3>Content Type</h3>

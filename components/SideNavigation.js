@@ -108,7 +108,7 @@ export default function SideNavigation() {
                       className={"uk-text-center"}
                       style={{ fontSize: "1.5rem" }}
                     >
-                      <i class={link.icon} />
+                      <i className={link.icon} />
                     </p>
                   </a>
                 </Link>
@@ -138,7 +138,7 @@ export default function SideNavigation() {
                           className={"uk-text-center"}
                           style={{ fontSize: "1.5rem" }}
                         >
-                          <i class={link.icon} />
+                          <i className={link.icon} />
                         </p>
                       </a>
                     </Link>

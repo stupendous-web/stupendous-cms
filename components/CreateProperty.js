@@ -2,6 +2,7 @@ import { useGlobal } from "../lib/context";
 import { useState } from "react";
 import axios from "axios";
 import UIkit from "uikit";
+import { createPropertyName } from "../utils/helpers";
 
 export default function CreateProperty({ id }) {
   const { editingProject, filteredModels, properties, setProperties } =
@@ -78,7 +79,9 @@ export default function CreateProperty({ id }) {
                 type={"text"}
                 value={name}
                 className={"uk-input"}
-                onChange={(event) => setName(event.target.value)}
+                onChange={(event) =>
+                  setName(createPropertyName(event.target.value))
+                }
                 required
               />
             </div>

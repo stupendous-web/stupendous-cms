@@ -5,3 +5,10 @@ export const createSlug = (string) => {
 
   return string;
 };
+
+export const createPropertyName = (string) => {
+  string = string.replace(" ", "");
+  string = string.replace(/[^a-zA-Z]/g, "");
+
+  return string;
+};

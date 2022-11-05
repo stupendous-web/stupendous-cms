@@ -2,13 +2,14 @@ import { useGlobal } from "../lib/context";
 import { useState } from "react";
 import axios from "axios";
 import UIkit from "uikit";
+import { createPropertyName } from "../utils/helpers";
 
 export default function EditProperty({ model, property }) {
   const { filteredModels, properties, setProperties } = useGlobal();
 
   const [editingId, setEditingId] = useState(property?._id);
   const [editingType, setEditingType] = useState(property?.type);
-  const [editingName, setEditingName] = useState(property?.type);
+  const [editingName, setEditingName] = useState(property?.name);
   const [editingIsRequired, setEditingIsRequired] = useState(
     property?.isRequired
   );
@@ -83,16 +84,11 @@ export default function EditProperty({ model, property }) {
             </div>
             <div>
               <div
-                className={"uk-text-primary"}
+                className={"uk-text-muted"}
                 style={{ cursor: "pointer" }}
                 onClick={() => handleDelete()}
               >
-                <span
-                  className={"material-symbols-rounded"}
-                  style={{ display: "flex", alignItems: "center" }}
-                >
-                  delete
-                </span>
+                <i className={"ri-delete-bin-fill"} />
               </div>
             </div>
           </div>
@@ -104,6 +100,7 @@ export default function EditProperty({ model, property }) {
                 className={"uk-select"}
                 onChange={(event) => setEditingType(event.target.value)}
                 required
+                disabled
               >
                 <option value={""}>Select</option>
                 {propertyTypes.map((propertyType) => {
@@ -121,8 +118,11 @@ export default function EditProperty({ model, property }) {
                 type={"text"}
                 value={editingName}
                 className={"uk-input"}
-                onChange={(event) => setEditingName(event.target.value)}
+                onChange={(event) =>
+                  setEditingName(createPropertyName(event.target.value))
+                }
                 required
+                disabled
               />
             </div>
             <div className={"uk-margin"}>
@@ -134,6 +134,7 @@ export default function EditProperty({ model, property }) {
                 checked={editingIsRequired}
                 className={"uk-checkbox"}
                 onChange={() => setEditingIsRequired(!editingIsRequired)}
+                disabled
               />
             </div>
             <input

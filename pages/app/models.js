@@ -189,7 +189,9 @@ export default function Models() {
                                     }}
                                   >
                                     <i
-                                      class={"ri-pencil-fill uk-margin-right"}
+                                      className={
+                                        "ri-pencil-fill uk-margin-right"
+                                      }
                                     />
                                   </span>
                                   <span
@@ -203,7 +205,7 @@ export default function Models() {
                                         .then(() => handleDelete(model._id));
                                     }}
                                   >
-                                    <i class={"ri-delete-bin-fill"} />
+                                    <i className={"ri-delete-bin-fill"} />
                                   </span>
                                 </td>
                               </tr>
