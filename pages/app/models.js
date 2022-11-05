@@ -188,11 +188,9 @@ export default function Models() {
                                       UIkit.modal("#edit-model-modal").show();
                                     }}
                                   >
-                                    <span
-                                      className={"material-symbols-rounded"}
-                                    >
-                                      edit
-                                    </span>
+                                    <i
+                                      class={"ri-pencil-fill uk-margin-right"}
+                                    />
                                   </span>
                                   <span
                                     className={"uk-text-primary"}
@@ -205,11 +203,7 @@ export default function Models() {
                                         .then(() => handleDelete(model._id));
                                     }}
                                   >
-                                    <span
-                                      className={"material-symbols-rounded"}
-                                    >
-                                      delete
-                                    </span>
+                                    <i class={"ri-delete-bin-fill"} />
                                   </span>
                                 </td>
                               </tr>
