@@ -44,22 +44,6 @@ export default async function handler(request, response) {
               accountId: ObjectId(session?.user?.accountId),
             },
           },
-          {
-            $addFields: {
-              modelId: {
-                $toObjectId: "$modelId",
-              },
-            },
-          },
-          {
-            $lookup: {
-              from: "models",
-              localField: "modelId",
-              foreignField: "_id",
-              as: "model",
-              pipeline: [{ $limit: 1 }],
-            },
-          },
         ])
         .toArray()
         .then((result) => response.status(200).json(result))
