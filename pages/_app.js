@@ -1,10 +1,10 @@
 import { SessionProvider } from "next-auth/react";
 import { Provider } from "../lib/context";
-import Uikit from "uikit";
 import devicon from "devicon";
 import "../styles/uikit/uikit.css";
 import { useEffect } from "react";
 import UIkit from "uikit";
+import "remixicon/fonts/remixicon.css";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   console.log(
