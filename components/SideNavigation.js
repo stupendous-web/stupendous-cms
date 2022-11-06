@@ -112,10 +112,7 @@ export default function SideNavigation() {
                     </p>
                   </a>
                 </Link>
-                <div
-                  className={"uk-box-shadow-large"}
-                  data-uk-dropdown="pos: right-top; offset: -14"
-                >
+                <div data-uk-dropdown="pos: right-top; offset: -14">
                   <h3 style={{ color: "inherit" }}>{link.heading}</h3>
                   <p>{link.description}</p>
                 </div>
