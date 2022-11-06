@@ -41,6 +41,7 @@ export default handler.post(async (request, response) => {
       });
       await storage.bucket("stupendous-cms").upload(file?.path, {
         destination: `${result.insertedId}`,
+        contentType: file?.headers?.["content-type"],
       });
       await client
         .db("stupendous-cms")
