@@ -6,46 +6,47 @@ import Layout from "../../components/Layout";
 import UIkit from "uikit";
 import Image from "next/image";
 import imageFolder from "../../images/undraw/undraw_image__folder_re_hgp7.svg";
+import { useState } from "react";
 
 export default function Files() {
+  const [previews, setPreviews] = useState([]);
+
   const { filteredFiles, setFilteredFiles, files, setFiles, editingProject } =
     useGlobal();
 
-  const handleUpload = (event) => {
-    UIkit.notification({
-      message: "Uploading!",
-      status: "primary",
-      pos: "bottom-right",
-    });
-    let formData = new FormData();
+  const handleChange = async (event) => {
+    let blobs = [];
     for (let counter = 0; counter < event.target.files.length; counter++) {
-      formData.append("files[]", event.target.files[counter]);
+      blobs.push(URL.createObjectURL(event.target.files[counter]));
     }
-    formData.append("projectId", editingProject?._id);
-    axios
-      .post("/api/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((response) => {
-        setFiles([response.data, ...files]);
-        UIkit.notification({
-          message: "All set!",
-          status: "success",
-          pos: "bottom-right",
+    setPreviews(blobs);
+    for (let counter = 0; counter < event.target.files.length; counter++) {
+      console.log(event.target.files[counter]);
+      let formData = new FormData();
+      formData.append("file", event.target.files[counter]);
+      formData.append("projectId", editingProject?._id);
+      console.log(formData.entries());
+      await axios
+        .post("/api/files/create", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          setPreviews(previews?.shift());
+          setFiles([response.data, ...files]);
+        })
+        .catch((error) => {
+          console.log(error);
+          if (error?.response?.status === 413) {
+            UIkit.notification({
+              message: "Try uploading less.",
+              status: "danger",
+              pos: "bottom-right",
+            });
+          }
         });
-      })
-      .catch((error) => {
-        console.log(error);
-        if (error?.response?.status === 413) {
-          UIkit.notification({
-            message: "Try uploading less.",
-            status: "danger",
-            pos: "bottom-right",
-          });
-        }
-      });
+    }
   };
 
   const handleDelete = (fileId) => {
@@ -60,7 +61,35 @@ export default function Files() {
   return (
     <Authentication>
       <Layout>
-        {!filteredFiles?.length ? (
+        {!!previews?.length && (
+          <div>
+            <div className={"uk-section uk-section-small"}>
+              <div className={"uk-container uk-container-expand"}>
+                <div data-uk-grid={""}>
+                  {previews.map((preview, key) => (
+                    <div key={key}>
+                      <div
+                        className={"uk-cover-container"}
+                        style={{ height: "100px", width: "100px" }}
+                      >
+                        <img src={preview} data-uk-cover={""} />
+                        <div
+                          className={"uk-overlay-default uk-position-cover"}
+                        />
+                        <div
+                          className={"uk-overlay uk-position-center uk-dark"}
+                        >
+                          <div data-uk-spinner={""} />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {!filteredFiles?.length && !previews?.length ? (
           <>
             <div
               className={
@@ -84,7 +113,7 @@ export default function Files() {
                       "image/jpeg, image/pjpeg, image/png, image/gif, image/webp, image/x-icon"
                     }
                     multiple
-                    onChange={(event) => handleUpload(event)}
+                    onChange={(event) => handleChange(event)}
                   />
                   <button
                     className={"uk-button uk-button-primary"}
@@ -111,7 +140,7 @@ export default function Files() {
                           "image/jpeg, image/pjpeg, image/png, image/gif, image/webp, image/x-icon"
                         }
                         multiple
-                        onChange={(event) => handleUpload(event)}
+                        onChange={(event) => handleChange(event)}
                       />
                       <button
                         className={
