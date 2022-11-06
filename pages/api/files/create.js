@@ -26,7 +26,6 @@ export default handler.post(async (request, response) => {
     .db("stupendous-cms")
     .collection("files")
     .insertOne({
-      url: `https://storage.cloud.google.com/stupendous-cms/${result?.insertedId}?authuser=1`,
       type: file?.headers?.["content-type"],
       projectId: ObjectId(body?.projectId[0]),
       accountId: ObjectId(session?.user?.accountId),
@@ -44,6 +43,17 @@ export default handler.post(async (request, response) => {
         destination: `${result.insertedId}`,
         contentType: file?.headers?.["content-type"],
       });
+      await client
+        .db("stupendous-cms")
+        .collection("files")
+        .updateOne(
+          { _id: ObjectId(result?.insertedId) },
+          {
+            $set: {
+              url: `https://storage.cloud.google.com/stupendous-cms/${result?.insertedId}?authuser=1`,
+            },
+          }
+        );
       await client
         .db("stupendous-cms")
         .collection("files")
