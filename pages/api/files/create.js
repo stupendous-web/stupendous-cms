@@ -48,9 +48,7 @@ export default handler.post(async (request, response) => {
         .collection("files")
         .findOne({ _id: ObjectId(result.insertedId) })
         .then((result) => {
-          return response
-            .status(200)
-            .send({ counter: body?.counter[0], file: result });
+          return response.status(200).send(result);
         });
     })
     .finally(() => client.close());

@@ -10,17 +10,13 @@ import Layout from "../../components/Layout";
 import imageFolder from "../../images/undraw/undraw_image__folder_re_hgp7.svg";
 
 export default function Files() {
-  const [previews, setPreviews] = useState([]);
+  const [isUploading, setIsUploading] = useState(false);
 
   const { filteredFiles, setFilteredFiles, files, setFiles, editingProject } =
     useGlobal();
 
   const handleChange = async (event) => {
-    let blobs = [];
-    for (let counter = 0; counter < event.target.files.length; counter++) {
-      blobs.push(URL.createObjectURL(event.target.files[counter]));
-    }
-    setPreviews(blobs);
+    setIsUploading(true);
     for (let counter = 0; counter < event.target.files.length; counter++) {
       let formData = new FormData();
       formData.append("file", event.target.files[counter]);
@@ -33,10 +29,8 @@ export default function Files() {
           },
         })
         .then((response) => {
-          const previousState = previews;
-          const newState = previousState.splice(response.data.counter, 1);
-          setPreviews(newState);
-          setFiles([response.data.file, ...files]);
+          setIsUploading(counter + 1 < event.target.files.length);
+          setFiles([response.data, ...files]);
         })
         .catch((error) => {
           console.log(error);
@@ -63,35 +57,7 @@ export default function Files() {
   return (
     <Authentication>
       <Layout>
-        {!!previews?.length && (
-          <div>
-            <div className={"uk-section uk-section-small"}>
-              <div className={"uk-container uk-container-expand"}>
-                <div data-uk-grid={""}>
-                  {previews.map((preview, key) => (
-                    <div key={key}>
-                      <div
-                        className={"uk-cover-container"}
-                        style={{ height: "10rem", width: "10rem" }}
-                      >
-                        <img src={preview} data-uk-cover={""} />
-                        <div
-                          className={"uk-overlay-default uk-position-cover"}
-                        />
-                        <div
-                          className={"uk-overlay uk-position-center uk-dark"}
-                        >
-                          <div data-uk-spinner={""} />
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-        {!filteredFiles?.length && !previews?.length ? (
+        {!filteredFiles?.length ? (
           <>
             <div
               className={
@@ -121,9 +87,13 @@ export default function Files() {
                     className={"uk-button uk-button-primary"}
                     type={"button"}
                     tabIndex={"-1"}
+                    disabled={isUploading}
                   >
                     Upload Media
                   </button>
+                </div>
+                <div className={"uk-margin"}>
+                  {isUploading && <div data-uk-spinner={""} />}
                 </div>
               </div>
             </div>
@@ -150,9 +120,16 @@ export default function Files() {
                         }
                         type={"button"}
                         tabIndex={"-1"}
+                        disabled={isUploading}
                       >
                         Upload Media
                       </button>
+                      {isUploading && (
+                        <div
+                          data-uk-spinner={""}
+                          className={"uk-margin-left"}
+                        />
+                      )}
                     </div>
                   </div>
                   <div className={"uk-width-1-1"}>
