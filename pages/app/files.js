@@ -1,12 +1,13 @@
+import { useState } from "react";
+import Image from "next/image";
 import axios from "axios";
 import { useGlobal } from "../../lib/context";
+import UIkit from "uikit";
 
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
-import UIkit from "uikit";
-import Image from "next/image";
+
 import imageFolder from "../../images/undraw/undraw_image__folder_re_hgp7.svg";
-import { useState } from "react";
 
 export default function Files() {
   const [previews, setPreviews] = useState([]);
@@ -21,10 +22,10 @@ export default function Files() {
     }
     setPreviews(blobs);
     for (let counter = 0; counter < event.target.files.length; counter++) {
-      console.log(event.target.files[counter]);
       let formData = new FormData();
       formData.append("file", event.target.files[counter]);
       formData.append("projectId", editingProject?._id);
+      formData.append("counter", counter);
       await axios
         .post("/api/files/create", formData, {
           headers: {
@@ -32,8 +33,10 @@ export default function Files() {
           },
         })
         .then((response) => {
-          setPreviews(previews?.shift());
-          setFiles([response.data, ...files]);
+          const previousState = previews;
+          const newState = previousState.splice(response.data.counter, 1);
+          setPreviews(newState);
+          setFiles([response.data.file, ...files]);
         })
         .catch((error) => {
           console.log(error);

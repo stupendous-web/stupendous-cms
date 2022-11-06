@@ -42,8 +42,15 @@ export default handler.post(async (request, response) => {
       await storage.bucket("stupendous-cms").upload(file?.path, {
         destination: `${result.insertedId}`,
       });
-
-      return response.status(200).send("Good things come to those who wait.");
+      await client
+        .db("stupendous-cms")
+        .collection("files")
+        .findOne({ _id: ObjectId(result.insertedId) })
+        .then((result) => {
+          return response
+            .status(200)
+            .send({ counter: body?.counter[0], file: result });
+        });
     })
     .finally(() => client.close());
 });
