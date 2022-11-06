@@ -25,7 +25,6 @@ export default function Files() {
       let formData = new FormData();
       formData.append("file", event.target.files[counter]);
       formData.append("projectId", editingProject?._id);
-      console.log(formData.entries());
       await axios
         .post("/api/files/create", formData, {
           headers: {
@@ -70,7 +69,7 @@ export default function Files() {
                     <div key={key}>
                       <div
                         className={"uk-cover-container"}
-                        style={{ height: "100px", width: "100px" }}
+                        style={{ height: "10rem", width: "10rem" }}
                       >
                         <img src={preview} data-uk-cover={""} />
                         <div
@@ -158,13 +157,11 @@ export default function Files() {
                       {filteredFiles?.map((file) => (
                         <div key={file?._id}>
                           <div
-                            className={
-                              "uk-cover-container uk-height-medium cover-image"
-                            }
-                            style={{ width: "300px" }}
+                            className={"uk-cover-container"}
+                            style={{ height: "12rem", width: "12rem" }}
                           >
                             <img
-                              src={`https://storage.cloud.google.com/stupendous-cms/${file?._id}?authuser=2`}
+                              src={`https://storage.cloud.google.com/stupendous-cms/${file?._id}?authuser=1`}
                               alt={file._id}
                               data-uk-cover={""}
                             />
@@ -174,9 +171,7 @@ export default function Files() {
                               }
                               onClick={() => handleDelete(file?._id)}
                             >
-                              <span className={"material-symbols-rounded"}>
-                                delete
-                              </span>
+                              <i className={"ri-delete-bin-fill"} />
                             </a>
                           </div>
                         </div>
