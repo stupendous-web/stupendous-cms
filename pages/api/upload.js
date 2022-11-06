@@ -43,7 +43,7 @@ export const uploadManyFiles = async (files, body, session) => {
               { _id: ObjectId(result?.insertedId) },
               {
                 $set: {
-                  url: `https://storage.cloud.google.com/stupendous-cms/${result?.insertedId}?authuser=2`,
+                  url: `https://storage.cloud.google.com/stupendous-cms/${result?.insertedId}?authuser=1`,
                 },
               }
             );

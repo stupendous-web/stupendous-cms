@@ -36,7 +36,7 @@ export default function SideNavigation() {
         filteredProperties?.length,
     },
     {
-      href: "/app/media",
+      href: "/app/files",
       heading: "Media",
       icon: "ri-image-fill",
       description:
