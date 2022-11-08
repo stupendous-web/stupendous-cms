@@ -32,7 +32,7 @@ export default function Projects() {
                         type={"text"}
                         className={"uk-input"}
                         style={{ background: "none", paddingLeft: 0 }}
-                        placeholder={"Title"}
+                        placeholder={"Text"}
                       />
                     )}
                     {property.type === "html" && (

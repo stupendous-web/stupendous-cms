@@ -10,6 +10,7 @@ import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
 
 import contentCreator from "../../images/undraw/undraw_content_creator_re_pt5b.svg";
+import { useEffect } from "react";
 
 dayjs.extend(calendar);
 
@@ -18,9 +19,16 @@ export default function Objects() {
     editingProject,
     filteredModels,
     filteredObjects,
+    objects,
+    setObjects,
+    editingObject,
     setEditingObject,
     properties,
   } = useGlobal();
+
+  useEffect(() => {
+    setEditingObject({});
+  }, []);
 
   const router = useRouter();
 
@@ -37,9 +45,10 @@ export default function Objects() {
     axios
       .post("/api/objects", data)
       .then((response) => {
-        UIkit.modal("#create-object-modal").hide();
+        setObjects([...objects, response?.data]);
         setEditingObject(response?.data);
         router.push("/app/editor");
+        UIkit.modal("#create-object-modal").hide();
       })
       .catch((error) => console.log(error));
   };
@@ -161,7 +170,7 @@ export default function Objects() {
             <form>
               <div className={"uk-margin"}>
                 <select
-                  defaultValue={""}
+                  value={editingObject?._id || ""}
                   className={"uk-select"}
                   onChange={(event) => createObject(event.target.value)}
                   required
