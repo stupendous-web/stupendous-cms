@@ -83,6 +83,7 @@ export default function CreateProperty({ id }) {
                 }
                 required
               />
+              <div className={"uk-text-small"}>ex: authorName</div>
             </div>
             <div className={"uk-margin"}>
               <label className={"uk-form-label uk-display-block"}>

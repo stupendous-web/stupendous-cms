@@ -9,7 +9,8 @@ const nextConfig = {
     "/app/projects",
     "/app/objects",
     "/app/editor",
-    "/app/media",
+    "/app/files",
+    "/app/account",
   ], // For sitemap
   swcMinify: true,
 };
