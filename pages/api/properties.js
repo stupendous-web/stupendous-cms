@@ -18,9 +18,7 @@ export default async function handler(request, response) {
         .db("stupendous-cms")
         .collection("properties")
         .insertOne({
-          name: body?.name,
-          type: body?.type,
-          isRequired: body?.isRequired,
+          ...body,
           modelId: ObjectId(body?.modelId),
           projectId: ObjectId(body?.projectId),
           accountId: ObjectId(session?.user?.accountId),
@@ -52,26 +50,6 @@ export default async function handler(request, response) {
         .then((result) => {
           response.status(200).json(result);
         })
-        .finally(() => client.close());
-
-      break;
-    case "PATCH":
-      await client
-        .db("stupendous-cms")
-        .collection("properties")
-        .updateOne(
-          { _id: ObjectId(body?._id) },
-          {
-            $set: {
-              type: body?.type,
-              name: body?.name,
-              isRequired: body?.isRequired,
-            },
-          }
-        )
-        .then(() =>
-          response.status(200).send("Good things come to those who wait.")
-        )
         .finally(() => client.close());
 
       break;

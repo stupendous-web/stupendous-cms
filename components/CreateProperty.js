@@ -1,5 +1,5 @@
 import { useGlobal } from "../lib/context";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import UIkit from "uikit";
 import { createPropertyName } from "../utils/helpers";
@@ -10,7 +10,12 @@ export default function CreateProperty({ id }) {
 
   const [type, setType] = useState("");
   const [name, setName] = useState("");
+  const [property, setProperty] = useState("");
   const [isRequired, setIsRequired] = useState(false);
+
+  useEffect(() => {
+    setProperty(createPropertyName(name));
+  }, [name]);
 
   const propertyTypes = [
     { option: "Plain Text", value: "string" },
@@ -23,6 +28,7 @@ export default function CreateProperty({ id }) {
       .post("/api/properties", {
         type: type,
         name: name,
+        property: property,
         isRequired: isRequired,
         modelId: id,
         projectId: editingProject?._id,
@@ -78,12 +84,19 @@ export default function CreateProperty({ id }) {
                 type={"text"}
                 value={name}
                 className={"uk-input"}
-                onChange={(event) =>
-                  setName(createPropertyName(event.target.value))
-                }
+                onChange={(event) => setName(event.target.value)}
                 required
               />
-              <div className={"uk-text-small"}>ex: authorName</div>
+            </div>
+            <div className={"uk-margin"}>
+              <label className={"uk-form-label"}>Property Name</label>
+              <input
+                type={"text"}
+                value={property}
+                className={"uk-input"}
+                required
+                disabled
+              />
             </div>
             <div className={"uk-margin"}>
               <label className={"uk-form-label uk-display-block"}>

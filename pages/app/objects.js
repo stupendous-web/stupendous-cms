@@ -31,7 +31,7 @@ export default function Objects() {
     };
     properties?.map((property) => {
       if (property.modelId === modelId) {
-        return (data[property.name] = "");
+        return (data[property.propertyName] = "");
       }
     });
     axios
