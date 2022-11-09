@@ -145,49 +145,54 @@ export default function Files() {
                               alt={file._id}
                               data-uk-cover={""}
                             />
-                            <div
-                              className={
-                                "uk-position-top-right uk-padding-small"
-                              }
-                            >
-                              <a
-                                href={`#lightbox-${file._id}`}
-                                style={{ color: "#ffffff" }}
-                                data-uk-toggle={""}
-                              >
-                                <i className={"ri-zoom-in-fill"} />
-                              </a>
-                              <div
-                                id={`lightbox-${file._id}`}
-                                className={"uk-padding-remove"}
-                                data-uk-modal={""}
-                              >
-                                <div class={"uk-flex uk-flex-center"}>
-                                  <button
-                                    type={"button"}
-                                    className={
-                                      "uk-modal-close-full uk-close-large"
-                                    }
-                                    style={{ color: "#ffffff" }}
-                                    data-uk-close={""}
-                                  />
-                                  <img
-                                    src={`https://storage.cloud.google.com/stupendous-cms/${file?._id}?authuser=1`}
-                                    alt={file._id}
-                                    className={"uk-padding"}
-                                    style={{ maxHeight: "100vh" }}
-                                  />
-                                </div>
-                              </div>
-                              &nbsp;
-                              <a
-                                style={{ color: "#ffffff" }}
-                                onClick={() => handleDelete(file?._id)}
-                              >
-                                <i className={"ri-delete-bin-fill"} />
-                              </a>
-                            </div>
                           </div>
+                          <p className={"uk-text-right"}>
+                            <a
+                              href={`#lightbox-${file._id}`}
+                              data-uk-toggle={""}
+                              data-uk-tooltip={"View"}
+                            >
+                              <i className={"ri-zoom-in-fill"} />
+                            </a>
+                            <div
+                              id={`lightbox-${file._id}`}
+                              className={"uk-padding-remove"}
+                              data-uk-modal={""}
+                            >
+                              <div class={"uk-flex uk-flex-center"}>
+                                <button
+                                  type={"button"}
+                                  className={
+                                    "uk-modal-close-full uk-close-large"
+                                  }
+                                  style={{ color: "#ffffff" }}
+                                  data-uk-close={""}
+                                />
+                                <img
+                                  src={`https://cdn.stupendouscms.com/${file?._id}`}
+                                  alt={file._id}
+                                  className={"uk-padding"}
+                                  style={{ maxHeight: "100vh" }}
+                                />
+                              </div>
+                            </div>
+                            &nbsp;
+                            <a
+                              onClick={() =>
+                                navigator.clipboard.writeText(file._id)
+                              }
+                              data-uk-tooltip={"Copy ID"}
+                            >
+                              <i className={"ri-clipboard-fill"} />
+                            </a>
+                            &nbsp;
+                            <a
+                              onClick={() => handleDelete(file?._id)}
+                              data-uk-tooltip={"Permanently Delete"}
+                            >
+                              <i className={"ri-delete-bin-fill"} />
+                            </a>
+                          </p>
                         </div>
                       ))}
                     </div>
