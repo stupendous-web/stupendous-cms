@@ -141,7 +141,7 @@ export default function Files() {
                             style={{ height: "12rem", width: "12rem" }}
                           >
                             <img
-                              src={`https://storage.cloud.google.com/stupendous-cms/${file?._id}?authuser=1`}
+                              src={`https://cdn.stupendouscms.com/${file?._id}`}
                               alt={file._id}
                               data-uk-cover={""}
                             />

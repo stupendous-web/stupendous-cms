@@ -50,7 +50,7 @@ export default handler.post(async (request, response) => {
           { _id: ObjectId(result?.insertedId) },
           {
             $set: {
-              url: `https://storage.cloud.google.com/stupendous-cms/${result?.insertedId}?authuser=1`,
+              url: `https://cdn.stupendouscms.com/${result?.insertedId}`,
             },
           }
         );
