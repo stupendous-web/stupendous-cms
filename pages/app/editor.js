@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
@@ -26,7 +26,7 @@ export default function Projects() {
               if (property.modelId === editingObject?.modelId) {
                 return (
                   <div className={"uk-margin"} key={property._id}>
-                    <h3>{property.name}</h3>{" "}
+                    <h3>{property.name}</h3>
                     {property.type === "string" && (
                       <input
                         type={"text"}

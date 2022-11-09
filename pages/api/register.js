@@ -25,11 +25,15 @@ export default async function handler(request, response) {
     .toArray();
 
   if (!user.length) {
-    // Create Stripe Customer
+    // Create Stripe Customer and Subscription
 
     const customer = await stripe.customers.create({
       name: body.name,
       email: body.email,
+    });
+    const subscription = await stripe.subscriptions.create({
+      customer: customer.id,
+      items: [{ price: "price_1M21yPIqQW8xJ9oZ21DBKKIG" }],
     });
 
     // Create Account
@@ -49,6 +53,7 @@ export default async function handler(request, response) {
         email: body.email,
         password: bcrypt.hashSync(body.password, 10),
         stripeCustomer: customer.id,
+        stripeSubscription: subscription.id,
         isAccountOwner: true,
         accountId: ObjectId(account.insertedId),
         createdAt: new Date(),
