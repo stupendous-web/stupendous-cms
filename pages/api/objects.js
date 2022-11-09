@@ -14,12 +14,13 @@ export default async function handler(request, response) {
 
   switch (request.method) {
     case "POST":
+      const data = { id: ObjectId().toString(), ...body?.data };
+      console.log(data);
+
       await client
         .db("stupendous-cms")
         .collection("objects")
         .insertOne({
-          ...body,
-          data: { id: ObjectId().toString(), ...body?.data },
           modelId: ObjectId(body?.modelId),
           projectId: ObjectId(body?.projectId),
           accountId: ObjectId(session?.user?.accountId),
@@ -29,11 +30,16 @@ export default async function handler(request, response) {
           await client
             .db("stupendous-cms")
             .collection("objects")
-            .findOne({ _id: ObjectId(result.insertedId) })
-            .then((result) => response.status(200).send(result));
+            .updateOne({ _id: result.insertedId }, { $set: { data: data } })
+            .then(async (result) => {
+              await client
+                .db("stupendous-cms")
+                .collection("objects")
+                .findOne({ _id: ObjectId(result.insertedId) })
+                .then((result) => response.status(200).send(result));
+            });
         })
         .finally(() => client.close());
-
       break;
     case "GET":
       await client
