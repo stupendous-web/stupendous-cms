@@ -14,9 +14,7 @@ export default async function handler(request, response) {
 
   switch (request.method) {
     case "POST":
-      const data = { id: ObjectId().toString(), ...body?.data };
-      console.log(data);
-
+      const createdAt = new Date();
       await client
         .db("stupendous-cms")
         .collection("objects")
@@ -24,9 +22,14 @@ export default async function handler(request, response) {
           modelId: ObjectId(body?.modelId),
           projectId: ObjectId(body?.projectId),
           accountId: ObjectId(session?.user?.accountId),
-          createdAt: new Date(),
+          createdAt: createdAt,
         })
         .then(async (result) => {
+          const data = {
+            id: ObjectId().toString(),
+            ...body?.data,
+            createdAt: createdAt,
+          };
           await client
             .db("stupendous-cms")
             .collection("objects")

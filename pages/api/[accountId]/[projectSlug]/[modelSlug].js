@@ -31,8 +31,12 @@ export default async function handler(request, response) {
           },
         ])
         .toArray()
-        .then((result) => {
-          response.status(200).send(result);
+        .then((results) => {
+          response.status(200).send(
+            results?.map((result) => {
+              return result.data;
+            })
+          );
         })
         .finally(() => client.close());
 

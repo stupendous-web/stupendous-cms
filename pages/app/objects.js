@@ -40,7 +40,6 @@ export default function Objects() {
         return null;
       }
     });
-    console.log(data);
     axios
       .post("/api/objects", {
         projectId: editingProject._id,
