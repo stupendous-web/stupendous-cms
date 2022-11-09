@@ -2,6 +2,11 @@ import { MongoClient, ObjectId } from "mongodb";
 const client = new MongoClient(process.env.MONGO_DB_URI);
 import { authOptions } from "./auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
+const stripe = require("stripe")(
+  process.env.NODE_ENV === "production"
+    ? process.env.STRIPE_LIVE_KEY
+    : process.env.STRIPE_TEST_KEY
+);
 
 export default async function handler(request, response) {
   await client.connect();
@@ -12,9 +17,14 @@ export default async function handler(request, response) {
 
   const accountId = session?.user?.accountId;
   const userId = session?.user?._id;
+  const stripeCustomer = session?.user?.stripeCustomer;
 
   switch (request.method) {
     case "DELETE":
+      await stripe.customers.del(stripeCustomer);
+
+      // Delete Media
+
       await client
         .db("stupendous-cms")
         .collection("objects")

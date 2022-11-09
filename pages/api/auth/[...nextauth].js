@@ -13,12 +13,15 @@ export const authOptions = {
       if (user?._id) token._id = user._id;
       if (user?.stripeCustomer) token.stripeCustomer = user.stripeCustomer;
       if (user?.isAccountOwner) token.isAccountOwner = user.isAccountOwner;
+      if (user?.stripeCustomer) token.stripeCustomer = user.stripeCustomer;
       if (user?.account[0]._id) token.accountId = user?.account[0]._id;
 
       return token;
     },
     async session({ session, token }) {
       if (token?._id) session.user._id = token._id;
+      if (token?.stripeCustomer)
+        session.user.stripeCustomer = token.stripeCustomer;
       if (token?.stripeCustomer)
         session.user.stripeCustomer = token.stripeCustomer;
       if (token?.isAccountOwner)
