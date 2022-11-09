@@ -4,7 +4,6 @@ import { useGlobal } from "../../lib/context";
 import axios from "axios";
 import dayjs from "dayjs";
 import UIkit from "uikit";
-import { v4 as uuidv4 } from "uuid";
 let calendar = require("dayjs/plugin/calendar");
 
 import Authentication from "../../components/Authentication";
@@ -36,11 +35,12 @@ export default function Objects() {
   const createObject = (modelId) => {
     let data = {};
     properties?.map((property) => {
-      if (property.modelId === modelId) {
-        data[property.property] = "";
+      if (property?.modelId === modelId) {
+        data[property?.property] = "";
         return null;
       }
     });
+    console.log(data);
     axios
       .post("/api/objects", {
         projectId: editingProject._id,

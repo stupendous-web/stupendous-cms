@@ -14,7 +14,6 @@ export default async function handler(request, response) {
 
   switch (request.method) {
     case "POST":
-      console.log({ id: ObjectId().toString(), ...body?.data });
       await client
         .db("stupendous-cms")
         .collection("objects")
