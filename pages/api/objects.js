@@ -14,11 +14,13 @@ export default async function handler(request, response) {
 
   switch (request.method) {
     case "POST":
+      console.log({ id: ObjectId().toString(), ...body?.data });
       await client
         .db("stupendous-cms")
         .collection("objects")
         .insertOne({
           ...body,
+          data: { id: ObjectId().toString(), ...body?.data },
           modelId: ObjectId(body?.modelId),
           projectId: ObjectId(body?.projectId),
           accountId: ObjectId(session?.user?.accountId),
@@ -49,6 +51,19 @@ export default async function handler(request, response) {
         .then((result) => response.status(200).json(result))
         .finally(() => client.close());
 
+      break;
+    case "PATCH":
+      await client
+        .db("stupendous-cms")
+        .collection("objects")
+        .updateOne(
+          { _id: ObjectId(body?.objectId) },
+          { $set: { data: body?.data } }
+        )
+        .then(() =>
+          response.status(200).send("Good things come to those who wait.")
+        )
+        .finally(() => client.close());
       break;
     default:
       return response.status(405).send();

@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 import { useGlobal } from "../../lib/context";
+import Text from "../../components/editor/Text";
 
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
@@ -27,14 +28,7 @@ export default function Projects() {
                 return (
                   <div className={"uk-margin"} key={property._id}>
                     <h3>{property.name}</h3>
-                    {property.type === "string" && (
-                      <input
-                        type={"text"}
-                        className={"uk-input"}
-                        style={{ background: "none", paddingLeft: 0 }}
-                        placeholder={"Text"}
-                      />
-                    )}
+                    {property.type === "string" && <Text property={property} />}
                     {property.type === "html" && (
                       <ReactQuill value={value} onChange={setValue} />
                     )}

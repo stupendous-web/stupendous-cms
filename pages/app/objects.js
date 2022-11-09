@@ -4,6 +4,7 @@ import { useGlobal } from "../../lib/context";
 import axios from "axios";
 import dayjs from "dayjs";
 import UIkit from "uikit";
+import { v4 as uuidv4 } from "uuid";
 let calendar = require("dayjs/plugin/calendar");
 
 import Authentication from "../../components/Authentication";
@@ -33,17 +34,19 @@ export default function Objects() {
   const router = useRouter();
 
   const createObject = (modelId) => {
-    const data = {
-      projectId: editingProject._id,
-      modelId: modelId,
-    };
+    let data = {};
     properties?.map((property) => {
       if (property.modelId === modelId) {
-        return (data[property.propertyName] = "");
+        data[property.property] = "";
+        return null;
       }
     });
     axios
-      .post("/api/objects", data)
+      .post("/api/objects", {
+        projectId: editingProject._id,
+        modelId: modelId,
+        data: data,
+      })
       .then((response) => {
         setObjects([...objects, response?.data]);
         setEditingObject(response?.data);
@@ -170,7 +173,7 @@ export default function Objects() {
             <form>
               <div className={"uk-margin"}>
                 <select
-                  value={editingObject?._id || ""}
+                  value={editingObject?._id}
                   className={"uk-select"}
                   onChange={(event) => createObject(event.target.value)}
                   required
