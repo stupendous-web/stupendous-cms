@@ -19,7 +19,10 @@ export default function Home() {
         </title>
       </Head>
       <Navigation />
-      <div className={"hero-gradient"}>
+      <div
+        className={"hero-gradient"}
+        style={{ height: "calc(100vh - 6rem)", overflow: "auto" }}
+      >
         <div className={"uk-section"}>
           <div className={"uk-container uk-container-small"}>
             <h1 className={"uk-heading-medium"}>
@@ -37,7 +40,7 @@ export default function Home() {
           </div>
         </div>
         <div className={"uk-section"}>
-          <div className={"uk-container"}>
+          <div className={"uk-container uk-container-small"}>
             <div className={"uk-flex-middle"} data-uk-grid={""}>
               <div className={"uk-width-2-3@s"}>
                 <div className={"next-image"}>
@@ -128,7 +131,7 @@ export default function Home() {
           </div>
         </div>
         <div className={"uk-section"}>
-          <div className={"uk-container"}>
+          <div className={"uk-container uk-container-small"}>
             <div className={"uk-child-width-1-3@s"} data-uk-grid={""}>
               <div>
                 <div className={"next-image"}>
@@ -150,6 +153,21 @@ export default function Home() {
         </div>
         <div className={"uk-section"}>
           <div className={"uk-container uk-container-small"}>
+            <p className={"uk-text-bold"}>No credit card required!</p>
+            <p>
+              Stupendous CMS is FREE for 3 months and just $15/mo. after that!
+              Access for{" "}
+              <Link href={"https://stupendousweb.com"}>
+                <a
+                  title={
+                    "Web App Development Services | Stupendous Web | If you want to build community, build a stupendous web app"
+                  }
+                >
+                  Stupendous Web
+                </a>
+              </Link>{" "}
+              clients and contributors is always free!!!
+            </p>
             <p>
               <Link href={"/register"}>
                 <a
@@ -160,7 +178,7 @@ export default function Home() {
                     "uk-button uk-button-primary uk-button-large uk-margin-right"
                   }
                 >
-                  Get started!
+                  Start for FREE!
                 </a>
               </Link>
               <Link href={"/login"}>
@@ -170,18 +188,6 @@ export default function Home() {
                   }
                 >
                   Login
-                </a>
-              </Link>
-            </p>
-            <p>
-              Learn more at{" "}
-              <Link href={"https://stupendousweb.com"}>
-                <a
-                  title={
-                    "Web App Development Services | Stupendous Web | If you want to build community, build a stupendous web app"
-                  }
-                >
-                  Stupendous Web
                 </a>
               </Link>
             </p>

@@ -42,7 +42,7 @@ export default async function handler(request, response) {
               : "price_1M22DwIqQW8xJ9oZWX3aYB23",
         },
       ],
-      trial_end: dayjs().add(1, "months").unix(),
+      trial_end: dayjs().add(3, "months").unix(),
     });
 
     // Create Account

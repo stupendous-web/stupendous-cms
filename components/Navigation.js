@@ -79,7 +79,7 @@ export default function Navigation() {
                 }
                 className={"uk-button uk-button-primary uk-margin-right"}
               >
-                Get Started
+                Start for FREE!
               </a>
             </Link>
             <Link href={"/login"}>
