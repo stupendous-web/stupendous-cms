@@ -6,6 +6,7 @@ const stripe = require("stripe")(
     : process.env.STRIPE_TEST_KEY
 );
 const bcrypt = require("bcrypt");
+const dayjs = require("dayjs");
 
 export default async function handler(request, response) {
   const body = request.body;
@@ -33,7 +34,15 @@ export default async function handler(request, response) {
     });
     const subscription = await stripe.subscriptions.create({
       customer: customer.id,
-      items: [{ price: "price_1M21yPIqQW8xJ9oZ21DBKKIG" }],
+      items: [
+        {
+          price:
+            process.env.NODE_ENV === "production"
+              ? "price_1M22T8IqQW8xJ9oZYO15nAXY"
+              : "price_1M22DwIqQW8xJ9oZWX3aYB23",
+        },
+      ],
+      trial_end: dayjs().add(1, "months").unix(),
     });
 
     // Create Account
