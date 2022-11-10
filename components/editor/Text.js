@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useGlobal } from "../../lib/context";
-import { patchObject } from "../../utils/api";
+import { patch } from "../../utils/api";
 
 export default function Text({ property }) {
   const { editingObject } = useGlobal();
@@ -11,7 +11,7 @@ export default function Text({ property }) {
     // Save after three seconds
     const delayPatch = setTimeout(() => {
       value !== null &&
-        patchObject({
+        patch("objects", {
           objectId: editingObject?._id,
           data: { ...property?.data, [property?.property]: value },
         });

@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { useGlobal } from "../../lib/context";
-import axios from "axios";
 import dayjs from "dayjs";
 import UIkit from "uikit";
-let calendar = require("dayjs/plugin/calendar");
+import calendar from "dayjs/plugin/calendar";
+import { del, post } from "../../utils/api";
 
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
@@ -25,32 +25,42 @@ export default function Objects() {
     properties,
   } = useGlobal();
 
-  const [modelId, setModelId] = useState("");
+  const [modelId, setModelId] = useState();
 
   const router = useRouter();
 
   useEffect(() => {
-    let data = {};
-    properties?.map((property) => {
-      if (property?.modelId === modelId) {
-        data[property?.property] = "";
-        return null;
-      }
-    });
-    axios
-      .post("/api/objects", {
+    if (modelId) {
+      let blueprint = {};
+      properties?.map((property) => {
+        if (property?.modelId === modelId) {
+          blueprint[property?.property] = "";
+          return null;
+        }
+      });
+      post("objects", {
+        data: blueprint,
         projectId: editingProject?._id,
         modelId: modelId,
-        data: data,
-      })
-      .then((response) => {
-        setObjects([...objects, response?.data]);
+      }).then((response) => {
+        console.log(response?.data);
+        setObjects([response?.data, ...objects]);
         setEditingObject(response?.data);
         router.push("/app/editor");
         UIkit.modal("#create-object-modal").hide();
-      })
-      .catch((error) => console.log(error));
+      });
+    }
   }, [modelId]);
+
+  const handleDelete = (_id) => {
+    UIkit.modal
+      .confirm("Are you sure you wish to permanently delete this object?")
+      .then(() =>
+        del("objects", _id).then(() =>
+          setObjects(objects?.filter((object) => object._id !== _id))
+        )
+      );
+  };
 
   return (
     <Authentication>
@@ -140,13 +150,7 @@ export default function Objects() {
                                       "uk-text-primary uk-margin-right"
                                     }
                                     style={{ cursor: "pointer" }}
-                                    onClick={() => {
-                                      UIkit.modal
-                                        .confirm(
-                                          "Are you sure you wish to permanently delete this project?"
-                                        )
-                                        .then(() => handleDelete(object._id));
-                                    }}
+                                    onClick={() => handleDelete(object._id)}
                                   >
                                     <i className={"ri-delete-bin-fill"} />
                                   </span>
