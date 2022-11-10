@@ -8,14 +8,14 @@ import Layout from "../../components/Layout";
 import userFlow from "../../images/undraw/undraw_user_flow_re_bvfx.svg";
 
 export default function Users() {
-  const { users } = useGlobal();
+  const { filteredUsers } = useGlobal();
 
   const { data: session } = useSession();
 
   return (
     <Authentication>
       <Layout>
-        {users?.length < 2 && (
+        {filteredUsers?.length < 2 && (
           <>
             <div
               className={
@@ -30,7 +30,7 @@ export default function Users() {
                 >
                   <Image src={userFlow} />
                 </div>
-                <p>Users are people that can add content to your API</p>
+                <p>Users are people that can add content to your API.</p>
                 <a className={"uk-button uk-button-primary"}>
                   Invite your Users
                 </a>
@@ -51,7 +51,7 @@ export default function Users() {
                       </tr>
                     </thead>
                     <tbody>
-                      {users?.map((user) => {
+                      {filteredUsers?.map((user) => {
                         return (
                           <tr key={user._id}>
                             <td className={"uk-flex uk-flex-middle"}>
