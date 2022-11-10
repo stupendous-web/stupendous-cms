@@ -4,9 +4,8 @@ import axios from "axios";
 import UIkit from "uikit";
 import { createPropertyName } from "../utils/helpers";
 
-export default function CreateProperty({ id }) {
-  const { editingProject, filteredModels, properties, setProperties } =
-    useGlobal();
+export default function CreateProperty({ model }) {
+  const { editingProject, properties, setProperties } = useGlobal();
 
   const [type, setType] = useState("");
   const [name, setName] = useState("");
@@ -30,12 +29,12 @@ export default function CreateProperty({ id }) {
         name: name,
         property: property,
         isRequired: isRequired,
-        modelId: id,
+        modelId: model._id,
         projectId: editingProject?._id,
       })
       .then((response) => {
         setProperties([...properties, response.data]);
-        UIkit.modal(`#create-property-modal-${id}`).hide();
+        UIkit.modal(`#create-property-modal-${model._id}`).hide();
         setType("");
         setName("");
         setIsRequired(false);
@@ -46,7 +45,7 @@ export default function CreateProperty({ id }) {
   return (
     <>
       <a
-        href={`#create-property-modal-${id}`}
+        href={`#create-property-modal-${model._id}`}
         className={
           "uk-button uk-button-primary uk-button-small uk-margin-small-right"
         }
@@ -54,12 +53,9 @@ export default function CreateProperty({ id }) {
       >
         Add
       </a>
-      <div id={`create-property-modal-${id}`} data-uk-modal={""}>
+      <div id={`create-property-modal-${model._id}`} data-uk-modal={""}>
         <div className={"uk-modal-dialog uk-modal-body"}>
-          <h3>
-            Create Property for{" "}
-            {filteredModels?.find((model) => model?._id === id).name}
-          </h3>
+          <h3>Create Property for {model?.name}</h3>
           <form onSubmit={(event) => handleSubmit(event)}>
             <div className={"uk-margin"}>
               <label className={"uk-form-label"}>Type</label>

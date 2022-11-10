@@ -165,7 +165,7 @@ export default function Models() {
                                         />
                                       );
                                     })}
-                                  <CreateProperty id={model._id} />
+                                  <CreateProperty model={model} />
                                 </td>
                                 <td className={"uk-text-right"}>
                                   <span

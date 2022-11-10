@@ -1,10 +1,7 @@
-import { useGlobal } from "../lib/context";
 import axios from "axios";
 import UIkit from "uikit";
 
-export default function EditProperty({ model, property }) {
-  const { filteredModels } = useGlobal();
-
+export default function EditProperty({ property }) {
   const editingId = property._id;
 
   const handleDelete = () => {
