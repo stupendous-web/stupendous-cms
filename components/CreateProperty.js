@@ -5,7 +5,8 @@ import UIkit from "uikit";
 import { createPropertyName } from "../utils/helpers";
 
 export default function CreateProperty({ model }) {
-  const { editingProject, properties, setProperties } = useGlobal();
+  const { editingProject, properties, setProperties, propertyTypes } =
+    useGlobal();
 
   const [type, setType] = useState("");
   const [name, setName] = useState("");
@@ -15,11 +16,6 @@ export default function CreateProperty({ model }) {
   useEffect(() => {
     setProperty(createPropertyName(name));
   }, [name]);
-
-  const propertyTypes = [
-    { option: "Plain Text", value: "string" },
-    { option: "HTML", value: "html" },
-  ];
 
   const handleSubmit = (event) => {
     event.preventDefault();

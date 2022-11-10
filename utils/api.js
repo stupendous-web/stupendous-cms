@@ -11,6 +11,19 @@ export const patchObject = async (data) => {
     });
 };
 
+// Users
+
+export const getUsers = async (params) => {
+  return await axios
+    .get("/api/users", { params: params })
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
+
 // Stripe
 
 export const getSubscription = async (params) => {

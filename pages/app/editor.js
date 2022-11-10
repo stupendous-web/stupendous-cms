@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
@@ -7,11 +7,18 @@ import Text from "../../components/editor/Text";
 
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
+import { useRouter } from "next/router";
 
 export default function Projects() {
   const { value, setValue } = useState();
 
   const { filteredProperties, editingObject } = useGlobal();
+
+  const router = useRouter();
+
+  useEffect(() => {
+    // !editingObject && router.replace("/app/objects");
+  }, [editingObject]);
 
   return (
     <Authentication>

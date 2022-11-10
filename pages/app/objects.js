@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { useGlobal } from "../../lib/context";
@@ -10,7 +11,6 @@ import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
 
 import contentCreator from "../../images/undraw/undraw_content_creator_re_pt5b.svg";
-import { useEffect } from "react";
 
 dayjs.extend(calendar);
 
@@ -21,18 +21,15 @@ export default function Objects() {
     filteredObjects,
     objects,
     setObjects,
-    editingObject,
     setEditingObject,
     properties,
   } = useGlobal();
 
-  useEffect(() => {
-    setEditingObject({});
-  }, []);
+  const [modelId, setModelId] = useState("");
 
   const router = useRouter();
 
-  const createObject = (modelId) => {
+  useEffect(() => {
     let data = {};
     properties?.map((property) => {
       if (property?.modelId === modelId) {
@@ -42,7 +39,7 @@ export default function Objects() {
     });
     axios
       .post("/api/objects", {
-        projectId: editingProject._id,
+        projectId: editingProject?._id,
         modelId: modelId,
         data: data,
       })
@@ -53,7 +50,7 @@ export default function Objects() {
         UIkit.modal("#create-object-modal").hide();
       })
       .catch((error) => console.log(error));
-  };
+  }, [modelId]);
 
   return (
     <Authentication>
@@ -172,9 +169,9 @@ export default function Objects() {
             <form>
               <div className={"uk-margin"}>
                 <select
-                  value={editingObject?._id}
+                  value={modelId}
                   className={"uk-select"}
-                  onChange={(event) => createObject(event.target.value)}
+                  onChange={(event) => setModelId(event.target.value)}
                   required
                 >
                   <option value={""}>Select</option>
