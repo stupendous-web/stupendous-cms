@@ -4,14 +4,17 @@ const stripe = require("stripe")(
     : process.env.STRIPE_TEST_KEY
 );
 
-export default async function Handler(request, response) {
+export default async function handler(request, response) {
+  if (request?.method !== "POST") return response.status(405).send();
+
   try {
     const session = await stripe.billingPortal.sessions.create({
       customer: request?.body?.stripeCustomer,
       return_url: "https://stupendouscms.com/app/dashboard",
     });
-    response.status(200).send(session.url);
+
+    return response.status(200).send(session);
   } catch (error) {
-    response.status(200).send("");
+    return response.status(500).send(error);
   }
 }

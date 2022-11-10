@@ -12,8 +12,9 @@ export const authOptions = {
     async jwt({ token, user }) {
       if (user?._id) token._id = user._id;
       if (user?.stripeCustomer) token.stripeCustomer = user.stripeCustomer;
+      if (user?.stripeSubscription)
+        token.stripeSubscription = user.stripeSubscription;
       if (user?.isAccountOwner) token.isAccountOwner = user.isAccountOwner;
-      if (user?.stripeCustomer) token.stripeCustomer = user.stripeCustomer;
       if (user?.account[0]._id) token.accountId = user?.account[0]._id;
 
       return token;
@@ -22,8 +23,8 @@ export const authOptions = {
       if (token?._id) session.user._id = token._id;
       if (token?.stripeCustomer)
         session.user.stripeCustomer = token.stripeCustomer;
-      if (token?.stripeCustomer)
-        session.user.stripeCustomer = token.stripeCustomer;
+      if (token?.stripeSubscription)
+        session.user.stripeSubscription = token.stripeSubscription;
       if (token?.isAccountOwner)
         session.user.isAccountOwner = token.isAccountOwner;
       if (token?.accountId) session.user.accountId = token.accountId;

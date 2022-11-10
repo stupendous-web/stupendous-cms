@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useGlobal } from "../lib/context";
-import axios from "axios";
 import { useSession } from "next-auth/react";
 import gravatar from "gravatar";
+import { getBillingLink } from "../utils/api";
 
 export default function SideNavigation() {
   const [billingLink, setBillingLink] = useState("");
@@ -14,12 +14,9 @@ export default function SideNavigation() {
 
   useEffect(() => {
     if (session?.user?.stripeCustomer) {
-      axios
-        .post("/api/billingLink", {
-          stripeCustomer: session?.user?.stripeCustomer,
-        })
-        .then((response) => setBillingLink(response.data))
-        .catch((error) => console.log(error));
+      getBillingLink({ stripeCustomer: session?.user?.stripeCustomer }).then(
+        (response) => setBillingLink(response?.data?.url || "")
+      );
     }
   }, [session]);
 
@@ -75,7 +72,7 @@ export default function SideNavigation() {
       icon: "ri-wallet-fill",
       description:
         "A portal for you to manage your subscription and view your invoices.",
-      visible: true,
+      visible: !!billingLink,
     },
   ];
 
