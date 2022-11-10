@@ -3,19 +3,25 @@ import { useGlobal } from "../../lib/context";
 import { patch } from "../../utils/api";
 
 export default function Text({ property }) {
-  const { editingObject } = useGlobal();
+  const { editingObject, setEditingObject, setIsSaving } = useGlobal();
 
   const [value, setValue] = useState();
 
   useEffect(() => {
-    // Save after three seconds
+    setIsSaving(true);
+    // Save after 1.5 seconds
     const delayPatch = setTimeout(() => {
-      value !== null &&
+      if (value !== null) {
+        setEditingObject({
+          ...editingObject,
+          data: { ...editingObject?.data, [property?.property]: value },
+        });
         patch("objects", {
           objectId: editingObject?._id,
-          data: { ...property?.data, [property?.property]: value },
-        });
-    }, 3000);
+          data: { ...editingObject?.data, [property?.property]: value },
+        }).then(() => setIsSaving(false));
+      }
+    }, 1500);
 
     return () => clearTimeout(delayPatch);
   }, [value]);
