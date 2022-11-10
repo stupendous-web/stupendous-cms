@@ -31,13 +31,9 @@ export default async function handler(request, response) {
           },
         ])
         .toArray()
-        .then((results) => {
-          response.status(200).send(
-            results?.map((result) => {
-              return result.data;
-            })
-          );
-        })
+        .then((results) =>
+          response.status(200).send(results?.map((result) => result.data))
+        )
         .finally(() => client.close());
 
       break;
