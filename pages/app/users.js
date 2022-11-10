@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Image from "next/image";
 import { useGlobal } from "../../lib/context";
 import { useSession } from "next-auth/react";
@@ -8,6 +9,8 @@ import Layout from "../../components/Layout";
 import userFlow from "../../images/undraw/undraw_user_flow_re_bvfx.svg";
 
 export default function Users() {
+  const [email, setEmail] = useState();
+
   const { filteredUsers } = useGlobal();
 
   const { data: session } = useSession();
@@ -31,7 +34,11 @@ export default function Users() {
                   <Image src={userFlow} />
                 </div>
                 <p>Users are people that can add content to your API.</p>
-                <a className={"uk-button uk-button-primary"}>
+                <a
+                  href={"#create-user-modal"}
+                  className={"uk-button uk-button-primary"}
+                  data-uk-toggle={""}
+                >
                   Invite your Users
                 </a>
               </div>
@@ -57,7 +64,8 @@ export default function Users() {
                             <td className={"uk-flex uk-flex-middle"}>
                               {user.name}
                               <span className={"uk-badge uk-margin-left"}>
-                                {user._id === session?.user?._id && "You!"}
+                                {user._id === session?.user?._id &&
+                                  "Account Owner"}
                               </span>
                             </td>
                           </tr>
@@ -68,6 +76,28 @@ export default function Users() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+        <div id={"create-user-modal"} data-uk-modal={""}>
+          <div className={"uk-modal-dialog uk-modal-body"}>
+            <h3>Invite User</h3>
+            <form onSubmit={(event) => handleEdit(event)}>
+              <div className={"uk-margin"}>
+                <label className={"uk-form-label"}>Name</label>
+                <input
+                  type={"email"}
+                  value={email}
+                  className={"uk-input"}
+                  onChange={(event) => setEmail(event.target.value)}
+                  required
+                />
+              </div>
+              <input
+                type={"submit"}
+                value={"Save"}
+                className={"uk-button uk-button-primary"}
+              />
+            </form>
           </div>
         </div>
       </Layout>
