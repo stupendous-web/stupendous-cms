@@ -21,7 +21,6 @@ export default function Files() {
       let formData = new FormData();
       formData.append("file", event.target.files[counter]);
       formData.append("projectId", editingProject?._id);
-      formData.append("counter", counter);
       await axios
         .post("/api/files/create", formData, {
           headers: {

@@ -8,6 +8,11 @@ export default async function handler(request, response) {
 
   switch (request.method) {
     case "GET":
+      const project = await client
+        .db("stupendous-cms")
+        .collection("projects")
+        .findOne({ slug: projectSlug });
+
       await client
         .db("stupendous-cms")
         .collection("files")
@@ -15,15 +20,23 @@ export default async function handler(request, response) {
           {
             $match: {
               accountId: ObjectId(accountId),
-              // Get project ID from slug
-              // projectId: ObjectId(projectId),
+              projectId: ObjectId(project._id),
             },
           },
         ])
         .toArray()
-        .then((result) => {
-          response.status(200).send(result);
-        })
+        .then((results) =>
+          response.status(200).send(
+            results?.map((result) => {
+              return {
+                id: ObjectId(result._id).toString(),
+                type: result?.type,
+                url: result?.url,
+                createdAt: result?.createdAt,
+              };
+            })
+          )
+        )
         .finally(() => client.close());
 
       break;
