@@ -155,7 +155,7 @@ export default function Home() {
           <div className={"uk-container uk-container-small"}>
             <p className={"uk-text-bold"}>No credit card required!</p>
             <p>
-              Stupendous CMS is FREE for 3 months and just $15/mo. after that!
+              Stupendous CMS is FREE for 30 days and just $15/mo. after that!
               Access for{" "}
               <Link href={"https://stupendousweb.com"}>
                 <a
