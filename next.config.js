@@ -11,6 +11,7 @@ const nextConfig = {
     "/app/editor",
     "/app/files",
     "/app/account",
+    "/app/users",
   ], // For sitemap
   swcMinify: true,
 };
