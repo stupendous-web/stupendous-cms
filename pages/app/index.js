@@ -7,7 +7,7 @@ import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
 import { useRouter } from "next/router";
 
-export default function Dashboard() {
+export default function Index() {
   const { data: session } = useSession();
 
   const router = useRouter();

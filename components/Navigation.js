@@ -58,7 +58,7 @@ export default function Navigation() {
       <div className={"uk-navbar-right"}>
         {session?.user ? (
           <div className={"uk-navbar-item"}>
-            <Link href={"/app/dashboard"} legacyBehavior>
+            <Link href={"/app"} legacyBehavior>
               <a className={"uk-button uk-button-primary uk-margin-right"}>
                 Dashboard
               </a>

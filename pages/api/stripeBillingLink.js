@@ -10,7 +10,7 @@ export default async function handler(request, response) {
   try {
     const session = await stripe.billingPortal.sessions.create({
       customer: request?.body?.stripeCustomer,
-      return_url: "https://stupendouscms.com/app/dashboard",
+      return_url: "https://stupendouscms.com/app",
     });
 
     return response.status(200).send(session);

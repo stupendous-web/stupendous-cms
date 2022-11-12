@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Head from "next/head";
-import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 
 import Navigation from "../components/Navigation";
@@ -9,9 +8,6 @@ import Link from "next/link";
 export default function Login() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [isError, setIsError] = useState(false);
-
-  const router = useRouter();
 
   return (
     <>
@@ -31,9 +27,7 @@ export default function Login() {
                 signIn("credentials", {
                   email: email,
                   password: password,
-                  redirect: false,
-                }).then(({ error }) => {
-                  error ? setIsError(true) : router.replace("/app/dashboard");
+                  callbackUrl: "/app",
                 });
               }}
             >
@@ -59,20 +53,6 @@ export default function Login() {
                   required
                 />
               </div>
-              {isError && (
-                <div class={"uk-alert-danger"} data-uk-alert={""}>
-                  <p>
-                    That didn&apos;t work. Please try again or email{" "}
-                    <Link
-                      href={"mailto:topher@stupendousweb.com"}
-                      legacyBehavior
-                    >
-                      <a>topher@stupendousweb.com</a>
-                    </Link>{" "}
-                    for help.
-                  </p>
-                </div>
-              )}
               <input
                 type={"submit"}
                 value={"Let's go!"}
