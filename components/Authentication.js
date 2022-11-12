@@ -70,13 +70,8 @@ export default function Authentication({ children }) {
             <div>
               <p>
                 Looks like you&apos;ve been logged out. Login{" "}
-                <Link href={"/login"}>
-                  <a>here</a>
-                </Link>{" "}
-                or check out the{" "}
-                <Link href={"/"}>
-                  <a>homepage</a>
-                </Link>
+                <Link href={"/login"}>here</Link> or check out the{" "}
+                <Link href={"/"}>homepage</Link>
               </p>
             </div>
           </div>

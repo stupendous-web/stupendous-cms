@@ -17,7 +17,7 @@
     "gravatar": "^1.8.2",
     "mongodb": "^4.11.0",
     "multiparty": "^4.2.3",
-    "next": "12.3.1",
+    "next": "^13.0.3",
     "next-auth": "^4.15.0",
     "next-connect": "^0.13.0",
     "next-sitemap": "^3.1.29",
@@ -30,6 +30,6 @@
   },
   "devDependencies": {
     "eslint": "8.26.0",
-    "eslint-config-next": "12.3.1"
+    "eslint-config-next": "^13.0.3"
   }
 }

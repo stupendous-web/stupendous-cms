@@ -84,13 +84,11 @@ export default function SideNavigation() {
       >
         <div className={"uk-navbar-item"}>
           <Link href={"/app/account"}>
-            <a>
-              <img
-                src={gravatar.url(session.user.email)}
-                className={"uk-border-circle"}
-                style={{ width: "4rem" }}
-              />
-            </a>
+            <img
+              src={gravatar.url(session.user.email)}
+              className={"uk-border-circle"}
+              style={{ width: "4rem" }}
+            />
           </Link>
         </div>
       </div>
@@ -105,14 +103,12 @@ export default function SideNavigation() {
                 >
                   <div className={"uk-width-1-1 uk-inline my-class"}>
                     <Link href={link.href}>
-                      <a>
-                        <p
-                          className={"uk-text-center"}
-                          style={{ fontSize: "1.5rem" }}
-                        >
-                          <i className={link.icon} />
-                        </p>
-                      </a>
+                      <p
+                        className={"uk-text-center"}
+                        style={{ fontSize: "1.5rem" }}
+                      >
+                        <i className={link.icon} />
+                      </p>
                     </Link>
                     <div
                       className={"uk-box-shadow-large"}

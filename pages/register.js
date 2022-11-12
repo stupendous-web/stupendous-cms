@@ -79,7 +79,7 @@ export default function Register() {
                 <p>
                   Stupendous CMS is FREE for 30 days and just $15/mo. after
                   that! Access for{" "}
-                  <Link href={"https://stupendousweb.com"}>
+                  <Link href={"https://stupendousweb.com"} legacyBehavior>
                     <a
                       title={
                         "Web App Development Services | Stupendous Web | If you want to build community, build a stupendous web app"
@@ -96,7 +96,10 @@ export default function Register() {
                   <p>
                     {error?.title || "There was an error."} Please try again or
                     email{" "}
-                    <Link href={"mailto:topher@stupendousweb.com"}>
+                    <Link
+                      href={"mailto:topher@stupendousweb.com"}
+                      legacyBehavior
+                    >
                       <a>topher@stupendousweb.com</a>
                     </Link>{" "}
                     for help.
@@ -108,7 +111,7 @@ export default function Register() {
                 value={"Let's Go!"}
                 className={"uk-button uk-button-primary uk-margin-right"}
               />
-              <Link href={"/login"}>
+              <Link href={"/login"} legacyBehavior>
                 <a
                   title={
                     "Login | Stupendous CMS by Stupendous Web | Clients manage their content. You manage their software."

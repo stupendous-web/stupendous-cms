@@ -35,11 +35,9 @@ export default function Dashboard() {
                             <Link
                               href={`https://stupendouscms.com/api/${session?.user?.accountId}/${editingProject?.slug}/${model?.slug}`}
                             >
-                              <a>
-                                https://stupendouscms.com/api/
-                                {session?.user?.accountId}/
-                                {editingProject?.slug}/{model?.slug}
-                              </a>
+                              https://stupendouscms.com/api/
+                              {session?.user?.accountId}/{editingProject?.slug}/
+                              {model?.slug}
                             </Link>
                           </li>
                         </div>
@@ -48,11 +46,9 @@ export default function Dashboard() {
                         <Link
                           href={`https://stupendouscms.com/api/${session?.user?.accountId}/${editingProject?.slug}/files`}
                         >
-                          <a>
-                            https://stupendouscms.com/api/
-                            {session?.user?.accountId}/{editingProject?.slug}
-                            /files
-                          </a>
+                          https://stupendouscms.com/api/
+                          {session?.user?.accountId}/{editingProject?.slug}
+                          /files
                         </Link>
                       </li>
                     </ul>

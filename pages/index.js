@@ -157,7 +157,7 @@ export default function Home() {
             <p>
               Stupendous CMS is FREE for 30 days and just $15/mo. after that!
               Access for{" "}
-              <Link href={"https://stupendousweb.com"}>
+              <Link href={"https://stupendousweb.com"} legacyBehavior>
                 <a
                   title={
                     "Web App Development Services | Stupendous Web | If you want to build community, build a stupendous web app"
@@ -169,7 +169,7 @@ export default function Home() {
               clients and contributors is always free!!!
             </p>
             <p>
-              <Link href={"/register"}>
+              <Link href={"/register"} legacyBehavior>
                 <a
                   title={
                     "Get Started | Stupendous CMS by Stupendous Web | Clients manage their content. You manage their software."
@@ -181,7 +181,7 @@ export default function Home() {
                   Start for FREE!
                 </a>
               </Link>
-              <Link href={"/login"}>
+              <Link href={"/login"} legacyBehavior>
                 <a
                   title={
                     "Login | Stupendous CMS by Stupendous Web | Clients manage their content. You manage their software."

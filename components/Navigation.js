@@ -43,7 +43,7 @@ export default function Navigation() {
           </div>
         )}
         {logo.includes(router.pathname) && (
-          <Link href={"/"}>
+          <Link href={"/"} legacyBehavior>
             <a
               title={
                 "Stupendous CMS by Stupendous Web | Clients manage their content. You manage their software."
@@ -58,7 +58,7 @@ export default function Navigation() {
       <div className={"uk-navbar-right"}>
         {session?.user ? (
           <div className={"uk-navbar-item"}>
-            <Link href={"/app/dashboard"}>
+            <Link href={"/app/dashboard"} legacyBehavior>
               <a className={"uk-button uk-button-primary uk-margin-right"}>
                 Dashboard
               </a>
@@ -72,7 +72,7 @@ export default function Navigation() {
           </div>
         ) : (
           <div className={"uk-navbar-item"}>
-            <Link href={"/register"}>
+            <Link href={"/register"} legacyBehavior>
               <a
                 title={
                   "Get Started | Stupendous CMS by Stupendous Web | Clients manage their content. You manage their software."
@@ -82,7 +82,7 @@ export default function Navigation() {
                 Start for FREE!
               </a>
             </Link>
-            <Link href={"/login"}>
+            <Link href={"/login"} legacyBehavior>
               <a
                 title={
                   "Login | Stupendous CMS by Stupendous Web | Clients manage their content. You manage their software."

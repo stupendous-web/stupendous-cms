@@ -63,7 +63,10 @@ export default function Login() {
                 <div class={"uk-alert-danger"} data-uk-alert={""}>
                   <p>
                     That didn&apos;t work. Please try again or email{" "}
-                    <Link href={"mailto:topher@stupendousweb.com"}>
+                    <Link
+                      href={"mailto:topher@stupendousweb.com"}
+                      legacyBehavior
+                    >
                       <a>topher@stupendousweb.com</a>
                     </Link>{" "}
                     for help.
@@ -75,7 +78,7 @@ export default function Login() {
                 value={"Let's go!"}
                 className={"uk-button uk-button-primary uk-margin-right"}
               />
-              <Link href={"/register"}>
+              <Link href={"/register"} legacyBehavior>
                 <a
                   title={
                     "Get Started | Stupendous CMS by Stupendous Web | Clients manage their content. You manage their software."
