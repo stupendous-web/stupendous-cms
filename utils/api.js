@@ -26,7 +26,7 @@ export const del = async (resource, _id) =>
 
 export const upload = async (data) =>
   await axios
-    .post("/api/files/create", data, {
+    .post("/api/upload", data, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

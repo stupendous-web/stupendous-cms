@@ -1,8 +1,8 @@
 import { MongoClient, ObjectId } from "mongodb";
 const client = new MongoClient(process.env.MONGO_DB_URI);
-import { authOptions } from "../auth/[...nextauth]";
+import { authOptions } from "./auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
-import middleware from "../../../middleware/middleware";
+import middleware from "../../middleware/middleware";
 import nextConnect from "next-connect";
 const { Storage } = require("@google-cloud/storage");
 
