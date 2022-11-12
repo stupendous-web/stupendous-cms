@@ -19,70 +19,87 @@ export default function Home() {
         </title>
       </Head>
       <Navigation />
-      <div
-        className={"hero-gradient"}
-        style={{ height: "calc(100vh - 6rem)", overflow: "auto" }}
-      >
-        <div className={"uk-section"}>
-          <div className={"uk-container uk-container-small"}>
-            <h1 className={"uk-heading-medium"}>
-              Clients manage their content. You manage their software.
-            </h1>
-            <p>
-              As a developer, it can be frustrating to allow your clients to
-              manager their content while allowing you as the developer to
-              insert it easily into their project via an API and at an
-              affordable cost. Stupendous CMS is a hosted, headless content
-              management system with a focus on Javascript and JSON. Your
-              clients can login and easily manage their content and you can
-              access it through your REST API. Let&apos;s go!
-            </p>
-          </div>
-        </div>
-        <div className={"uk-section"}>
-          <div className={"uk-container uk-container-small"}>
-            <div className={"uk-flex-middle"} data-uk-grid={""}>
-              <div className={"uk-width-2-3@s"}>
-                <div className={"next-image"}>
-                  <Image src={editor} alt={"Stupendous CMS"} />
-                </div>
-              </div>
-              <div className={"uk-width-1-3@s"}>
-                <h3>Content Meets Code</h3>
+      <div style={{ height: "calc(100vh - 6rem)", overflow: "auto" }}>
+        <div className={"uk-section uk-section-xlarge"}>
+          <div className={"uk-container uk-container-large"}>
+            <div
+              className={"uk-child-width-1-2@s uk-flex-middle"}
+              data-uk-grid={""}
+            >
+              <div>
+                <h1 className={"uk-heading-medium"}>
+                  Clients manage their content. You manage their software.
+                </h1>
                 <p>
-                  Distraction free editing makes it easy for your clients to
-                  publish their content in a way that&apos;s accessible to you
-                  as a developer.
+                  Stupendous CMS is an affordable, hosted, headless content
+                  management system with a focus on Javascript and JSON. Your
+                  clients can login and easily manage their content and you can
+                  access it through your REST API. Let&apos;s go!
                 </p>
-                <pre
-                  className={
-                    "uk-padding-small uk-margin-small-top uk-section-muted"
-                  }
-                >
-                  <code>
-                    {"{"}
-                    <br />
-                    &nbsp;&nbsp;id: 473057399,
-                    <br />
-                    &nbsp;&nbsp;slug: &quot;an-epic&quot;,
-                    <br />
-                    &nbsp;&nbsp;title: &quot;An Epic&quot;,
-                    <br />
-                    &nbsp;&nbsp;content: &quot;&#60;p&#62;&#60;em&#62;Lorem
-                    ipsum&#60;/em&#62; dolor sit amet, consectetur adipisicing
-                    elit. Consequatur hic praesentium
-                    quibusdam.&#60;/p&#62;&quot;,
-                    <br />
-                    &nbsp;&nbsp;createdAt:
-                    &quot;2022-07-09T10:06:55+00:00&quot;,
-                    <br />
-                    {"}"}
-                  </code>
-                </pre>
+                <p>
+                  <Link href={"/register"} legacyBehavior>
+                    <a
+                      title={
+                        "Get Started | Stupendous CMS by Stupendous Web | Clients manage their content. You manage their software."
+                      }
+                      className={
+                        "uk-button uk-button-primary uk-button-large uk-margin-right"
+                      }
+                    >
+                      Start for FREE!
+                    </a>
+                  </Link>
+                  <Link href={"/login"} legacyBehavior>
+                    <a
+                      title={
+                        "Login | Stupendous CMS by Stupendous Web | Clients manage their content. You manage their software."
+                      }
+                    >
+                      Login
+                    </a>
+                  </Link>
+                </p>
+              </div>
+              <div>
+                <div className={"uk-inline"}>
+                  <div
+                    className={
+                      "uk-padding-large uk-padding-remove-top uk-padding-remove-left"
+                    }
+                  >
+                    <Image src={editor} alt={"Stupendous CMS"} />
+                  </div>
+                  <pre
+                    className={
+                      "uk-padding-small uk-width-medium uk-section-muted uk-position-bottom-right uk-overflow-hidden"
+                    }
+                  >
+                    <code>
+                      {"{"}
+                      <br />
+                      &nbsp;&nbsp;id: 473057399,
+                      <br />
+                      &nbsp;&nbsp;slug: &quot;an-epic&quot;,
+                      <br />
+                      &nbsp;&nbsp;title: &quot;An Epic&quot;,
+                      <br />
+                      &nbsp;&nbsp;content: &quot;&#60;p&#62;&#60;em&#62;Lorem
+                      ipsum&#60;/em&#62; dolor sit amet, consectetur adipisicing
+                      elit. Consequatur hic praesentium
+                      quibusdam.&#60;/p&#62;&quot;,
+                      <br />
+                      &nbsp;&nbsp;createdAt:
+                      &quot;2022-07-09T10:06:55+00:00&quot;,
+                      <br />
+                      {"}"}
+                    </code>
+                  </pre>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
         <div className={"uk-section"}>
           <div className={"uk-container uk-container-small"}>
             <div className={"uk-child-width-1-2@s"} data-uk-grid={""}>
@@ -134,19 +151,13 @@ export default function Home() {
           <div className={"uk-container uk-container-small"}>
             <div className={"uk-child-width-1-3@s"} data-uk-grid={""}>
               <div>
-                <div className={"next-image"}>
-                  <Image src={rest} alt={"Stupendous CMS"} />
-                </div>
+                <Image src={rest} alt={"Stupendous CMS"} />
               </div>
               <div>
-                <div className={"next-image"}>
-                  <Image src={projects} alt={"Stupendous CMS"} />
-                </div>
+                <Image src={projects} alt={"Stupendous CMS"} />
               </div>
               <div>
-                <div className={"next-image"}>
-                  <Image src={models} alt={"Stupendous CMS"} />
-                </div>
+                <Image src={models} alt={"Stupendous CMS"} />
               </div>
             </div>
           </div>

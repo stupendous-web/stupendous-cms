@@ -11923,17 +11923,8 @@ pre {
   border-radius: 7px;
 }
 /**********/
-/* CUSTOM */
-/**********/
-.next-image > * {
-  display: block !important;
-}
-/**********/
 /* Custom */
 /**********/
-.hero-gradient {
-  background-image: linear-gradient(to right top, #edf5ff, #f2f4ff, #f7f2fd, #fbf2fa, #fef1f6, #fef1f6, #fdf1f7, #fdf1f7, #f9f1fb, #f3f3ff, #ecf4ff, #e5f6ff);
-}
 .ql-toolbar.ql-snow,
 .ql-container.ql-snow {
   border: none !important;
