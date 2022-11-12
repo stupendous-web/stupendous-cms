@@ -3,6 +3,7 @@ import Image from "next/image";
 import axios from "axios";
 import { useGlobal } from "../../lib/context";
 import UIkit from "uikit";
+import { upload } from "../../utils/api";
 
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
@@ -15,18 +16,13 @@ export default function Files() {
   const { filteredFiles, setFilteredFiles, files, setFiles, editingProject } =
     useGlobal();
 
-  const handleChange = async (event) => {
+  const handleChange = (event) => {
     setIsUploading(true);
     for (let counter = 0; counter < event.target.files.length; counter++) {
       let formData = new FormData();
       formData.append("file", event.target.files[counter]);
       formData.append("projectId", editingProject?._id);
-      await axios
-        .post("/api/files/create", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
+      upload(formData)
         .then((response) => {
           setIsUploading(counter + 1 < event.target.files.length);
           setFiles([response.data, ...files]);

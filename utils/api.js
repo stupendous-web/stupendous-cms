@@ -24,6 +24,16 @@ export const del = async (resource, _id) =>
     .then((response) => response)
     .catch((error) => console.error(error));
 
+export const upload = async (data) =>
+  await axios
+    .post("/api/files/create", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((response) => response)
+    .catch((error) => console.error(error));
+
 // Stripe
 
 export const getSubscription = async (params) => {
