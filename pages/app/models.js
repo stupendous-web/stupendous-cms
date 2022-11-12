@@ -1,9 +1,9 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useGlobal } from "../../lib/context";
-import axios from "axios";
 import UIkit from "uikit";
 import { createSlug } from "../../utils/helpers";
+import { post, patch, del } from "../../utils/api";
 
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
@@ -31,56 +31,51 @@ export default function Models() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios
-      .post("/api/models", {
-        singular: modelSingular,
-        plural: modelPlural,
-        slug: createSlug(modelPlural),
-        projectId: editingProject?._id,
-      })
-      .then((response) => {
-        UIkit.modal("#create-model-modal").hide();
-        setModels([response.data[0], ...models]);
-        setModelSingular("");
-        setModelPlural("");
-      })
-      .catch((error) => console.log(error));
+    post("models", {
+      singular: modelSingular,
+      plural: modelPlural,
+      slug: createSlug(modelPlural),
+      projectId: editingProject?._id,
+    }).then((response) => {
+      UIkit.modal("#create-model-modal").hide();
+      setModels([response?.data[0], ...models]);
+      setModelSingular("");
+      setModelPlural("");
+    });
   };
 
   const handleEdit = (event) => {
     event.preventDefault();
-    axios
-      .patch("/api/models", editingModel)
-      .then((response) => {
-        UIkit.modal("#edit-model-modal").hide();
-        const newState = models.map((model) => {
-          if (model._id === editingModel._id) {
-            return response.data[0];
-          }
+    patch("models", editingModel).then((response) => {
+      UIkit.modal("#edit-model-modal").hide();
+      const newState = models.map((model) => {
+        if (model._id === editingModel._id) {
+          return response?.data[0];
+        }
 
-          return model;
-        });
-        setModels(newState);
-        setEditingModel({
-          ...editingModel,
-          singular: "",
-          plural: "",
-          projectId: undefined,
-        });
-      })
-      .catch((error) => console.log(error));
+        return model;
+      });
+      setModels(newState);
+      setEditingModel({
+        ...editingModel,
+        singular: "",
+        plural: "",
+        projectId: undefined,
+      });
+    });
   };
 
-  const handleDelete = (modelId) => {
-    axios
-      .delete("/api/models", { data: { modelId: modelId } })
-      .then(() => {
-        setModels(models?.filter((model) => model._id !== modelId));
-        setProperties(
-          properties?.filter((property) => property?.modelId !== modelId)
-        );
-      })
-      .catch((error) => console.log(error));
+  const handleDelete = (_id) => {
+    UIkit.modal
+      .confirm("Are you sure you wish to permanently delete this model?")
+      .then(() =>
+        del("models", _id).then(() => {
+          setModels(models?.filter((model) => model._id !== _id));
+          setProperties(
+            properties?.filter((property) => property?.modelId !== _id)
+          );
+        })
+      );
   };
 
   return (
@@ -187,13 +182,7 @@ export default function Models() {
                                   <span
                                     className={"uk-text-primary"}
                                     style={{ cursor: "pointer" }}
-                                    onClick={() => {
-                                      UIkit.modal
-                                        .confirm(
-                                          "Are you sure you wish to permanently delete this model?"
-                                        )
-                                        .then(() => handleDelete(model._id));
-                                    }}
+                                    onClick={() => handleDelete(model?._id)}
                                   >
                                     <i className={"ri-delete-bin-fill"} />
                                   </span>

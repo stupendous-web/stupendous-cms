@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { useGlobal } from "../../lib/context";
-import axios from "axios";
 import UIkit from "uikit";
 import { createSlug } from "../../utils/helpers";
+import { post, patch, del } from "../../utils/api";
 
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
@@ -28,51 +28,42 @@ export default function Projects() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios
-      .post("/api/projects", { name: name, slug: slug })
-      .then((response) => {
-        setProjects([response.data, ...projects]);
-        setEditingProject(response.data);
-        UIkit.modal("#create-project-modal").hide();
-        setName("");
-      })
-      .catch((error) => console.log(error));
+    post("projects", { name: name, slug: slug }).then((response) => {
+      setProjects([response?.data, ...projects]);
+      setEditingProject(response?.data);
+      UIkit.modal("#create-project-modal").hide();
+      setName("");
+    });
   };
 
   const handleEdit = (event) => {
     event.preventDefault();
-    axios
-      .patch("/api/projects", editingProject)
-      .then(() => {
-        UIkit.modal("#edit-project-modal").hide();
-        const newState = projects.map((project) => {
-          if (project._id === editingProject._id) {
-            return {
-              ...project,
-              name: editingProject.name,
-              slug: editingProject.slug,
-            };
-          }
+    patch("projects", editingProject).then(() => {
+      UIkit.modal("#edit-project-modal").hide();
+      const newState = projects.map((project) => {
+        if (project._id === editingProject._id) {
+          return {
+            ...project,
+            name: editingProject.name,
+            slug: editingProject.slug,
+          };
+        }
 
-          return project;
-        });
-        setProjects(newState);
-        setEditingProject({
-          ...editingProject,
-          name: "",
-        });
-      })
-      .catch((error) => console.log(error));
+        return project;
+      });
+      setProjects(newState);
+      setEditingProject({
+        ...editingProject,
+        name: "",
+      });
+    });
   };
 
   const handleDelete = (_id) => {
-    axios
-      .delete("/api/projects", { data: { _id: _id } })
-      .then(() => {
-        setProjects(projects.filter((project) => project._id !== _id));
-        setModels(models.filter((model) => model.projectId !== _id));
-      })
-      .catch((error) => console.log(error));
+    del("projects", _id).then(() => {
+      setProjects(projects.filter((project) => project._id !== _id));
+      setModels(models.filter((model) => model.projectId !== _id));
+    });
   };
 
   const handleProjectNameChange = (event) => {
