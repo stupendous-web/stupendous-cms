@@ -10,8 +10,8 @@ export default function Navigation() {
 
   const { projects, editingProject, setEditingProject } = useGlobal();
 
-  const logo = ["/", "/register", "/login"];
-  const noGreeting = ["/", "/register", "/login", "/app/editor"];
+  const logo = ["/", "/register", "/login", "/onboard"];
+  const noGreeting = ["/", "/register", "/login", "/onboard", "/app/editor"];
   const noProjects = ["/", "/register", "/login", "/app/editor"];
 
   return (

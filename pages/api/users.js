@@ -34,8 +34,8 @@ export default async function handler(request, response) {
           sgMail.send({
             to: body?.email,
             from: "topher@stupendousweb.com",
-            subject: "You're invited!",
-            text: `Someone invited you to be a publisher on Stupendous CMS. Name: ${request.body.name}\r\nEmail: ${request.body.email}\r\nTwitter: ${request.body.twitter}\r\nDiscord: ${request.body.discord}\r\nMessage: ${request.body.message}`,
+            subject: "Stupendous CMS Publisher Invitation",
+            text: `Someone invited you to be a publisher on Stupendous CMS. Follow the link below to complete your registration:\n\nhttps://stupendouscms.com/onboard?email=${body?.email}&accountId=${accountId}`,
           });
 
           await collection
