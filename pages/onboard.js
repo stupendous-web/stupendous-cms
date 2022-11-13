@@ -1,6 +1,5 @@
 import Head from "next/head";
 import { useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { patch } from "../utils/api";
 
@@ -8,14 +7,13 @@ import Navigation from "../components/Navigation";
 
 export default function Onboard() {
   const [password, setPassword] = useState();
-  const [error, setError] = useState();
 
   const router = useRouter();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     patch("users", {
-      _id: router?.query?.userId,
+      _id: router?.query?._id,
       password: password,
     }).then(() => {
       router.replace("/login");
@@ -47,21 +45,6 @@ export default function Onboard() {
                   required
                 />
               </div>
-              {error && (
-                <div class={"uk-alert-danger"} data-uk-alert={""}>
-                  <p>
-                    {error?.title || "There was an error."} Please try again or
-                    email{" "}
-                    <Link
-                      href={"mailto:topher@stupendousweb.com"}
-                      legacyBehavior
-                    >
-                      <a>topher@stupendousweb.com</a>
-                    </Link>{" "}
-                    for help.
-                  </p>
-                </div>
-              )}
               <input
                 type={"submit"}
                 value={"Let's Go!"}

@@ -24,7 +24,11 @@ export default function Authentication({ children }) {
     );
   }, [user]);
 
-  if (user && !["active", "trialing"].includes(subscriptionStatus))
+  if (
+    user &&
+    user?.isAccountOwner &&
+    !["active", "trialing"].includes(subscriptionStatus)
+  )
     return (
       <div
         className={"uk-section-primary uk-flex uk-flex-center uk-flex-middle"}

@@ -18,6 +18,10 @@ export default function Index() {
     projects?.length < 1 && router.replace("/app/projects");
   }, [projects]);
 
+  useEffect(() => {
+    !session?.user?.isAccountOwner && router.replace("/app/objects");
+  }, [session]);
+
   return (
     <>
       <Authentication>

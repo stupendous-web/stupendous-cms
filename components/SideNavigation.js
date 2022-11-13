@@ -53,7 +53,6 @@ export default function SideNavigation() {
       description:
         "This is the the bread and butter of your API. See and edit all the data that's accessible via your API.",
       visible:
-        isAccountOwner &&
         !!projects?.length &&
         filteredModels?.length &&
         filteredProperties?.length,
@@ -93,36 +92,29 @@ export default function SideNavigation() {
         </div>
       </div>
       <div className={"uk-margin"}>
-        {session?.user?.isAccountOwner && (
-          <>
-            {links.map((link, key) => {
-              return (
+        {links.map((link, key) => {
+          return (
+            <div className={link?.visible ? undefined : "uk-hidden"} key={key}>
+              <div className={"uk-width-1-1 uk-inline my-class"}>
+                <Link href={link.href}>
+                  <p
+                    className={"uk-text-center"}
+                    style={{ fontSize: "1.5rem" }}
+                  >
+                    <i className={link.icon} />
+                  </p>
+                </Link>
                 <div
-                  className={link?.visible ? undefined : "uk-hidden"}
-                  key={key}
+                  className={"uk-box-shadow-large"}
+                  data-uk-dropdown="pos: right-top; offset: -14"
                 >
-                  <div className={"uk-width-1-1 uk-inline my-class"}>
-                    <Link href={link.href}>
-                      <p
-                        className={"uk-text-center"}
-                        style={{ fontSize: "1.5rem" }}
-                      >
-                        <i className={link.icon} />
-                      </p>
-                    </Link>
-                    <div
-                      className={"uk-box-shadow-large"}
-                      data-uk-dropdown="pos: right-top; offset: -14"
-                    >
-                      <h3 style={{ color: "inherit" }}>{link.heading}</h3>
-                      <p>{link.description}</p>
-                    </div>
-                  </div>
+                  <h3 style={{ color: "inherit" }}>{link.heading}</h3>
+                  <p>{link.description}</p>
                 </div>
-              );
-            })}
-          </>
-        )}
+              </div>
+            </div>
+          );
+        })}
       </div>
     </>
   );
