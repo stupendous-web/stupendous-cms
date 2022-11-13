@@ -4,6 +4,7 @@ const nextConfig = {
   siteUrl: "https://stupendouscms.com",
   generateRobotsTxt: true,
   exclude: [
+    "/onboard",
     "/app",
     "/app/models",
     "/app/projects",
