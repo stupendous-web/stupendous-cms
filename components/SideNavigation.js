@@ -44,7 +44,7 @@ export default function SideNavigation() {
       icon: "ri-user-fill",
       description:
         "Give access to people you want to publish content to your API.",
-      visible: isAccountOwner,
+      visible: isAccountOwner && !!projects?.length,
     },
     {
       href: "/app/objects",

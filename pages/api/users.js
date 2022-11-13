@@ -25,6 +25,7 @@ export default async function handler(request, response) {
           name: body?.name,
           email: body?.email,
           isAccountOwner: false,
+          projectId: ObjectId(body?.projectId),
           accountId: ObjectId(accountId),
           createdAt: new Date(),
         })

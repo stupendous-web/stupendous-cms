@@ -14,14 +14,20 @@ export default function Users() {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
 
-  const { filteredUsers, users, setUsers } = useGlobal();
+  const { filteredUsers, users, setUsers, editingProject } = useGlobal();
 
   const { data: session } = useSession();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    post("users", { name: name, email: email }).then((response) => {
+    post("users", {
+      name: name,
+      email: email,
+      projectId: editingProject?._id,
+    }).then((response) => {
       setUsers([response?.data, ...users]);
+      setName(undefined);
+      setEmail(undefined);
       UIkit.modal("#create-user-modal").hide();
     });
   };
@@ -39,7 +45,7 @@ export default function Users() {
   return (
     <Authentication>
       <Layout>
-        {filteredUsers?.length < 2 ? (
+        {!filteredUsers?.length ? (
           <>
             <div
               className={
