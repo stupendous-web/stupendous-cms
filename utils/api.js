@@ -4,7 +4,11 @@ export const post = async (resource, data, config = {}) =>
   await axios
     .post(`/api/${resource}`, data, config)
     .then((response) => response)
-    .catch((error) => console.error(error));
+    .catch((error) => {
+      console.error(error);
+
+      return error;
+    });
 
 export const get = async (resource, params) =>
   await axios

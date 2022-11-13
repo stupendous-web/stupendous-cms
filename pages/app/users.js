@@ -2,17 +2,19 @@ import { useState } from "react";
 import Image from "next/image";
 import { useGlobal } from "../../lib/context";
 import { useSession } from "next-auth/react";
-import { post, del } from "../../utils/api";
+import axios from "axios";
 import UIkit from "uikit";
 
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
 
 import userFlow from "../../images/undraw/undraw_user_flow_re_bvfx.svg";
+import Link from "next/link";
 
 export default function Users() {
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState();
 
   const { filteredUsers, users, setUsers, editingProject } = useGlobal();
 
@@ -20,25 +22,31 @@ export default function Users() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    post("users", {
-      name: name,
-      email: email,
-      projectId: editingProject?._id,
-    }).then((response) => {
-      setUsers([response?.data, ...users]);
-      setName(undefined);
-      setEmail(undefined);
-      UIkit.modal("#create-user-modal").hide();
-    });
+    axios
+      .post("/api/users", {
+        name: name,
+        email: email,
+        projectId: editingProject?._id,
+      })
+      .then((response) => {
+        setUsers([response.data, ...users]);
+        setName("");
+        setEmail("");
+        UIkit.modal("#create-user-modal").hide();
+      })
+      .catch((error) => {
+        setEmail("");
+        setError(error?.response?.data);
+      });
   };
 
   const handleDelete = (_id) => {
     UIkit.modal
       .confirm("Are you sure you wish to permanently delete this user?")
       .then(() =>
-        del("users", _id).then(() =>
-          setUsers(users?.filter((user) => user?._id !== _id))
-        )
+        axios
+          .delete("/api/users", { data: { _id: _id } })
+          .then(() => setUsers(users?.filter((user) => user?._id !== _id)))
       );
   };
 
@@ -150,6 +158,21 @@ export default function Users() {
                   required
                 />
               </div>
+              {error && (
+                <div class={"uk-alert-danger"} data-uk-alert={""}>
+                  <p>
+                    {error?.title || "There was an error."} Please try again or
+                    email{" "}
+                    <Link
+                      href={"mailto:topher@stupendousweb.com"}
+                      legacyBehavior
+                    >
+                      <a>topher@stupendousweb.com</a>
+                    </Link>{" "}
+                    for help.
+                  </p>
+                </div>
+              )}
               <input
                 type={"submit"}
                 value={"Send"}

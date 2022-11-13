@@ -19,33 +19,49 @@ export default async function handler(request, response) {
 
   switch (request.method) {
     case "POST":
-      // check for duplicates
+      const user = await client
+        .db("stupendous-cms")
+        .collection("users")
+        .aggregate([
+          { $match: { email: body?.email } },
+          { $limit: 1 },
+          { $count: "count" },
+        ])
+        .toArray();
 
-      await collection
-        .insertOne({
-          name: body?.name,
-          email: body?.email,
-          isAccountOwner: false,
-          projectId: ObjectId(body?.projectId),
-          accountId: ObjectId(accountId),
-          createdAt: new Date(),
-        })
-        .then(async (result) => {
-          sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-          sgMail.send({
-            to: body?.email,
-            from: "topher@stupendousweb.com",
-            subject: "Stupendous CMS Publisher Invitation",
-            text: `Someone invited you to be a publisher on Stupendous CMS. Follow the link below to complete your registration:\n\nhttps://stupendouscms.com/onboard?_id=${result?.insertedId}`,
-          });
-
-          await collection
-            .findOne({ _id: ObjectId(result.insertedId) })
-            .then((result) => {
-              response.status(200).json(result);
+      if (!user?.length) {
+        await collection
+          .insertOne({
+            name: body?.name,
+            email: body?.email,
+            isAccountOwner: false,
+            projectId: ObjectId(body?.projectId),
+            accountId: ObjectId(accountId),
+            createdAt: new Date(),
+          })
+          .then(async (result) => {
+            sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+            sgMail.send({
+              to: body?.email,
+              from: "topher@stupendousweb.com",
+              subject: "Stupendous CMS Publisher Invitation",
+              text: `Someone invited you to be a publisher on Stupendous CMS. Follow the link below to complete your registration:\n\nhttps://stupendouscms.com/onboard?_id=${result?.insertedId}`,
             });
-        })
-        .finally(() => client.close());
+
+            await collection
+              .findOne({ _id: ObjectId(result.insertedId) })
+              .then((result) => {
+                response.status(200).json(result);
+              });
+          })
+          .finally(() => client.close());
+      } else {
+        await client.close();
+
+        return response
+          .status(422)
+          .json({ title: "That email is already registered." });
+      }
 
       break;
     case "GET":

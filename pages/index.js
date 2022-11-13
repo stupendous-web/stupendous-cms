@@ -105,7 +105,7 @@ export default function Home() {
             <div className={"uk-child-width-1-2@s"} data-uk-grid={""}>
               <div>
                 <h3 className={"uk-flex uk-flex-middle"}>
-                  <i class={"ri-cloud-fill uk-margin-right"} /> Cloud Hosted
+                  <i className={"ri-cloud-fill uk-margin-right"} /> Cloud Hosted
                 </h3>
                 <p>
                   Make things easy for your clients and yourself! You can host
@@ -115,7 +115,7 @@ export default function Home() {
               </div>
               <div>
                 <h3 className={"uk-flex uk-flex-middle"}>
-                  <i class={"ri-braces-fill uk-margin-right"} />
+                  <i className={"ri-braces-fill uk-margin-right"} />
                   REST API
                 </h3>
                 <p>
@@ -126,7 +126,7 @@ export default function Home() {
               </div>
               <div>
                 <h3 className={"uk-flex uk-flex-middle"}>
-                  <i class={"ri-clipboard-fill uk-margin-right"} />
+                  <i className={"ri-clipboard-fill uk-margin-right"} />
                   Project Management
                 </h3>
                 <p>
@@ -136,7 +136,7 @@ export default function Home() {
               </div>
               <div>
                 <h3 className={"uk-flex uk-flex-middle"}>
-                  <i class={"ri-image-fill uk-margin-right"} />
+                  <i className={"ri-image-fill uk-margin-right"} />
                   Media
                 </h3>
                 <p>

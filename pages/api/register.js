@@ -19,7 +19,7 @@ export default async function handler(request, response) {
     .db("stupendous-cms")
     .collection("users")
     .aggregate([
-      { $match: { email: body.email } },
+      { $match: { email: body?.email } },
       { $limit: 1 },
       { $count: "count" },
     ])
