@@ -35,7 +35,7 @@ export default async function handler(request, response) {
             to: body?.email,
             from: "topher@stupendousweb.com",
             subject: "Stupendous CMS Publisher Invitation",
-            text: `Someone invited you to be a publisher on Stupendous CMS. Follow the link below to complete your registration:\n\nhttps://stupendouscms.com/onboard?email=${body?.email}&accountId=${accountId}`,
+            text: `Someone invited you to be a publisher on Stupendous CMS. Follow the link below to complete your registration:\n\nhttps://stupendouscms.com/onboard?userId=${result?.insertedId}`,
           });
 
           await collection

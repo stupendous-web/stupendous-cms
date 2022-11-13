@@ -14,18 +14,12 @@ export default function Onboard() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    patch("/api/register", {
-      name: name,
-      email: email,
+    patch("users", {
+      _id: router?.query?.userId,
       password: password,
-    })
-      .then(() => {
-        router.replace("/login");
-      })
-      .catch((error) => {
-        console.log(error);
-        setError(error?.response?.data);
-      });
+    }).then(() => {
+      router.replace("/login");
+    });
   };
 
   return (
