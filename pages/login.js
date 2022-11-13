@@ -1,13 +1,17 @@
 import { useState } from "react";
 import Head from "next/head";
-import { signIn } from "next-auth/react";
+import axios from "axios";
 
 import Navigation from "../components/Navigation";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function Login() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [error, setError] = useState();
+
+  const router = useRouter();
 
   return (
     <>
@@ -24,11 +28,15 @@ export default function Login() {
             <form
               onSubmit={(event) => {
                 event.preventDefault();
-                signIn("credentials", {
-                  email: email,
-                  password: password,
-                  callbackUrl: "/app",
-                });
+                axios
+                  .post("/api/login", {
+                    email: email,
+                    password: password,
+                  })
+                  .then(() => {
+                    router.replace("/app");
+                  })
+                  .catch((error) => setError(error?.response?.data));
               }}
             >
               <h1>Login</h1>
@@ -53,6 +61,21 @@ export default function Login() {
                   required
                 />
               </div>
+              {error && (
+                <div class={"uk-alert-danger"} data-uk-alert={""}>
+                  <p>
+                    {error?.title || "There was an error."} Please try again or
+                    email{" "}
+                    <Link
+                      href={"mailto:topher@stupendousweb.com"}
+                      legacyBehavior
+                    >
+                      <a>topher@stupendousweb.com</a>
+                    </Link>{" "}
+                    for help.
+                  </p>
+                </div>
+              )}
               <input
                 type={"submit"}
                 value={"Let's go!"}

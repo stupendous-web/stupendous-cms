@@ -17,7 +17,7 @@ export default function Register() {
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .post("/api/register", {
+      .post("/api/accounts", {
         name: name,
         email: email,
         password: password,
