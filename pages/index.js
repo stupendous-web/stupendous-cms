@@ -8,8 +8,6 @@ import editor from "../images/screenshots/editor.jpg";
 import rest from "../images/screenshots/rest.jpg";
 import projects from "../images/screenshots/projects.jpg";
 import models from "../images/screenshots/models.jpg";
-import { withIronSessionSsr } from "iron-session/next";
-import { ironOptions } from "../lib/config";
 
 export default function Home({ user }) {
   return (
@@ -210,16 +208,3 @@ export default function Home({ user }) {
     </>
   );
 }
-
-export const getServerSideProps = withIronSessionSsr(
-  async function getServerSideProps({ req }) {
-    return {
-      props: req.session.user
-        ? {
-            user: req.session.user,
-          }
-        : {},
-    };
-  },
-  ironOptions
-);
