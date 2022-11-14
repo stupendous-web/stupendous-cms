@@ -2,16 +2,16 @@ import { useEffect } from "react";
 import Link from "next/link";
 import { useGlobal } from "../../lib/context";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 import Layout from "../../components/Layout";
-import { withIronSessionSsr } from "iron-session/next/index";
-import { ironOptions } from "../../lib/config";
 
-export default function Index({ user }) {
-  console.log(user);
+export default function Index() {
   const router = useRouter();
 
   const { projects, editingProject, filteredModels } = useGlobal();
+
+  const { data: session } = useSession();
 
   /*
   useEffect(() => {
@@ -81,16 +81,3 @@ export default function Index({ user }) {
     </>
   );
 }
-
-export const getServerSideProps = withIronSessionSsr(
-  async function getServerSideProps({ req }) {
-    return {
-      props: req.session.user
-        ? {
-            user: req.session.user,
-          }
-        : {},
-    };
-  },
-  ironOptions
-);

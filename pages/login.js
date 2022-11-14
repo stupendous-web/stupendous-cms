@@ -1,17 +1,25 @@
 import { useState } from "react";
 import Head from "next/head";
-import axios from "axios";
-
-import Navigation from "../components/Navigation";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
+
+import Navigation from "../components/Navigation";
 
 export default function Login() {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState();
 
   const router = useRouter();
+
+  const handleSubmit = () => {
+    signIn("credentials", {
+      email: email,
+      password: password,
+      callbackUrl: "/app",
+    });
+  };
 
   return (
     <>
@@ -25,20 +33,7 @@ export default function Login() {
       <div style={{ height: "calc(100vh - 6rem)", overflow: "auto" }}>
         <div className={"uk-section"}>
           <div className={"uk-container uk-container-xsmall"}>
-            <form
-              onSubmit={(event) => {
-                event.preventDefault();
-                axios
-                  .post("/api/login", {
-                    email: email,
-                    password: password,
-                  })
-                  .then(() => {
-                    router.replace("/app");
-                  })
-                  .catch((error) => setError(error?.response?.data));
-              }}
-            >
+            <form onSubmit={() => handleSubmit()}>
               <h1>Login</h1>
               <div className={"uk-margin"}>
                 <label className={"uk-form-label"}>Email</label>

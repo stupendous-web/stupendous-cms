@@ -84,7 +84,7 @@ export default function SideNavigation() {
         <div className={"uk-navbar-item"}>
           <Link href={"/app/account"}>
             <img
-              src={gravatar.url(session.user.email)}
+              src={gravatar.url(session?.user?.email)}
               className={"uk-border-circle"}
               style={{ width: "4rem" }}
             />
