@@ -8,8 +8,10 @@ import editor from "../images/screenshots/editor.jpg";
 import rest from "../images/screenshots/rest.jpg";
 import projects from "../images/screenshots/projects.jpg";
 import models from "../images/screenshots/models.jpg";
+import { withIronSessionSsr } from "iron-session/next";
+import { ironOptions } from "../lib/config";
 
-export default function Home() {
+export default function Home({ user }) {
   return (
     <>
       <Head>
@@ -18,7 +20,7 @@ export default function Home() {
           manage their software.
         </title>
       </Head>
-      <Navigation />
+      <Navigation user={user} />
       <div style={{ height: "calc(100vh - 6rem)", overflow: "auto" }}>
         <div className={"uk-section uk-section-xlarge"}>
           <div className={"uk-container uk-container-large"}>
@@ -208,3 +210,16 @@ export default function Home() {
     </>
   );
 }
+
+export const getServerSideProps = withIronSessionSsr(
+  async function getServerSideProps({ req }) {
+    return {
+      props: req.session.user
+        ? {
+            user: req.session.user,
+          }
+        : {},
+    };
+  },
+  ironOptions
+);

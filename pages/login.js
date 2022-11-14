@@ -62,7 +62,7 @@ export default function Login() {
                 />
               </div>
               {error && (
-                <div class={"uk-alert-danger"} data-uk-alert={""}>
+                <div className={"uk-alert-danger"} data-uk-alert={""}>
                   <p>
                     {error?.title || "There was an error."} Please try again or
                     email{" "}

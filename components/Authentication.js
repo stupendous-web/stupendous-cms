@@ -1,28 +1,30 @@
 import Link from "next/link";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { getBillingLink, getSubscription } from "../utils/api";
 
 import payOnline from "../images/undraw/undraw_pay_online_re_aqe6.svg";
 import login from "../images/undraw/undraw_login_re_4vu2.svg";
 
-export default function Authentication({ children }) {
+export default function Authentication({ children, user }) {
+  console.log("user", user);
   const [billingLink, setBillingLink] = useState();
   const [subscriptionStatus, setSubscriptionStatus] = useState();
 
-  const { data: session } = useSession();
-  const user = session?.user;
-
+  /*
   useEffect(() => {
     user?.stripeSubscription &&
       getSubscription({ id: user?.stripeSubscription }).then((response) =>
         setSubscriptionStatus(response?.data?.status)
       );
-    getBillingLink({ stripeCustomer: session?.user?.stripeCustomer }).then(
-      (response) => setBillingLink(response?.data?.url)
+    getBillingLink({ stripeCustomer: user?.stripeCustomer }).then((response) =>
+      setBillingLink(response?.data?.url)
     );
   }, [user]);
+
+   */
+
+  /*
 
   if (
     user &&
@@ -85,4 +87,8 @@ export default function Authentication({ children }) {
   }
 
   return children;
+}
+
+
+   */
 }

@@ -1,11 +1,10 @@
-import { SessionProvider } from "next-auth/react";
+import { useEffect } from "react";
 import { Provider } from "../lib/context";
 import "../styles/uikit/uikit.css";
-import { useEffect } from "react";
 import UIkit from "uikit";
 import "remixicon/fonts/remixicon.css";
 
-function MyApp({ Component, pageProps: { session, ...pageProps } }) {
+function MyApp({ Component, pageProps: { ...pageProps } }) {
   console.log(
     "%c  ___ _                          _            __      __   _    \n" +
       " / __| |_ _  _ _ __  ___ _ _  __| |___ _  _ __\\ \\    / /__| |__ \n" +
@@ -20,13 +19,11 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   }, []);
 
   return (
-    <SessionProvider session={session}>
-      <Provider>
-        <div className={"uk-scope"}>
-          <Component {...pageProps} />
-        </div>
-      </Provider>
-    </SessionProvider>
+    <Provider>
+      <div className={"uk-scope"}>
+        <Component {...pageProps} />
+      </div>
+    </Provider>
   );
 }
 
