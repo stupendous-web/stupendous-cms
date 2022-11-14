@@ -13,19 +13,13 @@ export default function Index() {
 
   const { data: session } = useSession();
 
-  /*
   useEffect(() => {
     projects?.length < 1 && router.replace("/app/projects");
   }, [projects]);
 
-   */
-
-  /*
   useEffect(() => {
     !session?.user?.isAccountOwner && router.replace("/app/objects");
   }, [session]);
-
-   */
 
   return (
     <>

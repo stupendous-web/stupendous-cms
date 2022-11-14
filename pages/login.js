@@ -13,7 +13,8 @@ export default function Login() {
 
   const router = useRouter();
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
     signIn("credentials", {
       email: email,
       password: password,
@@ -33,7 +34,7 @@ export default function Login() {
       <div style={{ height: "calc(100vh - 6rem)", overflow: "auto" }}>
         <div className={"uk-section"}>
           <div className={"uk-container uk-container-xsmall"}>
-            <form onSubmit={() => handleSubmit()}>
+            <form onSubmit={(event) => handleSubmit(event)}>
               <h1>Login</h1>
               <div className={"uk-margin"}>
                 <label className={"uk-form-label"}>Email</label>

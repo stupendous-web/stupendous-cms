@@ -3,6 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import axios from "axios";
+import { signIn } from "next-auth/react";
 
 import Navigation from "../components/Navigation";
 
@@ -23,7 +24,11 @@ export default function Register() {
         password: password,
       })
       .then(() => {
-        router.replace("/login");
+        signIn("credentials", {
+          email: email,
+          password: password,
+          callbackUrl: "/app",
+        });
       })
       .catch((error) => {
         console.log(error);
