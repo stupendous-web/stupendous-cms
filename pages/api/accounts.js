@@ -6,7 +6,6 @@ const stripe = require("stripe")(
 );
 import dayjs from "dayjs";
 import bcrypt from "bcrypt";
-
 import { authOptions } from "./auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 

@@ -5,12 +5,18 @@ import axios from "axios";
 import { signOut } from "next-auth/react";
 
 const handleDelete = () => {
-  axios
-    .delete("/api/accounts")
-    .then(() => {
-      signOut();
-    })
-    .catch((error) => console.log(error));
+  UIkit.modal
+    .confirm(
+      "Are you sure you wish to permanently delete your account and all your content?"
+    )
+    .then(() =>
+      axios
+        .delete("/api/accounts")
+        .then(() => {
+          signOut();
+        })
+        .catch((error) => console.log(error))
+    );
 };
 export default function Account() {
   return (
@@ -23,17 +29,7 @@ export default function Account() {
                 <div className={"uk-card uk-card-default uk-card-body"}>
                   <h3>Account</h3>
                   <div className={"uk-margin"}>
-                    <a
-                      onClick={() => {
-                        UIkit.modal
-                          .confirm(
-                            "Are you sure you wish to permanently delete your account and all your content?"
-                          )
-                          .then(() => handleDelete());
-                      }}
-                    >
-                      Delete Account
-                    </a>
+                    <a onClick={() => handleDelete()}>Delete Account</a>
                   </div>
                 </div>
               </div>
