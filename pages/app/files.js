@@ -3,7 +3,6 @@ import Image from "next/image";
 import axios from "axios";
 import { useGlobal } from "../../lib/context";
 import UIkit from "uikit";
-import { upload } from "../../utils/api";
 
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
@@ -22,7 +21,12 @@ export default function Files() {
       let formData = new FormData();
       formData.append("file", event.target.files[counter]);
       formData.append("projectId", editingProject?._id);
-      upload(formData)
+      axios
+        .post("/api/upload", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
         .then((response) => {
           setIsUploading(counter + 1 < event.target.files.length);
           setFiles([response.data, ...files]);

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useGlobal } from "../lib/context";
 import { useSession } from "next-auth/react";
 import gravatar from "gravatar";
-import { getBillingLink } from "../utils/api";
+import axios from "axios";
 
 export default function SideNavigation() {
   const [billingLink, setBillingLink] = useState("");
@@ -15,9 +15,14 @@ export default function SideNavigation() {
 
   useEffect(() => {
     if (session?.user?.stripeCustomer) {
-      getBillingLink({ stripeCustomer: session?.user?.stripeCustomer }).then(
-        (response) => setBillingLink(response?.data?.url || "")
-      );
+      axios
+        .post("/api/stripeBillingLink", {
+          stripeCustomer: session?.user?.stripeCustomer,
+        })
+        .then((response) => setBillingLink(response?.data?.url || ""))
+        .catch((error) => {
+          console.error(error);
+        });
     }
   }, [session]);
 

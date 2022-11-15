@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useGlobal } from "../../lib/context";
 import UIkit from "uikit";
 import { createSlug } from "../../utils/helpers";
-import { post, patch, del } from "../../utils/api";
+import axios from "axios";
 
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
@@ -31,22 +31,24 @@ export default function Models() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    post("models", {
-      singular: modelSingular,
-      plural: modelPlural,
-      slug: createSlug(modelPlural),
-      projectId: editingProject?._id,
-    }).then((response) => {
-      UIkit.modal("#create-model-modal").hide();
-      setModels([response?.data[0], ...models]);
-      setModelSingular("");
-      setModelPlural("");
-    });
+    axios
+      .post("/api/models", {
+        singular: modelSingular,
+        plural: modelPlural,
+        slug: createSlug(modelPlural),
+        projectId: editingProject?._id,
+      })
+      .then((response) => {
+        UIkit.modal("#create-model-modal").hide();
+        setModels([response?.data[0], ...models]);
+        setModelSingular("");
+        setModelPlural("");
+      });
   };
 
   const handleEdit = (event) => {
     event.preventDefault();
-    patch("models", editingModel).then((response) => {
+    axios.patch("/api/models", editingModel).then((response) => {
       UIkit.modal("#edit-model-modal").hide();
       const newState = models.map((model) => {
         if (model._id === editingModel._id) {
@@ -69,7 +71,7 @@ export default function Models() {
     UIkit.modal
       .confirm("Are you sure you wish to permanently delete this model?")
       .then(() =>
-        del("models", _id).then(() => {
+        axios.delete("/api/models", { data: { _id: _id } }).then(() => {
           setModels(models?.filter((model) => model._id !== _id));
           setProperties(
             properties?.filter((property) => property?.modelId !== _id)

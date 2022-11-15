@@ -5,7 +5,7 @@ import { useGlobal } from "../../lib/context";
 import dayjs from "dayjs";
 import UIkit from "uikit";
 import calendar from "dayjs/plugin/calendar";
-import { del, post } from "../../utils/api";
+import axios from "axios";
 
 import Authentication from "../../components/Authentication";
 import Layout from "../../components/Layout";
@@ -38,17 +38,19 @@ export default function Objects() {
           return null;
         }
       });
-      post("objects", {
-        data: blueprint,
-        projectId: editingProject?._id,
-        modelId: modelId,
-      }).then((response) => {
-        console.log(response?.data);
-        setObjects([response?.data, ...objects]);
-        setEditingObject(response?.data);
-        router.push("/app/editor");
-        UIkit.modal("#create-object-modal").hide();
-      });
+      axios
+        .post("/api/objects", {
+          data: blueprint,
+          projectId: editingProject?._id,
+          modelId: modelId,
+        })
+        .then((response) => {
+          console.log(response?.data);
+          setObjects([response?.data, ...objects]);
+          setEditingObject(response?.data);
+          router.push("/app/editor");
+          UIkit.modal("#create-object-modal").hide();
+        });
     }
   }, [modelId]);
 
@@ -56,9 +58,11 @@ export default function Objects() {
     UIkit.modal
       .confirm("Are you sure you wish to permanently delete this object?")
       .then(() =>
-        del("objects", _id).then(() =>
-          setObjects(objects?.filter((object) => object._id !== _id))
-        )
+        axios
+          .delete("/api/objects", { data: { _id: _id } })
+          .then(() =>
+            setObjects(objects?.filter((object) => object._id !== _id))
+          )
       );
   };
 

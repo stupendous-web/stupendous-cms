@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { patch } from "../utils/api";
+import axios from "axios";
 
 import Navigation from "../components/Navigation";
 
@@ -12,12 +12,14 @@ export default function Onboard() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    patch("users", {
-      _id: router?.query?._id,
-      password: password,
-    }).then(() => {
-      router.replace("/login");
-    });
+    axios
+      .patch("/api/users", {
+        _id: router?.query?._id,
+        password: password,
+      })
+      .then(() => {
+        router.replace("/login");
+      });
   };
 
   return (

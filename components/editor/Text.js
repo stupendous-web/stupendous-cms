@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useGlobal } from "../../lib/context";
-import { patch } from "../../utils/api";
+import axios from "axios";
 
 export default function Text({ property }) {
   const { editingObject, setEditingObject, setIsSaving } = useGlobal();
@@ -16,10 +16,12 @@ export default function Text({ property }) {
           ...editingObject,
           data: { ...editingObject?.data, [property?.property]: value },
         });
-        patch("objects", {
-          objectId: editingObject?._id,
-          data: { ...editingObject?.data, [property?.property]: value },
-        }).then(() => setIsSaving(false));
+        axios
+          .patch("/api/objects", {
+            objectId: editingObject?._id,
+            data: { ...editingObject?.data, [property?.property]: value },
+          })
+          .then(() => setIsSaving(false));
       }
     }, 1500);
 
