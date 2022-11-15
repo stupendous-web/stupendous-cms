@@ -4,9 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
 
-import Navigation from "../components/Navigation";
-
-import login from "../images/undraw/undraw_login_re_4vu2.svg";
+import cms from "../images/undraw/undraw_cms_re_asu0.svg";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -29,26 +27,25 @@ export default function Login() {
           content. You manage their software.
         </title>
       </Head>
-      <Navigation />
-      <div style={{ height: "calc(100vh - 6rem)", overflow: "auto" }}>
+
+      <div style={{ overflow: "auto" }} data-uk-height-viewport={""}>
         <div className={"uk-grid-collapse"} data-uk-grid={""}>
           <div
             className={
-              "uk-width-2-3@s uk-flex uk-flex-center uk-flex-middle uk-visible@s"
+              "uk-width-2-3@s uk-section-primary uk-flex uk-flex-center uk-flex-middle uk-visible@s"
             }
           >
-            <div className={"uk-width-medium"}>
-              <Image src={login} alt={"Login"} />
+            <div className={"uk-width-large uk-padding"}>
+              <Image src={cms} alt={"Login"} />
             </div>
           </div>
           <div
-            className={
-              "uk-width-1-3@s uk-section-secondary uk-flex uk-flex-middle"
-            }
+            className={"uk-width-1-3@s uk-flex uk-flex-middle"}
             data-uk-height-viewport={""}
           >
             <div className={"uk-width-1-1 uk-container uk-container-expand"}>
               <form onSubmit={(event) => handleSubmit(event)}>
+                <p>Stupendous CMS</p>
                 <h1>Login</h1>
                 <div className={"uk-margin"}>
                   <label className={"uk-form-label"}>Email</label>
