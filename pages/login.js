@@ -42,7 +42,9 @@ export default function Login() {
             </div>
           </div>
           <div
-            className={"uk-width-1-3@s uk-section-muted uk-flex uk-flex-middle"}
+            className={
+              "uk-width-1-3@s uk-section-secondary uk-flex uk-flex-middle"
+            }
             data-uk-height-viewport={""}
           >
             <div className={"uk-width-1-1 uk-container uk-container-expand"}>
