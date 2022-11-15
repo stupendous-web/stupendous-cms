@@ -58,6 +58,9 @@ export default function Register() {
             data-uk-height-viewport={""}
           >
             <div className={"uk-width-1-1 uk-container uk-container-expand"}>
+              <h3>
+                <Link href={"/"}>Stupendous CMS</Link>
+              </h3>
               <h1>Get Started</h1>
               <form onSubmit={(event) => handleSubmit(event)}>
                 <div className={"uk-margin"}>

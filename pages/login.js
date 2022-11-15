@@ -45,7 +45,9 @@ export default function Login() {
           >
             <div className={"uk-width-1-1 uk-container uk-container-expand"}>
               <form onSubmit={(event) => handleSubmit(event)}>
-                <p>Stupendous CMS</p>
+                <h3>
+                  <Link href={"/"}>Stupendous CMS</Link>
+                </h3>
                 <h1>Login</h1>
                 <div className={"uk-margin"}>
                   <label className={"uk-form-label"}>Email</label>
