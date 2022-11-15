@@ -69,21 +69,7 @@ export default function Login() {
                     required
                   />
                 </div>
-                {error && (
-                  <div className={"uk-alert-danger"} data-uk-alert={""}>
-                    <p>
-                      {error?.title || "There was an error."} Please try again
-                      or email{" "}
-                      <Link
-                        href={"mailto:topher@stupendousweb.com"}
-                        legacyBehavior
-                      >
-                        <a>topher@stupendousweb.com</a>
-                      </Link>{" "}
-                      for help.
-                    </p>
-                  </div>
-                )}
+
                 <input
                   type={"submit"}
                   value={"Let's go!"}
