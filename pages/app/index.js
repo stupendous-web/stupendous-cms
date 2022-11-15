@@ -18,7 +18,9 @@ export default function Index() {
   }, [projects]);
 
   useEffect(() => {
-    !session?.user?.isAccountOwner && router.replace("/app/objects");
+    if (session) {
+      !session.user?.isAccountOwner && router.replace("/app/objects");
+    }
   }, [session]);
 
   return (
